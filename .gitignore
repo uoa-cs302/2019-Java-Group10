@@ -1,2 +1,8 @@
 *.txt~
 *.java~
+/Home.class
+/Movement$TAdapter.class
+/Movement.class
+/StartUp.class
+/ZeldaCharacter.class
+/test.class
