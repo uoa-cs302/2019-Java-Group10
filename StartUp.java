@@ -1,17 +1,33 @@
-import javax.swing.*;
+//Bodnar, J (2018). Moving Sprites (modified version)
+//[Source code]. http://zetcode.com/tutorials/javagamestutorial/movingsprites/
 
-public class StartUp {
+import java.awt.EventQueue;
+import javax.swing.JFrame;
 
-	public static void main(String[] args) {
-		// create frame for ShapesJPanel
-		JFrame frame = new JFrame("Level 1" );
-		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+public class StartUp extends JFrame {
 
-		// create ShapesJPanel
-		movement movementJPanel = new movement();
-		frame.add( movementJPanel ); // add shapesJPanel to frame
-		frame.setSize( 825, 600 ); // set frame size
-		frame.setVisible( true ); // display frame
-	}
+    public StartUp() {
+        
+        initUI();
+    }
+    
+    private void initUI() {
 
+        add(new Movement());
+
+        setTitle("Level 1");
+        setSize(1020, 800);
+        
+        setLocationRelativeTo(null);
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public static void main(String[] args) {
+
+        EventQueue.invokeLater(() -> {
+            StartUp su = new StartUp();
+            su.setVisible(true);
+        });
+    }
 }
