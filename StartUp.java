@@ -5,9 +5,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 
 public class StartUp extends JFrame {
-
+	
     public StartUp() {
-        
         initUI();
     }
     

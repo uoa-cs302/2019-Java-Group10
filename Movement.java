@@ -19,15 +19,14 @@ public class Movement extends JPanel implements ActionListener {
     private final int DELAY = 10;
 
     public Movement() {
-
         initMovement();
     }
 
     private void initMovement() {
-
+    	
         addKeyListener(new TAdapter());
         setBackground(Color.black);
-	  setFocusable(true);
+        setFocusable(true);
 
         zeldacharacter = new ZeldaCharacter();
 
@@ -35,7 +34,7 @@ public class Movement extends JPanel implements ActionListener {
         timer.start();
     }
 
-    //@Override
+	//@Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
