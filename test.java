@@ -8,7 +8,8 @@ public class test extends JFrame {
 	//this function creates JPanels that create the boundary of the level in the form of trees 
 	private void levelBorder(JPanel border, String direction){
 		
-		border.setBackground(new Color(56,187,77));
+		border.setBackground(Color.BLACK);
+		//border.setBackground(new Color(16,111,30));
 		
 		//based on the direction, we align the trees to the respective side of the JPanel
 		if (direction == "EAST") {
@@ -26,20 +27,59 @@ public class test extends JFrame {
 		
 		//this creates an x amount of trees defined by its direction
 		if ((direction == "EAST") || (direction == "WEST")) {
-			border.setLayout(new GridLayout(15, 10, 0, 0));
-			for(int i = 0; i< 15; i++){
+			border.setLayout(new GridLayout(17, 10, 0, 0));
+			for(int i = 0; i< 17; i++){
 				JLabel tree = new JLabel(new ImageIcon("tree.png"));
 				border.add(tree);
 			}
 		}
-		if ((direction == "NORTH") || (direction == "SOUTH")) {
-			border.setLayout(new GridLayout(1, 25, 0, 0));
-			for(int i = 0; i< 25; i++){
+		if  (direction == "SOUTH") {
+			border.setLayout(new GridLayout(1, 28, 0, 0));
+			for(int i = 0; i< 28; i++){
 				JLabel tree = new JLabel(new ImageIcon("tree.png"));
 				border.add(tree);
 			}
 		}
 		
+		
+		if (direction == "NORTH") {
+			border.setLayout(new GridLayout(2, 28, 0, 0));
+			for(int i = 0; i< 28; i++){
+				JLabel empty = new JLabel("");
+				border.add(empty);
+			}
+			for (int i = 28; i < 56; i++) {
+				JLabel tree = new JLabel(new ImageIcon("tree.png"));
+				border.add(tree);
+			}
+		}
+		
+		
+		
+		
+		
+	}
+	
+	private void topBar(JPanel top) {
+		top.setBackground(Color.BLACK);
+		top.setLayout(new GridLayout(1, 4, 5, 0));
+		JLabel powerups = new JLabel("Powerups/ Powerdowns: ");
+		JLabel time = new JLabel("Time: ");
+		JLabel score = new JLabel("Score: ");
+		JLabel lives = new JLabel("Lives left:");
+		powerups.setForeground(Color.WHITE);
+		time.setForeground(Color.WHITE);
+		score.setForeground(Color.WHITE);
+		lives.setForeground(Color.WHITE);
+		lives.setHorizontalAlignment(JLabel.CENTER);
+		score.setHorizontalAlignment(JLabel.CENTER);
+		time.setHorizontalAlignment(JLabel.CENTER);
+		powerups.setHorizontalAlignment(JLabel.CENTER);
+		top.add(powerups);
+		top.add(time);
+		top.add(score);
+		top.add(lives);
+		add(top, BorderLayout.NORTH);
 	}
 
 
@@ -59,10 +99,18 @@ public class test extends JFrame {
 		levelBorder(borderEast, "EAST");
 		JPanel borderWest = new JPanel();
 		levelBorder(borderWest, "WEST");
-		JPanel borderNorth = new JPanel();
-		levelBorder(borderNorth, "NORTH");
 		JPanel borderSouth = new JPanel();
 		levelBorder(borderSouth, "SOUTH");
+		JPanel borderNorth = new JPanel();
+		levelBorder(borderNorth, "NORTH");
+		
+		
+		
+		//displays the score, time, lives etc.
+		//JPanel topInformationBar = new JPanel();
+		//topBar(topInformationBar);
+		
+		
 		
 		setVisible(true);
 	}
