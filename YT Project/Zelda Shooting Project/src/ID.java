@@ -8,5 +8,7 @@ public enum ID {
 	Enemy(),  //random motion. Lizard?
 	EnemySpider(), //spider enemy. Left to right motion
 	EnemyBoss(), //lion. Following motion
-	EnemyMultiplayer(); //multi-player enemy
+	EnemyMultiplayer(),//multi-player enemy
+	EnemyHunter(),
+	ArrowHunter();
 }

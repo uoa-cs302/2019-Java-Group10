@@ -113,6 +113,22 @@ public class Zelda extends GameObject{
 				}
 			}
 			
+			if(temp.getId() == ID.EnemyHunter) {
+				if(getBounds().intersects(temp.getBounds())) {
+					game.hp--;
+				}
+			}
+			
+			//checking for HunterArrow
+			if(temp.getId() == ID.ArrowHunter) {
+				if(getBounds().intersects(temp.getBounds())) {
+					game.hp = game.hp - 10;
+					handler.removeObj(temp);
+				}
+			}
+			
+			
+			
 			
 		}
 	}

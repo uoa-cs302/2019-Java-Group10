@@ -20,13 +20,12 @@ public class Game extends Canvas implements Runnable {
 	private Thread thread;
 	private Camera camera;
 	public SpriteSheet ss;
-	//public Zelda zelda;
 	
 	public static int LEVEL = 1;
 	
 	
 	private BufferedImage floor = null;
-	public BufferedImage level1 = null, level2 = null, levelBoss = null, levelMultiplayer = null;
+	public BufferedImage level1 = null, level2 = null, levelBoss = null, levelMultiplayer = null, levelHunter = null;
 	private BufferedImage spriteSheet = null;
 	
 	//declared here becoz we'll be drawing this out in a later video
@@ -34,7 +33,10 @@ public class Game extends Canvas implements Runnable {
 	//100 health
 	public int hp = 100;
 	long start, finish, timingValue;
+	//should start from 1. Kept at 5 to skip levels for now.
 	int levelCounter=1;
+	
+	//NOTE- Should clear all objects once game ends. Allows for a fresh start on a new game.
 	
 	public Game() {
 		
@@ -55,6 +57,7 @@ public class Game extends Canvas implements Runnable {
 		
 		levelBoss = loader.loadImage("/zelda_level_boss.png");
 		levelMultiplayer = loader.loadImage("/zelda_level_multiplayer.png");
+		levelHunter = loader.loadImage("/zelda_level_hunter.png");
 		
 		spriteSheet = loader.loadImage("/sprite_sheet.png");
 		ss = new SpriteSheet(spriteSheet);
@@ -117,6 +120,14 @@ public class Game extends Canvas implements Runnable {
 		if (hp <= 0 && levelCounter ==5) {
 			//Game.LEVEL++;
 			switchLevel(5);
+			hp = 100;
+			levelCounter++;
+		}
+		
+		//Hunter level. Should actually go before boss level. Change accordingly later
+		if (hp <= 0 && levelCounter ==6) {
+			//Game.LEVEL++;
+			switchLevel(6);
 			hp = 100;
 		}
 		
@@ -184,11 +195,6 @@ public class Game extends Canvas implements Runnable {
 		bs.show();
 	}
 	
-//	public void setLevel(int level) {
-//		if (level == 2) {
-//			switchLevel();
-//		}
-//	}
 	
 	public void switchLevel(int level) {
 		//clears the current level before loading the next level
@@ -212,6 +218,11 @@ public class Game extends Canvas implements Runnable {
 		//multiplayer Level
 		if (level == 5) {
 			loadLevel(levelMultiplayer);
+		}
+
+		//Hunter Level
+		if (level == 6) {
+			loadLevel(levelHunter);
 		}
 	}
 	
@@ -259,6 +270,10 @@ public class Game extends Canvas implements Runnable {
 				
 				if(red ==255 && green ==174 && blue ==201) {
 					handler.addObj(new EnemyMultiplayer (i*32, j*32, ID.EnemyMultiplayer, handler, ss));
+				}
+				
+				if(red ==255 && green ==242 && blue ==0) {
+					handler.addObj(new EnemyHunter (i*32, j*32, ID.EnemyHunter, handler, ss));
 				}
 				
 				
