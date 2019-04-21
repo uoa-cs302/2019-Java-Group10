@@ -6,6 +6,9 @@ import java.util.LinkedList;
 //handles all our objects
 public class Handler {
 	private boolean up = false, down = false, left = false, right = false;
+	//for multiplayer object
+	private boolean upM = false, downM = false, leftM = false, rightM = false;
+	
 	LinkedList<GameObject> obj = new LinkedList<GameObject>();
 	
 	public void tick() {
@@ -45,6 +48,40 @@ public class Handler {
 
 	public void setRight(boolean right) {
 		this.right = right;
+	}
+	
+	
+	//Multiplayer getters and setters
+	public boolean isUpM() {
+		return upM;
+	}
+
+	public void setUpM(boolean upM) {
+		this.upM = upM;
+	}
+
+	public boolean isDownM() {
+		return downM;
+	}
+
+	public void setDownM(boolean downM) {
+		this.downM = downM;
+	}
+
+	public boolean isLeftM() {
+		return leftM;
+	}
+
+	public void setLeftM(boolean leftM) {
+		this.leftM = leftM;
+	}
+
+	public boolean isRightM() {
+		return rightM;
+	}
+
+	public void setRightM(boolean rightM) {
+		this.rightM = rightM;
 	}
 
 	public void render(Graphics g) {

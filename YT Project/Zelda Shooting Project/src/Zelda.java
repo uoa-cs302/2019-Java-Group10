@@ -107,6 +107,12 @@ public class Zelda extends GameObject{
 				}
 			}
 			
+			if(temp.getId() == ID.EnemyMultiplayer) {
+				if(getBounds().intersects(temp.getBounds())) {
+					game.hp--;
+				}
+			}
+			
 			
 		}
 	}

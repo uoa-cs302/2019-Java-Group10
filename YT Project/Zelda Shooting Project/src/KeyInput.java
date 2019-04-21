@@ -48,6 +48,22 @@ public class KeyInput extends KeyAdapter {
 					handler.setRight(true);
 				}		
 			}
+			
+			//Multiplayer motion being set up
+			if (temp.getId() == ID.EnemyMultiplayer) {
+				if (key == KeyEvent.VK_W) {
+					handler.setUpM(true);
+				}
+				if (key == KeyEvent.VK_S) {
+					handler.setDownM(true);
+				}
+				if (key == KeyEvent.VK_A) {
+					handler.setLeftM(true);
+				}
+				if (key == KeyEvent.VK_D) {
+					handler.setRightM(true);
+				}		
+			}
 		}
 	}
 	
@@ -71,13 +87,23 @@ public class KeyInput extends KeyAdapter {
 				}
 				if (key == KeyEvent.VK_RIGHT) {
 					handler.setRight(false);
+				}			
+			}
+			
+			//Multiplayer Motion set-up
+			if (temp.getId() == ID.EnemyMultiplayer) {
+				if (key == KeyEvent.VK_W) {
+					handler.setUpM(false);
 				}
-				
-//				if (key == KeyEvent.VK_P) {
-//					System.out.println("P released");
-//					game.start();
-//				}
-				
+				if (key == KeyEvent.VK_S) {
+					handler.setDownM(false);
+				}
+				if (key == KeyEvent.VK_A) {
+					handler.setLeftM(false);
+				}
+				if (key == KeyEvent.VK_D) {
+					handler.setRightM(false);
+				}			
 			}
 		}	
 	}

@@ -26,7 +26,7 @@ public class Game extends Canvas implements Runnable {
 	
 	
 	private BufferedImage floor = null;
-	public BufferedImage level1 = null, level2 = null, levelBoss = null;
+	public BufferedImage level1 = null, level2 = null, levelBoss = null, levelMultiplayer = null;
 	private BufferedImage spriteSheet = null;
 	
 	//declared here becoz we'll be drawing this out in a later video
@@ -54,6 +54,7 @@ public class Game extends Canvas implements Runnable {
 		level2 = loader.loadImage("/zelda_level_2.png");
 		
 		levelBoss = loader.loadImage("/zelda_level_boss.png");
+		levelMultiplayer = loader.loadImage("/zelda_level_multiplayer.png");
 		
 		spriteSheet = loader.loadImage("/sprite_sheet.png");
 		ss = new SpriteSheet(spriteSheet);
@@ -108,6 +109,14 @@ public class Game extends Canvas implements Runnable {
 		if (hp <= 0 && levelCounter ==4) {
 			//Game.LEVEL++;
 			switchLevel(4);
+			hp = 100;
+			levelCounter++;
+		}
+		
+		//multiplayer level
+		if (hp <= 0 && levelCounter ==5) {
+			//Game.LEVEL++;
+			switchLevel(5);
 			hp = 100;
 		}
 		
@@ -199,6 +208,11 @@ public class Game extends Canvas implements Runnable {
 		if (level == 4) {
 			loadLevel(levelBoss);
 		}
+		
+		//multiplayer Level
+		if (level == 5) {
+			loadLevel(levelMultiplayer);
+		}
 	}
 	
 	//loading the level
@@ -241,6 +255,10 @@ public class Game extends Canvas implements Runnable {
 				
 				if(red ==255 && green ==127 && blue ==39) {
 					handler.addObj(new EnemyBoss (i*32, j*32, ID.EnemyBoss, handler, ss));
+				}
+				
+				if(red ==255 && green ==174 && blue ==201) {
+					handler.addObj(new EnemyMultiplayer (i*32, j*32, ID.EnemyMultiplayer, handler, ss));
 				}
 				
 				
