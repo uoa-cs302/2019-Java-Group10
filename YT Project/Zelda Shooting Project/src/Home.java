@@ -30,10 +30,10 @@ public class Home extends Canvas {
 		//load the following images to be used within the home screen
 		BufferedImageLoader loader = new BufferedImageLoader();
 		backgroundZelda = loader.loadImage("/ZeldaBackground.jpg");
-		startGame = loader.loadImage("/play.PNG");
-		multiplayerGame = loader.loadImage("/multiplayer.PNG");
-		optionsGame = loader.loadImage("/options.PNG");
-		endGame = loader.loadImage("/exit.PNG");
+		startGame = loader.loadImage("/play.png");
+		multiplayerGame = loader.loadImage("/multiplayer.png");
+		optionsGame = loader.loadImage("/options.png");
+		endGame = loader.loadImage("/exit.png");
 
 		//spriteSheet = loader.loadImage("/sprite_sheet.png");
 		//ss = new SpriteSheet(spriteSheet);
@@ -109,7 +109,8 @@ public class Home extends Canvas {
 		g.setFont(getFont("/teen_bold.ttf", 50));
 		g.drawString("Reborn", 50, 180);
 		g.setFont(getFont("/teen.ttf", 15));
-		g.drawString("© Copyright - An original game by GameWarriors", 30, 700);
+		//not working on Dhyani's laptop. Idk why. Need to fix.
+		g.drawString("ï¿½ Copyright - An original game by GameWarriors", 30, 700);
 	}
 	
 	
