@@ -19,10 +19,15 @@ import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 
 public class Home extends Canvas {
-	Font font;
+	//Font font;
 	public static JFrame homeFrame;
-	Rectangle rectStart, rectEnd, rectMultiplayer, rectOptions;
-	private BufferedImage backgroundZelda = null, startGame = null, endGame = null, multiplayerGame = null, optionsGame = null;
+	Rectangle rectStart, rectEnd, rectMultiplayer, rectHighscore, rect1, rect2, rect3;
+	private BufferedImage backgroundZelda = null, startGame = null, endGame = null,
+			multiplayerGame = null, highscoreGame = null, difficulty = null;
+	private BufferedImage[] diff1 = new BufferedImage[2];
+	private BufferedImage[] diff2 = new BufferedImage[2];
+	private BufferedImage[] diff3 = new BufferedImage[2]; 
+	public int difficultyLevel = 1;
 	
 	//private SpriteSheet ss;
 	//private BufferedImage spriteSheet = null;
@@ -34,8 +39,17 @@ public class Home extends Canvas {
 		backgroundZelda = loader.loadImage("/ZeldaBackground.jpg");
 		startGame = loader.loadImage("/play.png");
 		multiplayerGame = loader.loadImage("/multiplayer.png");
-		optionsGame = loader.loadImage("/options.png");
+		highscoreGame = loader.loadImage("/highscore.png");
 		endGame = loader.loadImage("/exit.png");
+		difficulty = loader.loadImage("/difficulty.png");
+		
+		//difficulty buttons
+		diff1[0] = loader.loadImage("/1_empty.png");
+		diff1[1] = loader.loadImage("/1_full.png");
+		diff2[0] = loader.loadImage("/2_empty.png");
+		diff2[1] = loader.loadImage("/2_full.png");
+		diff3[0] = loader.loadImage("/3_empty.png");
+		diff3[1] = loader.loadImage("/3_full.png");
 
 		//spriteSheet = loader.loadImage("/sprite_sheet.png");
 		//ss = new SpriteSheet(spriteSheet);
@@ -43,13 +57,20 @@ public class Home extends Canvas {
 		
 		//button rectangle detection on click
 		rectStart = new Rectangle();
-		rectStart.setBounds(804, 335, 200, 70);
+		rectStart.setBounds(804, 260, 200, 70);
 		rectMultiplayer = new Rectangle();
 		rectMultiplayer.setBounds(737, 416, 263, 55);
-		rectOptions = new Rectangle();
-		rectOptions.setBounds(805, 486, 195, 55);
+		rectHighscore = new Rectangle();
+		rectHighscore.setBounds(780, 486, 220, 55);
 		rectEnd = new Rectangle();
 		rectEnd.setBounds(849, 557, 152, 55);
+		rect1 = new Rectangle();
+		rect1.setBounds(840, 340, 42, 42);
+		rect2 = new Rectangle();
+		rect2.setBounds(890, 340, 42, 42);
+		rect3 = new Rectangle();
+		rect3.setBounds(940, 340, 42, 42);
+		
 		
 		//detect mouse input to buttons
 		//source-code: https://www.youtube.com/watch?v=CajXXmhIndI
@@ -69,12 +90,25 @@ public class Home extends Canvas {
 					System.out.println("multiplayer");
 				}
 				//options button input
-				else if ((x > rectOptions.getX()) && (x < rectOptions.getX() + 195) && (y > rectOptions.getY()) && (y < rectOptions.getY() + 55)) {
-					System.out.println("options");
+				else if ((x > rectHighscore.getX()) && (x < rectHighscore.getX() + 220) && (y > rectHighscore.getY()) && (y < rectHighscore.getY() + 55)) {
+					System.out.println("highscore");
 				}
 				//end button input
 				else if ((x > rectEnd.getX()) && (x < rectEnd.getX() + 152) && (y > rectEnd.getY()) && (y < rectEnd.getY() + 55)) {
 					System.exit(0);
+				}
+				//difficulty input
+				else if ((x > rect1.getX()) && (x < rect1.getX() + 42) && (y > rect1.getY()) && (y < rect1.getY() + 42)) {
+					difficultyLevel = 1;
+					repaint();
+				}
+				else if ((x > rect2.getX()) && (x < rect2.getX() + 42) && (y > rect2.getY()) && (y < rect2.getY() + 42)) {
+					difficultyLevel = 2;
+					repaint();
+				}
+				else if ((x > rect3.getX()) && (x < rect3.getX() + 42) && (y > rect3.getY()) && (y < rect3.getY() + 42)) {
+					difficultyLevel = 3;
+					repaint();
 				}
 			}
 		});	
@@ -95,10 +129,33 @@ public class Home extends Canvas {
 	public void paint (Graphics g) {   
 		//draw the relevant images to the screen
 		g.drawImage(backgroundZelda, 0, 0, 1024, 768, null);
-		g.drawImage(startGame, 750, 250, 250, 250, null);
+		//g.drawImage(startGame, 750, 250, 250, 250, null);
+		g.drawImage(startGame, 750, 175, 250, 250, null);
 		g.drawImage(multiplayerGame, 705, 300, 300, 300, null);
-		g.drawImage(optionsGame, 705, 370, 300, 300, null);
+		g.drawImage(highscoreGame, 750, 365, 300, 300, null);
 		g.drawImage(endGame, 705, 440, 300, 300, null);
+		
+		if (difficultyLevel == 1) {
+			g.drawImage(diff1[1], 800, 300, 125, 125, null);	
+		}
+		else {
+			g.drawImage(diff1[0], 800, 300, 125, 125, null);
+		}
+		
+		if (difficultyLevel == 2) {
+			g.drawImage(diff2[1], 850, 300, 125, 125, null);
+		}
+		else {
+			g.drawImage(diff2[0], 850, 300, 125, 125, null);
+		}
+		
+		if (difficultyLevel == 3) {
+			g.drawImage(diff3[1], 900, 300, 125, 125, null);
+		}
+		else {
+			g.drawImage(diff3[0], 900, 300, 125, 125, null);
+		}		
+		g.drawImage(difficulty, 790, 300, 200, 200, null);
 
 		//grey colour used for font input
 		g.setColor(new Color(211,211,211));
@@ -112,6 +169,6 @@ public class Home extends Canvas {
 		g.drawString("Reborn", 50, 180);
 		g.setFont(GameFont.getFont("/teen.ttf", 15));
 		g.drawString("Copyright - An original game by GameWarriors", 640, 710);
-		g.drawString("Background credits: GameWarriors", 30, 710);
+		g.drawString("Background credits: GameWarriors", 30, 710);		
 	}
 }
