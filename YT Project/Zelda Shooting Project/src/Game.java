@@ -236,8 +236,9 @@ public class Game extends Canvas implements Runnable {
 		
 		//health for the game - UI
 		//health box
-		g.setColor(Color.GRAY);
+		//g.setColor(Color.GRAY);
 		g.fillRect(5, 5, 200, 32);
+	
 		//health with colour coordination for specific boundaries
 		if(hp < 50 && hp > 35) {
 			g.setColor(Color.YELLOW);
@@ -253,13 +254,36 @@ public class Game extends Canvas implements Runnable {
 		g.setColor(Color.BLACK);
 		g.drawRect(5, 5, 200, 32);
 		
+		//Health string
+		g.setColor(new Color(211,211,211));
+		g.drawString("Health", 5, 50);
 		
+		
+		//ammo - UI - bottom left corner
+//		g.setColor(new Color(211,211,211));
+//		g.drawString("Ammo", 15, 720);
+//		g.setFont(GameFont.getFont("/teen_bold.ttf", 30));
+//		g.drawString("" + ammo, 15, 700);
+	
 		//ammo - UI
-		g.setColor(Color.WHITE);
-		g.drawString("Ammo: " + ammo, 5, 50);
+		g.setColor(new Color(211,211,211));
+		g.drawString("Ammo", 940, 50);
+		g.setFont(GameFont.getFont("/teen_bold.ttf", 30));
+		if (ammo < 30) {
+			g.setColor(Color.YELLOW);
+			g.drawString("" + ammo, 940, 35);
+		}
+		else if (ammo == 0) {
+			g.setColor(Color.RED);
+			g.drawString("" + ammo, 940, 35);
+		}
+		else {
+			g.setColor(new Color(211,211,211));
+			g.drawString("" + ammo, 940, 35);	
+		}
 		
 		//game time
-		//g.setColor(Color.WHITE);
+		g.setColor(new Color(211,211,211));
 		//	FIXED coz I am awesome! :)
 		finish = System.nanoTime();
 		timingValue = finish-start;
