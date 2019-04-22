@@ -447,7 +447,8 @@ public class Game extends Canvas implements Runnable {
 	//change back to private and fix later
 	public void stop() {
 		isRunning = false;
-		finish += timingValue;
+		finish = finish + timingValue;
+		timingValue=0;
 	
 		try {
 			thread.join();
