@@ -36,7 +36,10 @@ public class Game extends Canvas implements Runnable {
 	public int ammo =100; //100 bullets
 	//100 health
 	public int hp = 100;
-	long start, finish, timingValue;
+	long start, timingValue;
+	long finish = 0;
+	//long totalTime = 0;
+	
 	//should start from 1. Kept at 5 to skip levels for now.
 	int levelCounter=1;
 	
@@ -90,7 +93,7 @@ public class Game extends Canvas implements Runnable {
 		loadLevel(level1);
 		levelCounter++;
 		
-		start = System.nanoTime();
+		
 	}
 	
 	/*
@@ -286,10 +289,13 @@ public class Game extends Canvas implements Runnable {
 		
 		//game time
 		g.setColor(new Color(211,211,211));
+/*		
 		//	FIXED coz I am awesome! :)
 		finish = System.nanoTime();
 		timingValue = ((finish-start)/1000000000);
-		g.drawString("Time: " + timingValue + "sec", 450, 50);
+		
+*/		
+		g.drawString("Time: " + (finish+timingValue) + "sec", 450, 50);
 		
 		
 		/////
@@ -391,6 +397,7 @@ public class Game extends Canvas implements Runnable {
 	}
 	
 	public void run() {
+		//System.out.println("1-outer");
 		//stock game loop timer - running frame 60 times/ sec
 		this.requestFocus();
 		long lastTime = System.nanoTime();
@@ -400,7 +407,12 @@ public class Game extends Canvas implements Runnable {
 		long timer = System.currentTimeMillis();
 		int frames = 0;
 		while (isRunning) {
+			//System.out.println("2-inner");
 			long now = System.nanoTime();
+			
+			//finish = System.nanoTime();
+			timingValue = ((now-start)/1000000000);
+			
 			delta += (now - lastTime) / ns;
 			lastTime = now;
 			while(delta >= 1) {
@@ -415,17 +427,27 @@ public class Game extends Canvas implements Runnable {
 			}
 		}
 	}
+	
+	public boolean getIsRunning() {
+		return isRunning;
+	}
+
+	public void setIsRunning(boolean isRunning) {
+		this.isRunning = isRunning;
+	}
 
 	//was private before
 	public void start() {
 		isRunning = true;
 		thread = new Thread(this);
 		thread.start();
+		start = System.nanoTime();
 	}
 	
 	//change back to private and fix later
 	public void stop() {
 		isRunning = false;
+		finish += timingValue;
 	
 		try {
 			thread.join();

@@ -71,6 +71,8 @@ public class KeyInput extends KeyAdapter {
 	public void keyReleased(KeyEvent e) {
 		int key = e.getKeyCode();
 		
+		
+		
 		//loops through all objects
 		for (int i = 0; i < handler.obj.size(); i ++) {
 			GameObject temp = handler.obj.get(i);
