@@ -79,8 +79,8 @@ public class EnemyHunter extends GameObject{
 			}
 			
 			if(temp.getId() == ID.Player) {
-				zelda_x = temp.getX();
-				zelda_y = temp.getY();
+				zelda_x = temp.getX() + 15;
+				zelda_y = temp.getY() + 5;
 			}
 			
 			

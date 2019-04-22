@@ -111,7 +111,7 @@ public class Home extends Canvas {
 		g.setFont(GameFont.getFont("/teen_bold.ttf", 50));
 		g.drawString("Reborn", 50, 180);
 		g.setFont(GameFont.getFont("/teen.ttf", 15));
-		//not working on Dhyani's laptop. Idk why. Need to fix.
-		g.drawString("� Copyright - An original game by GameWarriors", 30, 700);
+		g.drawString("Copyright - An original game by GameWarriors", 640, 710);
+		g.drawString("Background credits: GameWarriors", 30, 710);
 	}
 }

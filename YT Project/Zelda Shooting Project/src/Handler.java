@@ -1,5 +1,6 @@
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 
@@ -9,7 +10,8 @@ public class Handler {
 	//for multiplayer object
 	private boolean upM = false, downM = false, leftM = false, rightM = false;
 	
-	LinkedList<GameObject> obj = new LinkedList<GameObject>();
+	//LinkedList<GameObject> obj = new LinkedList<GameObject>();
+	ArrayList<GameObject> obj = new ArrayList<GameObject>();
 	
 	public void tick() {
 		for (int i = 0 ; i < obj.size(); i++) {

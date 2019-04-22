@@ -177,7 +177,8 @@ public class Game extends Canvas implements Runnable {
 			for (int j = 0; j < 30*72; j +=32) {
 					g.drawImage(grass, i, j, null);	
 			}
-		}
+		}	
+
 
 //		if (dirtTileOnce) {
 //			for (int i = 0; i < 20; i++) {
@@ -192,7 +193,7 @@ public class Game extends Canvas implements Runnable {
 		
 		
 		//TUTORIAL (game instructions)
-		if (levelCounter < 3) {
+		if (levelCounter == 2) {
 			//grey colour used for font input
 			g.setColor(new Color(211,211,211));
 			g.setFont(GameFont.getFont("/teen_bold.ttf", 20));
@@ -255,6 +256,7 @@ public class Game extends Canvas implements Runnable {
 		
 		//Health string
 		g.setColor(new Color(211,211,211));
+		g.setFont(GameFont.getFont("/teen_bold.ttf", 15));
 		g.drawString("Health", 5, 50);
 		
 		
@@ -266,6 +268,7 @@ public class Game extends Canvas implements Runnable {
 	
 		//ammo - UI
 		g.setColor(new Color(211,211,211));
+		g.setFont(GameFont.getFont("/teen_bold.ttf", 15));
 		g.drawString("Ammo", 940, 50);
 		g.setFont(GameFont.getFont("/teen_bold.ttf", 30));
 		if (ammo == 0) {

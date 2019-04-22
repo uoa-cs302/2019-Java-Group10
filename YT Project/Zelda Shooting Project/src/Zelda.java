@@ -153,7 +153,7 @@ public class Zelda extends GameObject{
 					game.hp = game.hp - 10;
 					handler.removeObj(temp);
 				}
-			}			
+			}
 		}
 	}
 
