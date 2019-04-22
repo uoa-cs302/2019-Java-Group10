@@ -342,13 +342,15 @@ public class Game extends Canvas implements Runnable {
 			loadLevel(levelBoss);
 		}
 		
-		//Boss Level
+		//semi-Boss Level
 		if (level == 4) {
 			loadLevel(levelBoss);
 		}
 		
-		//Hunter Level
+		//Boss-Hunter Level
 		if (level == 5) {
+			//allows levelCounter to be set for PgDn as well now
+			levelCounter=5;
 			loadLevel(levelHunter);
 		}
 
@@ -404,7 +406,7 @@ public class Game extends Canvas implements Runnable {
 				}
 				
 				if(red ==255 && green ==127 && blue ==39) {
-					handler.addObj(new EnemyBoss (i*32, j*32, ID.EnemyBoss, handler, ss));
+					handler.addObj(new EnemyBoss (i*32, j*32, ID.EnemyBoss, handler, ss, this));
 				}
 				
 				if(red ==255 && green ==174 && blue ==201) {

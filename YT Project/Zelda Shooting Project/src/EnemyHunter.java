@@ -58,7 +58,7 @@ public class EnemyHunter extends GameObject{
 						deltaX = zelda_x - x;
 						deltaY = zelda_y - y;
 						direction = Math.atan2(deltaY,deltaX);
-						speed = game.difficulty + 1;
+						speed = game.difficulty + 2;
 						
 						velX=  (int) (speed*Math.cos(direction));
 						velY= (int) (speed*Math.sin(direction));
@@ -94,7 +94,7 @@ public class EnemyHunter extends GameObject{
 						handler.addObj(new ArrowHunter(x , y , ID.ArrowHunter, handler, zelda_x + 15, zelda_y + 5, ss));
 					}
 				}
-				//being overflooded with objects?
+
 				
 			}
 		}

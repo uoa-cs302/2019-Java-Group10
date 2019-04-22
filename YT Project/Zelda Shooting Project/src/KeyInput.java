@@ -41,6 +41,10 @@ public class KeyInput extends KeyAdapter {
 			}
 		}
 		
+		if (key == KeyEvent.VK_PAGE_DOWN) {
+			game.switchLevel(5);
+		}
+		
 		//loops through all objects
 		for (int i = 0; i < handler.obj.size(); i ++) {
 			GameObject temp = handler.obj.get(i);

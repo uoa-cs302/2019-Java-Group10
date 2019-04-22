@@ -12,8 +12,8 @@ public class ArrowHunter extends GameObject{
 		this.handler = handler;
 		
 		//10 acts as a speed divider here. Basically time to reach location
-		velY = (zeldaY - y) / 10;
-		velX = (zeldaX - x) / 10;
+		velY = (zeldaY - y) / 11;
+		velX = (zeldaX - x) / 11;
 	}
 
 	@Override

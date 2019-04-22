@@ -12,18 +12,22 @@ public class EnemyBoss extends GameObject{
 	private Handler handler;
 	
 	private BufferedImage[] enemy_image = new BufferedImage[2];
+	private Game game;
 	Animations anim;
 	
 	int zelda_x, zelda_y;
 	int choose = 0;
-	int hp = 100;   //health
+	int hp;   //health
 	double dist, deltaX, deltaY, direction, speed;
 	
-	public EnemyBoss(int x, int y, ID id, Handler handler, SpriteSheet ss) {
+	public EnemyBoss(int x, int y, ID id, Handler handler, SpriteSheet ss, Game game) {
 		super(x, y, id, ss);
 		this.handler = handler;
+		this.game = game;
 		enemy_image[0] = ss.grabImage(5, 3, 32, 32);
 		enemy_image[1] = ss.grabImage(6, 3, 32, 32);
+		
+		hp = (game.difficulty * 100) +50;
 		
 		anim = new Animations(3, enemy_image);
 	}
@@ -55,7 +59,7 @@ public class EnemyBoss extends GameObject{
 						deltaX = zelda_x - x;
 						deltaY = zelda_y - y;
 						direction = Math.atan2(deltaY,deltaX);
-						speed = 2;
+						speed = game.difficulty +2;
 						
 						velX=  (int) (speed*Math.cos(direction));
 						velY= (int) (speed*Math.sin(direction));

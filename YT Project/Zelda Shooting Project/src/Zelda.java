@@ -150,8 +150,8 @@ public class Zelda extends GameObject{
 			//checking for HunterArrow
 			if(temp.getId() == ID.ArrowHunter) {
 				if(getBounds().intersects(temp.getBounds())) {
-					game.hp = game.hp - 10;
 					handler.removeObj(temp);
+					game.hp = game.hp - 10;
 				}
 			}
 		}
