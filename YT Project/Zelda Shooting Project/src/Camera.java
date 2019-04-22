@@ -17,12 +17,11 @@ public class Camera {
 		y = y + (obj.getY() - y - 768/2) * 0.05f;
 		
 		if(x <= 0 ) x=0;
-		if(x >= 1024+32 ) x=1024+30;
+		//if(x >= 1024+32 ) x=1024+30;
+		if(x >= 1024 +15 ) x=1024 + 15;
 		if(y <= 0 ) y=0;
-		if(y >= 768+16 ) y=768;
-		
-		
-		
+		//if(y >= 768+16 ) y=768;
+		if(y >= 230) y=230;		
 	}
 
 	public float getX() {

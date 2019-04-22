@@ -11,7 +11,7 @@ public class Block extends GameObject {
 	public Block(int x, int y, ID id, SpriteSheet ss) {
 		super(x, y, id, ss);
 		
-		block_image = ss.grabImage(4, 1, 32, 32);
+		block_image = ss.grabImage(2, 4, 32, 32);
 	}
 
 	@Override

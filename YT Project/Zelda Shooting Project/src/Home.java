@@ -106,26 +106,12 @@ public class Home extends Canvas {
 		//set title (and copyright text) with specific font size at specific pixel points on the screen
 		//font-source: https://www.1001fonts.com/teen-font.html
 		//font-source: https://www.fontspace.com/house-of-lime/stars
-		g.setFont(getFont("/Stars.ttf", 100));
+		g.setFont(GameFont.getFont("/Stars.ttf", 100));
 		g.drawString("ZELDA", 40, 120);
-		g.setFont(getFont("/teen_bold.ttf", 50));
+		g.setFont(GameFont.getFont("/teen_bold.ttf", 50));
 		g.drawString("Reborn", 50, 180);
-		g.setFont(getFont("/teen.ttf", 15));
+		g.setFont(GameFont.getFont("/teen.ttf", 15));
 		//not working on Dhyani's laptop. Idk why. Need to fix.
 		g.drawString("� Copyright - An original game by GameWarriors", 30, 700);
-	}
-	
-	
-	//code-source : https://www.programcreek.com/java-api-examples/?class=java.awt.Font&method=createFont
-	public static Font getFont(String file, int size) {
-	    try {
-	    	//add new font into game from file input
-	        Font font = Font.createFont(Font.TRUETYPE_FONT, Home.class.getResourceAsStream(file));
-	        font = font.deriveFont(Font.TRUETYPE_FONT, size);
-	        return font;
-	    } catch (Exception ex) {
-	    	//if there is an error, display text with default font, so the game doesn't crash
-	    	return new Font("Tahoma", Font.BOLD, size);
-	    }
 	}
 }

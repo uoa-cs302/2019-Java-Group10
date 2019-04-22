@@ -4,8 +4,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-
-import javax.swing.JFrame;
+import java.util.Random;
 
 //MAIN CLASS BASICALLY. EVRYTHING GETS PUT THROUGH HERE.
 //ALL CLASSES INITIALISED HERE
@@ -22,10 +21,16 @@ public class Game extends Canvas implements Runnable {
 	public SpriteSheet ss, ss_zelda, ss_spider;
 	
 	public static int LEVEL = 1;
+	Random rand = new Random();
+	
+	//int iDirt = 0, jDirt = 0;
+	boolean dirtTileOnce = true;
 	
 	
-	private BufferedImage floor = null;
-	public BufferedImage level1 = null, level2 = null, levelBoss = null, levelMultiplayer = null, levelHunter = null;
+	private BufferedImage grass = null, dirt = null;
+	public BufferedImage level1 = null, level2 = null, levelBoss = null, 
+			levelMultiplayer = null, levelHunter = null, pause = null, esc = null,
+			up = null, down = null, right = null, left = null, mouse = null;
 	private BufferedImage spriteSheet = null;
 	
 	//declared here becoz we'll be drawing this out in a later video
@@ -69,7 +74,17 @@ public class Game extends Canvas implements Runnable {
 		spriteSheet = loader.loadImage("/ss_spider.png");
 		ss_spider = new SpriteSheet(spriteSheet);
 		
-		floor = ss.grabImage(3, 1, 32, 32);
+		//controls images
+		pause = loader.loadImage("/pause.png");
+		esc = loader.loadImage("/esc.png");
+		left = loader.loadImage("/left.png");
+		right = loader.loadImage("/right.png");
+		up = loader.loadImage("/up.png");
+		down = loader.loadImage("/down.png");
+		mouse = loader.loadImage("/mouse.png");
+		
+		grass = ss.grabImage(3, 3, 32, 32);
+		dirt = ss.grabImage(2, 1, 32, 32);
 		
 		this.addMouseListener(new MouseInput(handler, camera, this, ss));
 		
@@ -77,7 +92,6 @@ public class Game extends Canvas implements Runnable {
 		levelCounter++;
 		
 		start = System.nanoTime();
-		
 	}
 	
 	/*
@@ -162,14 +176,55 @@ public class Game extends Canvas implements Runnable {
 		//draws the floor image as the background
 		for (int i = 0; i < 30*72; i += 32) {
 			for (int j = 0; j < 30*72; j +=32) {
-				g.drawImage(floor, i, j, null);
+					g.drawImage(grass, i, j, null);	
 			}
 		}
+
+//		if (dirtTileOnce) {
+//			for (int i = 0; i < 20; i++) {
+//				g.drawImage(dirt, rand.nextInt(1024), rand.nextInt(768), null);
+//			}
+//			dirtTileOnce = false;
+//		}
+
+//		if (dirtTile) {
+//			g.drawImage(dirt, iDirt, jDirt, null);
+//		}
 		
-		//game instructions
+		
+		//TUTORIAL (game instructions)
 		if (levelCounter < 3) {
-			g.setColor(Color.WHITE);
-			g.drawString("Game instructions: ", 100, 100);
+			//grey colour used for font input
+			g.setColor(new Color(211,211,211));
+			g.setFont(GameFont.getFont("/teen_bold.ttf", 20));
+			//storyline
+			g.drawString("Game Storyline:", 50, 740);
+			g.setFont(GameFont.getFont("/teen_bold.ttf", 15));
+			g.drawString("... your best friend, Link, has been injured and "
+					+ "needs special fruits to survive", 50, 760);
+			g.drawString("After discovering these fruits can only be " + 
+					"found in this forest, 'The Forest of", 50, 780);
+			g.drawString("Panthera' your aim is to make your way through the forest in order to", 50, 800);
+			g.drawString("find these special healing fruits to bring back to Link. During your journey,", 50, 820);
+			g.drawString("you will oppose various animals which you will have to overcome to", 50, 840);
+			g.drawString("unlock a special fruit and to get to the next stage of the forest. Save Link", 50, 860);
+			g.drawString("by collecting all the special fruits before he dies.", 50, 880);
+			g.setFont(GameFont.getFont("/teen_bold.ttf", 20));
+			
+			//Controls
+			g.drawString("Controls", 50, 560);
+			g.setFont(GameFont.getFont("/teen_bold.ttf", 15));
+			g.drawImage(pause, 50, 560, 100, 100, null);
+			g.drawString("Pause", 120, 610);
+			g.drawImage(esc, 50, 610, 100, 100, null);
+			g.drawString("Home", 120, 660);
+			g.drawImage(up, 300, 560, 100, 100, null);
+			g.drawImage(down, 300, 600, 100, 100, null);
+			g.drawImage(right, 340, 600, 100, 100, null);
+			g.drawImage(left, 260, 600, 100, 100, null);
+			g.drawString("Move", 325, 695);
+			g.drawImage(mouse, 500, 585, 100, 100, null);
+			g.drawString("Shoot", 525, 695);
 		}
 		
 		handler.render(g);
@@ -183,8 +238,16 @@ public class Game extends Canvas implements Runnable {
 		//health box
 		g.setColor(Color.GRAY);
 		g.fillRect(5, 5, 200, 32);
-		//health
-		g.setColor(Color.GREEN);
+		//health with colour coordination for specific boundaries
+		if(hp < 50 && hp > 35) {
+			g.setColor(Color.YELLOW);
+		}
+		else if (hp < 35) {
+			g.setColor(Color.RED);
+		}
+		else {
+			g.setColor(Color.GREEN);
+		}
 		g.fillRect(5, 5, hp*2, 32);
 		//outline for the health bar
 		g.setColor(Color.BLACK);
@@ -212,7 +275,6 @@ public class Game extends Canvas implements Runnable {
 	public void switchLevel(int level) {
 		//clears the current level before loading the next level
 		handler.clearLevel();
-		
 		
 		if (level == 2) {
 			loadLevel(level2);
@@ -265,7 +327,14 @@ public class Game extends Canvas implements Runnable {
 				if (red == 237 && green ==28 && blue==36) {
 					handler.addObj(new Block(i*32, j*32, ID.Block, ss));
 				}
-				
+//				if (red == 127 && green ==127 && blue==127) {
+//					dirtTile = true;
+//					iDirt = i;
+//					jDirt = j;
+//				}
+//				else {
+//					dirtTile = false;
+//				}
 				if (red == 63 && green == 72 && blue == 204) {
 					handler.addObj(new Zelda(i*32, j*32, ID.Player, handler, this, ss_zelda));
 				}
