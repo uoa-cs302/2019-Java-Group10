@@ -19,7 +19,7 @@ public class Game extends Canvas implements Runnable {
 	private Handler handler;
 	private Thread thread;
 	private Camera camera;
-	public SpriteSheet ss;
+	public SpriteSheet ss, ss_zelda, ss_spider;
 	
 	public static int LEVEL = 1;
 	
@@ -61,6 +61,13 @@ public class Game extends Canvas implements Runnable {
 		
 		spriteSheet = loader.loadImage("/sprite_sheet.png");
 		ss = new SpriteSheet(spriteSheet);
+		
+		//zelda's spritesheet
+		spriteSheet = loader.loadImage("/ss_zelda.png");
+		ss_zelda = new SpriteSheet(spriteSheet);
+		
+		spriteSheet = loader.loadImage("/ss_spider.png");
+		ss_spider = new SpriteSheet(spriteSheet);
 		
 		floor = ss.grabImage(3, 1, 32, 32);
 		
@@ -159,6 +166,12 @@ public class Game extends Canvas implements Runnable {
 			}
 		}
 		
+		//game instructions
+		if (levelCounter < 3) {
+			g.setColor(Color.WHITE);
+			g.drawString("Game instructions: ", 100, 100);
+		}
+		
 		handler.render(g);
 		
 		g2d.translate(camera.getX(), camera.getY());
@@ -254,14 +267,14 @@ public class Game extends Canvas implements Runnable {
 				}
 				
 				if (red == 63 && green == 72 && blue == 204) {
-					handler.addObj(new Zelda(i*32, j*32, ID.Player, handler, this, ss));
+					handler.addObj(new Zelda(i*32, j*32, ID.Player, handler, this, ss_zelda));
 				}
 				if(red ==34 && green == 177 && blue ==76) {
 					handler.addObj(new Enemy (i*32, j*32, ID.Enemy, handler, ss));
 				}
 				
 				if(red ==163 && green ==73 && blue ==164) {
-					handler.addObj(new EnemySpider (i*32, j*32, ID.EnemySpider, handler, ss));
+					handler.addObj(new EnemySpider (i*32, j*32, ID.EnemySpider, handler, ss_spider));
 				}
 				
 				if(red ==255 && green ==127 && blue ==39) {

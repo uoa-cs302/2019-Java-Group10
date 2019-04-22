@@ -62,7 +62,7 @@ public class KeyInput extends KeyAdapter {
 				}
 				if (key == KeyEvent.VK_D) {
 					handler.setRightM(true);
-				}		
+				}
 			}
 		}
 	}

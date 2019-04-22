@@ -11,20 +11,22 @@ public class EnemySpider extends GameObject{
 	Random r = new Random();
 	private Handler handler;
 	
-	private BufferedImage[] enemy_image = new BufferedImage[2];
+	private BufferedImage[] enemy_spider = new BufferedImage[4];
 	Animations anim;
 	
 	int choose = 0;
 	int hp = 100;   //health
-	boolean collided = false;
+	boolean collidedBlock = false, collisionZelda = false;
 	
 	public EnemySpider(int x, int y, ID id, Handler handler, SpriteSheet ss) {
 		super(x, y, id, ss);
 		this.handler = handler;
-		enemy_image[0] = ss.grabImage(5, 3, 32, 32);
-		enemy_image[1] = ss.grabImage(6, 3, 32, 32);
+		enemy_spider[0] = ss.grabBigImage(1, 1, 64, 64);
+		enemy_spider[1] = ss.grabBigImage(2, 1, 64, 64);
+		enemy_spider[2] = ss.grabBigImage(1, 2, 64, 64);
+		enemy_spider[3] = ss.grabBigImage(1, 1, 64, 64);
 		
-		anim = new Animations(3, enemy_image);
+		anim = new Animations(1, enemy_spider);
 	}
 
 	@Override
@@ -49,11 +51,11 @@ public class EnemySpider extends GameObject{
 					velX *=  -1;
 					velY *= -1;
 					
-					collided = !collided;
+					collidedBlock = !collidedBlock;
 				}
 				//not colliding
 				else {
-					if(collided ==true) {
+					if(collidedBlock ==true) {
 						velX = 1;
 					}
 					else {
@@ -69,7 +71,18 @@ public class EnemySpider extends GameObject{
 					hp = hp-50;
 					handler.removeObj(temp);
 				}
-				
+			}
+			
+			//collision with zelda
+			if(temp.getId() == ID.Player) {
+				if(getBounds().intersects(temp.getBounds())) {
+					collisionZelda = true;
+					//if collision with zelda, change array image to spider with red eyes
+					enemy_spider[3] = ss.grabBigImage(2, 2, 64, 64);
+				}
+				else {
+					collisionZelda = false;
+				}
 			}
 		}
 		
@@ -82,11 +95,18 @@ public class EnemySpider extends GameObject{
 
 	@Override
 	public void render(Graphics g) {
-		anim.drawAnimation(g, x, y, 0);
+		//if spider collides with zelda, spiders image with red eyes displays
+		if (collisionZelda) {
+			g.drawImage(enemy_spider[3], x, y, null);
+		}
+		else {
+			anim.drawAnimation(g, x, y, 0);
+		}
 	}
 
 	
 	@Override
+	//collision box for spiders
 	public Rectangle getBounds() {
 		return new Rectangle(x, y, 32, 32);
 	}
