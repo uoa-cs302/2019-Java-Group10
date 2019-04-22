@@ -33,6 +33,7 @@ public class Home extends Canvas {
 	private BufferedImage[] diff3 = new BufferedImage[2]; 
 	public int difficultyLevel = 1;
 	static Home h;
+	int paintCounter=1;
 	
 	//private SpriteSheet ss;
 	//private BufferedImage spriteSheet = null;
@@ -88,13 +89,13 @@ public class Home extends Canvas {
 				//start button input
 				if ((x > rectStart.getX()) && (x < rectStart.getX() + 200) && (y > rectStart.getY()) && (y < rectStart.getY() + 70)) {
 					homeFrame.dispose();
-					new Game(h);
+					new Game(h, 1);
 				}
 				//multiplayer button input
 				else if ((x > rectMultiplayer.getX()) && (x < rectMultiplayer.getX() + 263) && (y > rectMultiplayer.getY()) && (y < rectMultiplayer.getY() + 55)) {
-					System.out.println("multiplayer");
+					new Game(h,6);
 				}
-				//options button input
+				//highscore button input
 				else if ((x > rectHighscore.getX()) && (x < rectHighscore.getX() + 220) && (y > rectHighscore.getY()) && (y < rectHighscore.getY() + 55)) {
 					System.out.println("highscore");
 				}
@@ -132,6 +133,8 @@ public class Home extends Canvas {
 	}
 
 	public void paint (Graphics g) {   
+
+
 		//draw the relevant images to the screen
 		g.drawImage(backgroundZelda, 0, 0, 1024, 768, null);
 		//g.drawImage(startGame, 750, 250, 250, 250, null);
@@ -139,7 +142,24 @@ public class Home extends Canvas {
 		g.drawImage(multiplayerGame, 705, 300, 300, 300, null);
 		g.drawImage(highscoreGame, 750, 365, 300, 300, null);
 		g.drawImage(endGame, 705, 440, 300, 300, null);
-		
+
+
+		//grey colour used for font input
+		g.setColor(new Color(211,211,211));
+
+		//set title (and copyright text) with specific font size at specific pixel points on the screen
+		//font-source: https://www.1001fonts.com/teen-font.html
+		//font-source: https://www.fontspace.com/house-of-lime/stars
+		g.setFont(GameFont.getFont("/Stars.ttf", 100));
+		g.drawString("ZELDA", 40, 120);
+		g.setFont(GameFont.getFont("/teen_bold.ttf", 50));
+		g.drawString("Reborn", 50, 180);
+		g.setFont(GameFont.getFont("/teen.ttf", 15));
+		g.drawString("Copyright - An original game by GameWarriors", 640, 710);
+		g.drawString("Background credits: GameWarriors", 30, 710);	
+
+
+
 		//display correct image for certain difficulty level setting
 		if (difficultyLevel == 1) {
 			g.drawImage(diff1[1], 800, 300, 125, 125, null);	
@@ -147,14 +167,14 @@ public class Home extends Canvas {
 		else {
 			g.drawImage(diff1[0], 800, 300, 125, 125, null);
 		}
-		
+
 		if (difficultyLevel == 2) {
 			g.drawImage(diff2[1], 850, 300, 125, 125, null);
 		}
 		else {
 			g.drawImage(diff2[0], 850, 300, 125, 125, null);
 		}
-		
+
 		if (difficultyLevel == 3) {
 			g.drawImage(diff3[1], 900, 300, 125, 125, null);
 		}
@@ -163,6 +183,7 @@ public class Home extends Canvas {
 		}		
 		g.drawImage(difficulty, 790, 300, 200, 200, null);
 
+		/*
 		//grey colour used for font input
 		g.setColor(new Color(211,211,211));
 		
@@ -175,6 +196,7 @@ public class Home extends Canvas {
 		g.drawString("Reborn", 50, 180);
 		g.setFont(GameFont.getFont("/teen.ttf", 15));
 		g.drawString("Copyright - An original game by GameWarriors", 640, 710);
-		g.drawString("Background credits: GameWarriors", 30, 710);		
+		g.drawString("Background credits: GameWarriors", 30, 710);	
+		*/	
 	}
 }

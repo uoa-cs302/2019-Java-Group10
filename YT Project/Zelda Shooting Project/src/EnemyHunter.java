@@ -10,22 +10,25 @@ public class EnemyHunter extends GameObject{
 		
 	Random r = new Random();
 	private Handler handler;
+	private Game game;
 	
 	private BufferedImage[] enemy_image = new BufferedImage[2];
 	Animations anim;
 	
 	int zelda_x, zelda_y;
 	int choose = 0;
-	int hp = 100;   //health
+	int hp;   //health
 	double dist, deltaX, deltaY, direction, speed;
 	
-	public EnemyHunter(int x, int y, ID id, Handler handler, SpriteSheet ss) {
+	public EnemyHunter(int x, int y, ID id, Handler handler, SpriteSheet ss, Game game) {
 		super(x, y, id, ss);
 		this.handler = handler;
+		this.game = game;
 		enemy_image[0] = ss.grabImage(5, 3, 32, 32);
 		enemy_image[1] = ss.grabImage(6, 3, 32, 32);
 		
 		anim = new Animations(3, enemy_image);
+		hp = (game.difficulty + 1)*100;
 	}
 
 	@Override
@@ -55,7 +58,7 @@ public class EnemyHunter extends GameObject{
 						deltaX = zelda_x - x;
 						deltaY = zelda_y - y;
 						direction = Math.atan2(deltaY,deltaX);
-						speed = 2;
+						speed = game.difficulty + 1;
 						
 						velX=  (int) (speed*Math.cos(direction));
 						velY= (int) (speed*Math.sin(direction));
@@ -88,7 +91,7 @@ public class EnemyHunter extends GameObject{
 			if(temp.getId() == ID.EnemyHunter) {
 				if (dist < 400) {
 					if (choose == 1) {
-						handler.addObj(new ArrowHunter(x + 16, y +24, ID.ArrowHunter, handler, zelda_x, zelda_y, ss));
+						handler.addObj(new ArrowHunter(x , y , ID.ArrowHunter, handler, zelda_x + 15, zelda_y + 5, ss));
 					}
 				}
 				//being overflooded with objects?

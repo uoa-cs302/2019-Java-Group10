@@ -36,7 +36,7 @@ public class KeyInput extends KeyAdapter {
 			counter++;
 			if(counter==2) {
 				game.frame.dispose();
-				h.main(null);
+				Home.main(null);
 				//game.Window.dispose();
 			}
 		}

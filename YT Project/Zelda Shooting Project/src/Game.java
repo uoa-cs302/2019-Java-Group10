@@ -17,7 +17,7 @@ public class Game extends Canvas implements Runnable {
 
 	private static final long serialVersionUID = 1L;
 
-	public static JFrame frame;
+	public JFrame frame;
 	private boolean isRunning = false;
 	private Handler handler;
 	private Thread thread;
@@ -47,11 +47,13 @@ public class Game extends Canvas implements Runnable {
 	
 	//should start from 1. Kept at 5 to skip levels for now.
 	int levelCounter=1;
+	int difficulty=1;
 	
 	//NOTE- Should clear all objects once game ends. Allows for a fresh start on a new game.
 	
-	public Game(Home ho) {
-		home =ho;
+	public Game(Home home, int level) {
+		this.home =home;
+		difficulty = home.difficultyLevel;
 		
 		//make new JFrame window with the following input parameters
 		int w=1024;
@@ -115,9 +117,14 @@ public class Game extends Canvas implements Runnable {
 		
 		this.addMouseListener(new MouseInput(handler, camera, this, ss));
 		
-		loadLevel(level1);
-		levelCounter++;
-		
+		if(level ==1) {
+			loadLevel(level1);
+			levelCounter++;
+		}
+		else if (level==6){
+			levelCounter =6;
+			switchLevel(6);
+		}		
 		
 	}
 	
@@ -164,15 +171,14 @@ public class Game extends Canvas implements Runnable {
 			levelCounter++;
 		}
 		
-		//multiplayer level
+		//hunter level
 		if (hp <= 0 && levelCounter ==5) {
 			//Game.LEVEL++;
 			switchLevel(5);
 			hp = 100;
-			levelCounter++;
 		}
 		
-		//Hunter level. Should actually go before boss level. Change accordingly later
+		//multiplayer level
 		if (hp <= 0 && levelCounter ==6) {
 			//Game.LEVEL++;
 			switchLevel(6);
@@ -312,18 +318,12 @@ public class Game extends Canvas implements Runnable {
 			g.drawString("" + ammo, 940, 35);	
 		}
 		
-		//game time
 		g.setColor(new Color(211,211,211));
-/*		
-		//	FIXED coz I am awesome! :)
-		finish = System.nanoTime();
-		timingValue = ((finish-start)/1000000000);
 		
-*/		
+		//game time
 		g.drawString("Time: " + (finish+timingValue) + "sec", 450, 50);
 		
 		
-		/////
 		g.dispose();
 		bs.show();
 	}
@@ -339,7 +339,7 @@ public class Game extends Canvas implements Runnable {
 		
 		if (level == 3) {
 			//loading level 2 here. Change to Level 3 when its set up.
-			loadLevel(level2);
+			loadLevel(levelBoss);
 		}
 		
 		//Boss Level
@@ -347,14 +347,14 @@ public class Game extends Canvas implements Runnable {
 			loadLevel(levelBoss);
 		}
 		
-		//multiplayer Level
+		//Hunter Level
 		if (level == 5) {
-			loadLevel(levelMultiplayer);
+			loadLevel(levelHunter);
 		}
 
 		//Hunter Level
 		if (level == 6) {
-			loadLevel(levelHunter);
+			loadLevel(levelMultiplayer);
 		}
 	}
 	
@@ -412,7 +412,7 @@ public class Game extends Canvas implements Runnable {
 				}
 				
 				if(red ==255 && green ==242 && blue ==0) {
-					handler.addObj(new EnemyHunter (i*32, j*32, ID.EnemyHunter, handler, ss));
+					handler.addObj(new EnemyHunter (i*32, j*32, ID.EnemyHunter, handler, ss, this));
 				}
 				
 				
