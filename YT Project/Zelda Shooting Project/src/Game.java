@@ -20,7 +20,6 @@ public class Game extends Canvas implements Runnable {
 	private Camera camera;
 	public SpriteSheet ss, ss_zelda, ss_spider;
 	
-	public static int LEVEL = 1;
 	Random rand = new Random();
 	
 	//int iDirt = 0, jDirt = 0;
@@ -236,7 +235,7 @@ public class Game extends Canvas implements Runnable {
 		
 		//health for the game - UI
 		//health box
-		//g.setColor(Color.GRAY);
+		g.setColor(Color.GRAY);
 		g.fillRect(5, 5, 200, 32);
 	
 		//health with colour coordination for specific boundaries
@@ -269,12 +268,12 @@ public class Game extends Canvas implements Runnable {
 		g.setColor(new Color(211,211,211));
 		g.drawString("Ammo", 940, 50);
 		g.setFont(GameFont.getFont("/teen_bold.ttf", 30));
-		if (ammo < 30) {
-			g.setColor(Color.YELLOW);
+		if (ammo == 0) {
+			g.setColor(Color.RED);
 			g.drawString("" + ammo, 940, 35);
 		}
-		else if (ammo == 0) {
-			g.setColor(Color.RED);
+		else if (ammo < 30 && ammo != 0) {
+			g.setColor(Color.YELLOW);
 			g.drawString("" + ammo, 940, 35);
 		}
 		else {
@@ -286,8 +285,8 @@ public class Game extends Canvas implements Runnable {
 		g.setColor(new Color(211,211,211));
 		//	FIXED coz I am awesome! :)
 		finish = System.nanoTime();
-		timingValue = finish-start;
-		g.drawString("Time: " + timingValue/1000000000 + "sec", 450, 50);
+		timingValue = ((finish-start)/1000000000);
+		g.drawString("Time: " + timingValue + "sec", 450, 50);
 		
 		
 		/////

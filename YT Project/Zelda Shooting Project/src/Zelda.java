@@ -20,21 +20,29 @@ public class Zelda extends GameObject{
 		this.handler = handler;
 		this.game=game;
 		
-		zelda_Leftimage[0] = ss.grabBigImage(1, 1, 60, 60);
-		zelda_Leftimage[1] = ss.grabBigImage(2, 1, 60, 60);
-		zelda_Leftimage[2] = ss.grabBigImage(3, 1, 60, 60);
+		//add the multiple sides of zelda within the cooresponding array
+		for (int i= 0; i < 3; i ++) {
+			zelda_Leftimage[i] = ss.grabBigImage(i+1, 1, 60, 60);
+			zelda_Rightimage[i] = ss.grabBigImage(i+1, 2, 60, 60);
+			zelda_Frontimage[i] = ss.grabBigImage(i+1, 3, 60, 60);
+			zelda_Backimage[i] = ss.grabBigImage(i+1, 4, 60, 60);
+		}
 		
-		zelda_Rightimage[0] = ss.grabBigImage(1, 2, 60, 60);
-		zelda_Rightimage[1] = ss.grabBigImage(2, 2, 60, 60);
-		zelda_Rightimage[2] = ss.grabBigImage(3, 2, 60, 60);
-		
-		zelda_Frontimage[0] = ss.grabBigImage(1, 3, 60, 60);
-		zelda_Frontimage[1] = ss.grabBigImage(2, 3, 60, 60);
-		zelda_Frontimage[2] = ss.grabBigImage(3, 3, 60, 60);
-		
-		zelda_Backimage[0] = ss.grabBigImage(1, 4, 60, 60);
-		zelda_Backimage[1] = ss.grabBigImage(2, 4, 60, 60);
-		zelda_Backimage[2] = ss.grabBigImage(3, 4, 60, 60);
+//		zelda_Leftimage[0] = ss.grabBigImage(1, 1, 60, 60);
+//		zelda_Leftimage[1] = ss.grabBigImage(2, 1, 60, 60);
+//		zelda_Leftimage[2] = ss.grabBigImage(3, 1, 60, 60);
+//		
+//		zelda_Rightimage[0] = ss.grabBigImage(1, 2, 60, 60);
+//		zelda_Rightimage[1] = ss.grabBigImage(2, 2, 60, 60);
+//		zelda_Rightimage[2] = ss.grabBigImage(3, 2, 60, 60);
+//		
+//		zelda_Frontimage[0] = ss.grabBigImage(1, 3, 60, 60);
+//		zelda_Frontimage[1] = ss.grabBigImage(2, 3, 60, 60);
+//		zelda_Frontimage[2] = ss.grabBigImage(3, 3, 60, 60);
+//		
+//		zelda_Backimage[0] = ss.grabBigImage(1, 4, 60, 60);
+//		zelda_Backimage[1] = ss.grabBigImage(2, 4, 60, 60);
+//		zelda_Backimage[2] = ss.grabBigImage(3, 4, 60, 60);
 		
 		//2 is the speed at which animation starts with
 		animFront = new Animations(2, zelda_Frontimage);
