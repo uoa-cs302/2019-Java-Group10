@@ -19,6 +19,10 @@ import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 
 public class Home extends Canvas {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//Font font;
 	public static JFrame homeFrame;
 	Rectangle rectStart, rectEnd, rectMultiplayer, rectHighscore, rect1, rect2, rect3;
@@ -28,6 +32,7 @@ public class Home extends Canvas {
 	private BufferedImage[] diff2 = new BufferedImage[2];
 	private BufferedImage[] diff3 = new BufferedImage[2]; 
 	public int difficultyLevel = 1;
+	static Home h;
 	
 	//private SpriteSheet ss;
 	//private BufferedImage spriteSheet = null;
@@ -83,7 +88,7 @@ public class Home extends Canvas {
 				//start button input
 				if ((x > rectStart.getX()) && (x < rectStart.getX() + 200) && (y > rectStart.getY()) && (y < rectStart.getY() + 70)) {
 					homeFrame.dispose();
-					new Game();
+					new Game(h);
 				}
 				//multiplayer button input
 				else if ((x > rectMultiplayer.getX()) && (x < rectMultiplayer.getX() + 263) && (y > rectMultiplayer.getY()) && (y < rectMultiplayer.getY() + 55)) {
@@ -117,7 +122,7 @@ public class Home extends Canvas {
 	public static void main(String args []) {
 		//create and set conditions and constraints on home screen JFrame
 		homeFrame = new JFrame("Zelda Reborn");
-		Home h = new Home();
+		h = new Home();
 		homeFrame.setSize(1024, 768);
 		homeFrame.setResizable(false);
 		homeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

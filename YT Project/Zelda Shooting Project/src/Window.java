@@ -1,3 +1,5 @@
+//Almost useless now. Not needed.
+
 import java.awt.Dimension;
 
 import javax.swing.JFrame;

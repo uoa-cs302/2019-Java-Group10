@@ -5,8 +5,10 @@ public class KeyInput extends KeyAdapter {
 
 	Handler handler;
 	Game game;
+	Home h;
 	
 	boolean paused = false;
+	int counter= 0;
 	
 	//dont create new handler as you we want to use handler instance created from before
 	public KeyInput (Handler handler, Game game) {
@@ -27,6 +29,15 @@ public class KeyInput extends KeyAdapter {
 			else {
 				game.start();
 				paused = false;
+			}
+		}
+		
+		if (key == KeyEvent.VK_ESCAPE) {
+			counter++;
+			if(counter==2) {
+				game.frame.dispose();
+				h.main(null);
+				//game.Window.dispose();
 			}
 		}
 		

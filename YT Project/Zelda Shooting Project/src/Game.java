@@ -1,10 +1,13 @@
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.Random;
+
+import javax.swing.JFrame;
 
 //MAIN CLASS BASICALLY. EVRYTHING GETS PUT THROUGH HERE.
 //ALL CLASSES INITIALISED HERE
@@ -14,11 +17,13 @@ public class Game extends Canvas implements Runnable {
 
 	private static final long serialVersionUID = 1L;
 
+	public static JFrame frame;
 	private boolean isRunning = false;
 	private Handler handler;
 	private Thread thread;
 	private Camera camera;
 	public SpriteSheet ss, ss_zelda, ss_spider;
+	private Home home;
 	
 	Random rand = new Random();
 	
@@ -45,10 +50,30 @@ public class Game extends Canvas implements Runnable {
 	
 	//NOTE- Should clear all objects once game ends. Allows for a fresh start on a new game.
 	
-	public Game() {
+	public Game(Home ho) {
+		home =ho;
 		
 		//make new JFrame window with the following input parameters
-		new Window(1024, 768, "Zelda Reborn", this);
+		int w=1024;
+		int h=768;
+		
+		//new Window(1024, 768, "Zelda Reborn", this);
+		//replaced as below
+		
+		//
+		frame = new JFrame("Zelda Reborn");
+		frame.setPreferredSize(new Dimension(w, h));
+		frame.setMaximumSize(new Dimension(w, h));
+		frame.setMinimumSize(new Dimension(w, h));
+		
+		frame.add(this);
+		frame.setResizable(false);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+		//
+		
+		
 		start();
 		
 		handler = new Handler();
