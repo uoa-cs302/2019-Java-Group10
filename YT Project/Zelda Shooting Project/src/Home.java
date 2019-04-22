@@ -135,6 +135,7 @@ public class Home extends Canvas {
 		g.drawImage(highscoreGame, 750, 365, 300, 300, null);
 		g.drawImage(endGame, 705, 440, 300, 300, null);
 		
+		//display correct image for certain difficulty level setting
 		if (difficultyLevel == 1) {
 			g.drawImage(diff1[1], 800, 300, 125, 125, null);	
 		}
