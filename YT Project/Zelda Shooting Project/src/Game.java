@@ -28,7 +28,7 @@ public class Game extends Canvas implements Runnable {
 	Random rand = new Random();
 	
 	//int iDirt = 0, jDirt = 0;
-	boolean dirtTileOnce = true;
+	boolean dirtTile = true;
 	public int powerup = 1;
 	
 	private BufferedImage grass = null, dirt = null;
@@ -52,7 +52,7 @@ public class Game extends Canvas implements Runnable {
 	//NOTE- Should clear all objects once game ends. Allows for a fresh start on a new game.
 	
 	public Game(Home home, int level) {
-		this.home =home;
+		this.home = home;
 		difficulty = home.difficultyLevel;
 		
 		//make new JFrame window with the following input parameters
@@ -121,15 +121,14 @@ public class Game extends Canvas implements Runnable {
 		
 		this.addMouseListener(new MouseInput(handler, camera, this, ss));
 		
-		if(level ==1) {
+		if(level == 1) {
 			loadLevel(level1);
 			levelCounter++;
 		}
-		else if (level==6){
-			levelCounter =6;
+		else if (level == 6){
+			levelCounter = 6;
 			switchLevel(6);
-		}		
-		
+		}
 	}
 	
 	/*
@@ -213,7 +212,8 @@ public class Game extends Canvas implements Runnable {
 		//draws the floor image as the background
 		for (int i = 0; i < 30*72; i += 32) {
 			for (int j = 0; j < 30*72; j +=32) {
-					g.drawImage(grass, i, j, null);	
+					g.drawImage(grass, i, j, null);
+					//g.drawImage(ss.grabImage(2, 1, 32, 32), i, j, null);
 			}
 		}	
 
@@ -426,23 +426,23 @@ public class Game extends Canvas implements Runnable {
 						powerup++;
 					}
 				}
+				
+				//need to fix to remove overlap
+				if (red == 127 && green ==127 && blue==127) {
+					handler.addObj(new DirtTile (i*32, j*32, ID.DirtTile, ss));
+				}
+				
 				if (red == 237 && green ==28 && blue==36) {
 					handler.addObj(new Block(i*32, j*32, ID.Block, ss));
 				}
-//				if (red == 127 && green ==127 && blue==127) {
-//					dirtTile = true;
-//					iDirt = i;
-//					jDirt = j;
-//				}
-//				else {
-//					dirtTile = false;
-//				}
+				
 				if (red == 63 && green == 72 && blue == 204) {
 					handler.addObj(new Zelda(i*32, j*32, ID.Player, handler, this, ss_zelda));
 				}
 				if(red ==34 && green == 177 && blue ==76) {
 					handler.addObj(new Enemy (i*32, j*32, ID.Enemy, handler, ss));
 				}
+				
 				
 				if(red ==163 && green ==73 && blue ==164) {
 					handler.addObj(new EnemySpider (i*32, j*32, ID.EnemySpider, handler, ss_spider));

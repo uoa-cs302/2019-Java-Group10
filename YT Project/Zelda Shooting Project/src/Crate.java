@@ -8,6 +8,7 @@ public class Crate extends GameObject {
 
 	public Crate(int x, int y, ID id, SpriteSheet ss) {
 		super(x, y, id, ss);
+		//based on the ID of powerup/powerdown set, grab the according image from the sprite sheet to render
 		if (id == ID.Crate_healthPlus) {
 			crate_image = ss.grabBigImage(1, 1, 60, 60);
 		}
@@ -32,12 +33,15 @@ public class Crate extends GameObject {
 
 	@Override
 	public void render(Graphics g) {
+		//draw the image of the crate selected
 		g.drawImage(crate_image, x, y, null);
 	}
 
 	@Override
 	public Rectangle getBounds() {
-		return new Rectangle(x,y,32,32);
+		//set a rectangle bounds around the powerup/ powerdown to use for collision detection
+		return new Rectangle(x+12,y+12,32,32);
+		
 	}
 
 }

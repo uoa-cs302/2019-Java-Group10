@@ -89,10 +89,11 @@ public class Home extends Canvas {
 				//start button input
 				if ((x > rectStart.getX()) && (x < rectStart.getX() + 200) && (y > rectStart.getY()) && (y < rectStart.getY() + 70)) {
 					homeFrame.dispose();
-					new Game(h, 1);
+					new Game(h,1);
 				}
 				//multiplayer button input
 				else if ((x > rectMultiplayer.getX()) && (x < rectMultiplayer.getX() + 263) && (y > rectMultiplayer.getY()) && (y < rectMultiplayer.getY() + 55)) {
+					homeFrame.dispose();
 					new Game(h,6);
 				}
 				//highscore button input
@@ -106,16 +107,14 @@ public class Home extends Canvas {
 				//difficulty input
 				else if ((x > rect1.getX()) && (x < rect1.getX() + 42) && (y > rect1.getY()) && (y < rect1.getY() + 42)) {
 					difficultyLevel = 1;
-					repaint();
 				}
 				else if ((x > rect2.getX()) && (x < rect2.getX() + 42) && (y > rect2.getY()) && (y < rect2.getY() + 42)) {
 					difficultyLevel = 2;
-					repaint();
 				}
 				else if ((x > rect3.getX()) && (x < rect3.getX() + 42) && (y > rect3.getY()) && (y < rect3.getY() + 42)) {
 					difficultyLevel = 3;
-					repaint();
 				}
+				repaint();
 			}
 		});	
 	}

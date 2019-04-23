@@ -3,6 +3,7 @@ public enum ID {
 	
 	Player(),
 	Block(),
+	DirtTile(),
 	Crate_healthPlus(), //powerup
 	Crate_healthMinus(), //powerdown
 	Crate_speedPlus(), //powerup
