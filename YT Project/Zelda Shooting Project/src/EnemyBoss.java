@@ -59,7 +59,7 @@ public class EnemyBoss extends GameObject{
 						deltaX = zelda_x - x;
 						deltaY = zelda_y - y;
 						direction = Math.atan2(deltaY,deltaX);
-						speed = game.difficulty +2;
+						speed = game.difficulty +1;
 						
 						velX=  (int) (speed*Math.cos(direction));
 						velY= (int) (speed*Math.sin(direction));
@@ -89,6 +89,7 @@ public class EnemyBoss extends GameObject{
 		
 		if(hp <= 0) {
 			handler.removeObj(this);
+			game.highscore = game.highscore + 20;
 		}
 	}
 

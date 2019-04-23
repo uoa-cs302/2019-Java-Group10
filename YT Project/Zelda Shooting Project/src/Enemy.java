@@ -10,6 +10,7 @@ public class Enemy extends GameObject{
 		
 	Random r = new Random();
 	private Handler handler;
+	private Game game;
 	
 	private BufferedImage[] enemy_image = new BufferedImage[2];
 	Animations anim;
@@ -17,9 +18,10 @@ public class Enemy extends GameObject{
 	int choose = 0;
 	int hp = 100;   //health
 	
-	public Enemy(int x, int y, ID id, Handler handler, SpriteSheet ss) {
+	public Enemy(int x, int y, ID id, Handler handler, SpriteSheet ss, Game game) {
 		super(x, y, id, ss);
 		this.handler = handler;
+		this.game = game;
 		enemy_image[0] = ss.grabImage(5, 3, 32, 32);
 		enemy_image[1] = ss.grabImage(6, 3, 32, 32);
 		
@@ -68,6 +70,7 @@ public class Enemy extends GameObject{
 		
 		if(hp <= 0) {
 			handler.removeObj(this);
+			game.highscore = game.highscore + 10;
 		}
 	}
 

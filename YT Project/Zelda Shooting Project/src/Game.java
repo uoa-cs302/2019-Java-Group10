@@ -31,6 +31,7 @@ public class Game extends Canvas implements Runnable {
 	
 	private BufferedImage grass = null, dirt = null;
 	public BufferedImage level1 = null, level2 = null, levelBoss = null, 
+			levelSpinOff = null,
 			levelMultiplayer = null, levelHunter = null, pause = null, esc = null, mute = null,
 			up = null, right = null, left = null, down = null, mouse = null;
 	private BufferedImage spriteSheet = null;
@@ -39,6 +40,8 @@ public class Game extends Canvas implements Runnable {
 	public int ammo = 100; //100 bullets
 	//100 health
 	public int hp = 100;
+	public int highscore =0;
+	public int finalScore = 0;
 	public int multiplayerHp = 1000;
 	long start, timingValue;
 	long finish = 0;
@@ -89,6 +92,7 @@ public class Game extends Canvas implements Runnable {
 		level2 = loader.loadImage("/zelda_level_2.png");
 		
 		levelBoss = loader.loadImage("/zelda_level_boss.png");
+		levelSpinOff = loader.loadImage("/zelda_level_spinoff.png");
 		levelMultiplayer = loader.loadImage("/zelda_level_multiplayer.png");
 		levelHunter = loader.loadImage("/zelda_level_hunter.png");
 		
@@ -123,6 +127,7 @@ public class Game extends Canvas implements Runnable {
 		if(level == 1) {
 			levelCounter=1;
 			loadLevel(level1);
+			System.out.println(highscore);
 			
 		}
 		else if (level == 6){
@@ -156,6 +161,7 @@ public class Game extends Canvas implements Runnable {
 				hp = 100;
 				levelSwitch =false;
 				//levelCounter++;
+				//System.out.println(highscore);
 				
 			}
 
@@ -166,7 +172,7 @@ public class Game extends Canvas implements Runnable {
 				hp = 100;
 				levelSwitch =false;
 				//levelCounter++;
-				
+				//System.out.println(highscore);
 			}
 
 			//boss Level
@@ -176,17 +182,32 @@ public class Game extends Canvas implements Runnable {
 				hp = 100;
 				levelSwitch =false;
 				//levelCounter++;
-				
+				//System.out.println(highscore);
 			}
 
 			//hunter level
 			else if (levelCounter ==5) {
 				//Game.LEVEL++;
 				switchLevel(5);
+				//extra 1000 points given for making it to the last level
+				highscore=highscore+1000;
 				hp = 100;
 				levelSwitch =false;
+				//System.out.println(highscore);
 			}
+			
+			/* Not working. Remove later.
+			//game over condition after final level
+			else if (levelCounter ==10) {
+				//total score = animals killed score - time taken + game finish bonus
+				finalScore = highscore - (int) (finish+timingValue) + 1000;
+				System.out.println("Score =" + finalScore);
+			}*/
 		}
+		
+		//total score when game is not finished
+		System.out.println(highscore);
+		finalScore = highscore - (int) (finish+timingValue);
 		
 		/*
 		//multiplayer level
@@ -428,7 +449,7 @@ public class Game extends Canvas implements Runnable {
 		
 		//semi-Boss Level
 		if (level == 4) {
-			loadLevel(levelBoss);
+			loadLevel(levelSpinOff);
 		}
 		
 		//Boss-Hunter Level
@@ -505,11 +526,11 @@ public class Game extends Canvas implements Runnable {
 					handler.addObj(new Zelda(i*32, j*32, ID.Player, handler, this, ss_zelda));
 				}
 				if(red ==34 && green == 177 && blue ==76) {
-					handler.addObj(new Enemy (i*32, j*32, ID.Enemy, handler, ss));
+					handler.addObj(new Enemy (i*32, j*32, ID.Enemy, handler, ss, this));
 				}
 				
 				if(red ==163 && green ==73 && blue ==164) {
-					handler.addObj(new EnemySpider (i*32, j*32, ID.EnemySpider, handler, ss_spider));
+					handler.addObj(new EnemySpider (i*32, j*32, ID.EnemySpider, handler, ss_spider, this));
 				}
 				
 				if(red ==255 && green ==127 && blue ==39) {

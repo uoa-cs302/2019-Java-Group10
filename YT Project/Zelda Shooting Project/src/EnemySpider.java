@@ -10,6 +10,7 @@ public class EnemySpider extends GameObject{
 		
 	Random r = new Random();
 	private Handler handler;
+	private Game game;
 	
 	private BufferedImage[] enemy_spider = new BufferedImage[4];
 	Animations anim;
@@ -18,9 +19,10 @@ public class EnemySpider extends GameObject{
 	int hp = 100;   //health
 	boolean collidedBlock = false, collisionZelda = false;
 	
-	public EnemySpider(int x, int y, ID id, Handler handler, SpriteSheet ss) {
+	public EnemySpider(int x, int y, ID id, Handler handler, SpriteSheet ss, Game game) {
 		super(x, y, id, ss);
 		this.handler = handler;
+		this.game = game;
 		enemy_spider[0] = ss.grabBigImage(1, 1, 64, 64);
 		enemy_spider[1] = ss.grabBigImage(2, 1, 64, 64);
 		enemy_spider[2] = ss.grabBigImage(1, 2, 64, 64);
@@ -90,6 +92,7 @@ public class EnemySpider extends GameObject{
 		
 		if(hp <= 0) {
 			handler.removeObj(this);
+			game.highscore = game.highscore + 5;
 		}
 	}
 
