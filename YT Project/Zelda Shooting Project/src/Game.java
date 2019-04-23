@@ -227,9 +227,10 @@ public class Game extends Canvas implements Runnable {
 					g.drawImage(grass, i, j, null);
 			}
 		}
-		g.drawImage(dirt, 50, 50, null);
-		g.drawImage(dirt, 100, 100, null);
-		g.drawImage(dirt, 150, 150, null);
+		
+//		g.drawImage(dirt, 50, 50, null);
+//		g.drawImage(dirt, 100, 100, null);
+//		g.drawImage(dirt, 150, 150, null);
 
 //		if (dirtTileOnce) {
 //			for (int i = 0; i < 20; i++) {
@@ -281,7 +282,7 @@ public class Game extends Canvas implements Runnable {
 			g.drawString("Shoot", 525, 665);
 			
 			
-			 /*
+			 
 			//Powerups and Powerdowns
 			g.setFont(GameFont.getFont("/teen_bold.ttf", 20));
 			g.drawString("Powerups/ Powerdowns", 50, 440);
@@ -297,7 +298,7 @@ public class Game extends Canvas implements Runnable {
 			g.drawString("Speed decreaser", 420, 500);
 			g.drawImage(ss_powerups.grabBigImage(1, 3, 60, 60), 570, 440, null);
 			g.drawString("Ammo", 570, 500);
-			*/
+			
 		}
 		
 		handler.render(g);
