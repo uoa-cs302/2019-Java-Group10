@@ -3,7 +3,11 @@ public enum ID {
 	
 	Player(),
 	Block(),
-	Crate(), //powerup
+	Crate_healthPlus(), //powerup
+	Crate_healthMinus(), //powerdown
+	Crate_speedPlus(), //powerup
+	Crate_speedMinus(), //powerdown
+	Crate_ammoPlus(), //powerup
 	Arrow(), //bullet
 	Enemy(),  //random motion. Lizard?
 	EnemySpider(), //spider enemy. Left to right motion

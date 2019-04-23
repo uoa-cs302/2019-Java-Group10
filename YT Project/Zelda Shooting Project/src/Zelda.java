@@ -4,12 +4,14 @@ import java.awt.image.BufferedImage;
 
 //wizard
 public class Zelda extends GameObject{
-	
+
 	Game game;  //being used to allow for ammo variable to be used here
 	Handler handler;
-	
+
 	Animations animFront, animBack, animRight, animLeft;
-	
+
+	int speedPositive = 5, speedNegative = -5;
+
 	private BufferedImage[] zelda_Leftimage = new BufferedImage[3];
 	private BufferedImage[] zelda_Rightimage = new BufferedImage[3];
 	private BufferedImage[] zelda_Frontimage = new BufferedImage[3];
@@ -19,7 +21,7 @@ public class Zelda extends GameObject{
 		super(x, y, id, ss);
 		this.handler = handler;
 		this.game=game;
-		
+
 		//add the multiple sides of zelda within the cooresponding array
 		for (int i= 0; i < 3; i ++) {
 			zelda_Leftimage[i] = ss.grabBigImage(i+1, 1, 60, 60);
@@ -27,23 +29,23 @@ public class Zelda extends GameObject{
 			zelda_Frontimage[i] = ss.grabBigImage(i+1, 3, 60, 60);
 			zelda_Backimage[i] = ss.grabBigImage(i+1, 4, 60, 60);
 		}
-		
-//		zelda_Leftimage[0] = ss.grabBigImage(1, 1, 60, 60);
-//		zelda_Leftimage[1] = ss.grabBigImage(2, 1, 60, 60);
-//		zelda_Leftimage[2] = ss.grabBigImage(3, 1, 60, 60);
-//		
-//		zelda_Rightimage[0] = ss.grabBigImage(1, 2, 60, 60);
-//		zelda_Rightimage[1] = ss.grabBigImage(2, 2, 60, 60);
-//		zelda_Rightimage[2] = ss.grabBigImage(3, 2, 60, 60);
-//		
-//		zelda_Frontimage[0] = ss.grabBigImage(1, 3, 60, 60);
-//		zelda_Frontimage[1] = ss.grabBigImage(2, 3, 60, 60);
-//		zelda_Frontimage[2] = ss.grabBigImage(3, 3, 60, 60);
-//		
-//		zelda_Backimage[0] = ss.grabBigImage(1, 4, 60, 60);
-//		zelda_Backimage[1] = ss.grabBigImage(2, 4, 60, 60);
-//		zelda_Backimage[2] = ss.grabBigImage(3, 4, 60, 60);
-		
+
+		//		zelda_Leftimage[0] = ss.grabBigImage(1, 1, 60, 60);
+		//		zelda_Leftimage[1] = ss.grabBigImage(2, 1, 60, 60);
+		//		zelda_Leftimage[2] = ss.grabBigImage(3, 1, 60, 60);
+		//		
+		//		zelda_Rightimage[0] = ss.grabBigImage(1, 2, 60, 60);
+		//		zelda_Rightimage[1] = ss.grabBigImage(2, 2, 60, 60);
+		//		zelda_Rightimage[2] = ss.grabBigImage(3, 2, 60, 60);
+		//		
+		//		zelda_Frontimage[0] = ss.grabBigImage(1, 3, 60, 60);
+		//		zelda_Frontimage[1] = ss.grabBigImage(2, 3, 60, 60);
+		//		zelda_Frontimage[2] = ss.grabBigImage(3, 3, 60, 60);
+		//		
+		//		zelda_Backimage[0] = ss.grabBigImage(1, 4, 60, 60);
+		//		zelda_Backimage[1] = ss.grabBigImage(2, 4, 60, 60);
+		//		zelda_Backimage[2] = ss.grabBigImage(3, 4, 60, 60);
+
 		//2 is the speed at which animation starts with
 		animFront = new Animations(2, zelda_Frontimage);
 		animRight = new Animations(2, zelda_Rightimage);
@@ -55,48 +57,48 @@ public class Zelda extends GameObject{
 	public void tick() {
 		x = x + velX;
 		y = y + velY;
-		
+
 		collision();		
-		
+
 		//for each key input -- vel for each direction
 		if (handler.isUp()) {
-			velY = -5;
+			velY = speedNegative;
 			animBack.runAnimation();
 		}
 		//improving lag
 		else if (!handler.isDown()) {
 			velY = 0;
 		}
-		
+
 		if (handler.isDown()) {
-			velY = 5;
+			velY = speedPositive;
 			animFront.runAnimation();
 		}
 		else if (!handler.isUp()) {
 			velY = 0;
 		}
-		
+
 		if (handler.isRight()) {
-			velX = 5;
+			velX = speedPositive;
 			animRight.runAnimation();
 		}
 		else if (!handler.isLeft()) {
 			velX = 0;
 		}
-		
+
 		if (handler.isLeft()) {
-			velX = -5;
+			velX = speedNegative;
 			animLeft.runAnimation();
 		}
 		else if (!handler.isRight()) {
 			velX = 0;
 		}
 	}
-	
+
 	private void collision() {
 		for(int i=0; i< handler.obj.size(); i++) {
 			GameObject temp = handler.obj.get(i);
-			
+
 			if(temp.getId() == ID.Block) {
 				//intersects is an inbuilt function
 				if(getBounds().intersects(temp.getBounds())) {
@@ -104,9 +106,50 @@ public class Zelda extends GameObject{
 					y =y+velY * -1;
 				}
 			}
+
+			//  POWERUP/ POWERDOWN COLLISION
+			if(temp.getId() == ID.Crate_healthPlus) {
+				//intersects is an inbuilt function
+				if(getBounds().intersects(temp.getBounds())) {
+					//extra life powerup
+					if (game.hp < 75) {
+						game.hp += 25;
+					}
+					else {
+						game.hp = 100;
+					}
+					handler.removeObj(temp);
+				}
+			}
 			
-			//change for power-ups/ powerdowns
-			if(temp.getId() == ID.Crate) {
+			if(temp.getId() == ID.Crate_healthMinus) {
+				//intersects is an inbuilt function
+				if(getBounds().intersects(temp.getBounds())) {
+					//lose life - powerdown
+					game.hp -= 25;
+					handler.removeObj(temp);
+				}
+			}
+			
+			if(temp.getId() == ID.Crate_speedPlus) {
+				//intersects is an inbuilt function
+				if(getBounds().intersects(temp.getBounds())) {
+					speedPositive = 10;
+					speedNegative = -10;
+					handler.removeObj(temp);
+				}
+			}
+			
+			if(temp.getId() == ID.Crate_speedMinus) {
+				//intersects is an inbuilt function
+				if(getBounds().intersects(temp.getBounds())) {
+					speedPositive = 2;
+					speedNegative = -2;
+					handler.removeObj(temp);
+				}
+			}
+			
+			if(temp.getId() == ID.Crate_ammoPlus) {
 				//intersects is an inbuilt function
 				if(getBounds().intersects(temp.getBounds())) {
 					game.ammo = game.ammo + 10;
@@ -120,33 +163,33 @@ public class Zelda extends GameObject{
 					game.hp--;
 				}
 			}
-			
+
 			//collision with enemy
 			if(temp.getId() == ID.Enemy) {
 				if(getBounds().intersects(temp.getBounds())) {
 					game.hp--;
 				}
 			}
-			
-			
+
+
 			if(temp.getId() == ID.EnemyBoss) {
 				if(getBounds().intersects(temp.getBounds())) {
 					game.hp--;
 				}
 			}
-			
+
 			if(temp.getId() == ID.EnemyMultiplayer) {
 				if(getBounds().intersects(temp.getBounds())) {
 					game.hp--;
 				}
 			}
-			
+
 			if(temp.getId() == ID.EnemyHunter) {
 				if(getBounds().intersects(temp.getBounds())) {
 					game.hp--;
 				}
 			}
-			
+
 			//checking for HunterArrow
 			if(temp.getId() == ID.ArrowHunter) {
 				if(getBounds().intersects(temp.getBounds())) {

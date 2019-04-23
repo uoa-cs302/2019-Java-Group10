@@ -8,7 +8,21 @@ public class Crate extends GameObject {
 
 	public Crate(int x, int y, ID id, SpriteSheet ss) {
 		super(x, y, id, ss);
-		crate_image = ss.grabImage(1, 3, 32, 32);
+		if (id == ID.Crate_healthPlus) {
+			crate_image = ss.grabBigImage(1, 1, 60, 60);
+		}
+		else if (id == ID.Crate_healthMinus) {
+			crate_image = ss.grabBigImage(2, 1, 60, 60);
+		}
+		else if (id == ID.Crate_speedPlus) {
+			crate_image = ss.grabBigImage(1, 2, 60, 60);
+		}
+		else if (id == ID.Crate_speedMinus) {
+			crate_image = ss.grabBigImage(2, 2, 60, 60);
+		}
+		else if (id == ID.Crate_ammoPlus) {
+			crate_image = ss.grabBigImage(1, 3, 60, 60);
+		}
 	}
 
 	@Override

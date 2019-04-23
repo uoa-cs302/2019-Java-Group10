@@ -22,19 +22,19 @@ public class Game extends Canvas implements Runnable {
 	private Handler handler;
 	private Thread thread;
 	private Camera camera;
-	public SpriteSheet ss, ss_zelda, ss_spider;
+	public SpriteSheet ss, ss_zelda, ss_spider, ss_powerups;
 	private Home home;
 	
 	Random rand = new Random();
 	
 	//int iDirt = 0, jDirt = 0;
 	boolean dirtTileOnce = true;
-	
+	public int powerup = 1;
 	
 	private BufferedImage grass = null, dirt = null;
 	public BufferedImage level1 = null, level2 = null, levelBoss = null, 
 			levelMultiplayer = null, levelHunter = null, pause = null, esc = null,
-			up = null, down = null, right = null, left = null, mouse = null;
+			up = null, down = null, right = null, left = null, mouse = null, mute = null;
 	private BufferedImage spriteSheet = null;
 	
 	//declared here becoz we'll be drawing this out in a later video
@@ -103,6 +103,9 @@ public class Game extends Canvas implements Runnable {
 		spriteSheet = loader.loadImage("/ss_spider.png");
 		ss_spider = new SpriteSheet(spriteSheet);
 		
+		spriteSheet = loader.loadImage("/ss_powerups.png");
+		ss_powerups = new SpriteSheet(spriteSheet);
+		
 		//controls images
 		pause = loader.loadImage("/pause.png");
 		esc = loader.loadImage("/esc.png");
@@ -111,6 +114,7 @@ public class Game extends Canvas implements Runnable {
 		up = loader.loadImage("/up.png");
 		down = loader.loadImage("/down.png");
 		mouse = loader.loadImage("/mouse.png");
+		mute = loader.loadImage("/mute.png");
 		
 		grass = ss.grabImage(3, 3, 32, 32);
 		dirt = ss.grabImage(2, 1, 32, 32);
@@ -232,8 +236,8 @@ public class Game extends Canvas implements Runnable {
 			g.setColor(new Color(211,211,211));
 			g.setFont(GameFont.getFont("/teen_bold.ttf", 20));
 			//storyline
-			g.drawString("Game Storyline:", 50, 740);
-			g.setFont(GameFont.getFont("/teen_bold.ttf", 15));
+			g.drawString("Game Storyline:", 50, 730);
+			g.setFont(GameFont.getFont("/teen.ttf", 15));
 			g.drawString("... your best friend, Link, has been injured and "
 					+ "needs special fruits to survive", 50, 760);
 			g.drawString("After discovering these fruits can only be " + 
@@ -243,22 +247,39 @@ public class Game extends Canvas implements Runnable {
 			g.drawString("you will oppose various animals which you will have to overcome to", 50, 840);
 			g.drawString("unlock a special fruit and to get to the next stage of the forest. Save Link", 50, 860);
 			g.drawString("by collecting all the special fruits before he dies.", 50, 880);
-			g.setFont(GameFont.getFont("/teen_bold.ttf", 20));
 			
 			//Controls
-			g.drawString("Controls", 50, 560);
-			g.setFont(GameFont.getFont("/teen_bold.ttf", 15));
-			g.drawImage(pause, 50, 560, 100, 100, null);
-			g.drawString("Pause", 120, 610);
-			g.drawImage(esc, 50, 610, 100, 100, null);
-			g.drawString("Home", 120, 660);
-			g.drawImage(up, 300, 560, 100, 100, null);
-			g.drawImage(down, 300, 600, 100, 100, null);
-			g.drawImage(right, 340, 600, 100, 100, null);
-			g.drawImage(left, 260, 600, 100, 100, null);
-			g.drawString("Move", 325, 695);
-			g.drawImage(mouse, 500, 585, 100, 100, null);
-			g.drawString("Shoot", 525, 695);
+			g.setFont(GameFont.getFont("/teen_bold.ttf", 20));
+			g.drawString("Controls", 50, 540);
+			g.setFont(GameFont.getFont("/teen.ttf", 15));
+			g.drawImage(pause, 50, 530, 100, 100, null);
+			g.drawString("Pause", 120, 580);
+			g.drawImage(esc, 50, 580, 100, 100, null);
+			g.drawString("Home", 120, 630);
+			g.drawImage(mute, 32, 630, 100, 100, null);
+			g.drawString("Mute", 120, 680);
+			g.drawImage(up, 300, 530, 100, 100, null);
+			g.drawImage(down, 300, 570, 100, 100, null);
+			g.drawImage(right, 340, 570, 100, 100, null);
+			g.drawImage(left, 260, 570, 100, 100, null);
+			g.drawString("Move", 325, 665);
+			g.drawImage(mouse, 500, 555, 100, 100, null);
+			g.drawString("Shoot", 525, 665);
+			
+			//Powerups and Powerdowns
+			g.setFont(GameFont.getFont("/teen_bold.ttf", 20));
+			g.drawString("Powerups/ Powerdowns", 50, 440);
+			g.setFont(GameFont.getFont("/teen.ttf", 15));
+			g.drawImage(ss_powerups.grabBigImage(1, 1, 60, 60), 70, 440, null);
+			g.drawString("Extra Life", 70, 500);
+			g.drawImage(ss_powerups.grabBigImage(2, 1, 60, 60), 180, 440, null);
+			g.drawString("Loss of Life", 170, 500);
+			g.drawImage(ss_powerups.grabBigImage(1, 2, 60, 60), 310, 440, null);
+			g.drawString("Speed booster", 280, 500);	
+			g.drawImage(ss_powerups.grabBigImage(2, 2, 60, 60), 450, 440, null);
+			g.drawString("Speed decreaser", 420, 500);
+			g.drawImage(ss_powerups.grabBigImage(1, 3, 60, 60), 570, 440, null);
+			g.drawString("Ammo", 570, 500);
 		}
 		
 		handler.render(g);
@@ -381,7 +402,29 @@ public class Game extends Canvas implements Runnable {
 				
 				
 				if(red == 153 && green ==217 && blue ==234) {
-					handler.addObj(new Crate (i*32, j*32, ID.Crate, ss));
+					if (powerup == 1) {
+						handler.addObj(new Crate (i*32, j*32, ID.Crate_healthPlus, ss_powerups));
+					}
+					else if (powerup == 2) {
+						handler.addObj(new Crate (i*32, j*32, ID.Crate_healthMinus, ss_powerups));
+					}
+					else if (powerup == 3) {
+						handler.addObj(new Crate (i*32, j*32, ID.Crate_speedPlus, ss_powerups));
+					}
+					else if (powerup == 4) {
+						handler.addObj(new Crate (i*32, j*32, ID.Crate_speedMinus, ss_powerups));
+					}
+					else if (powerup == 5 || powerup == 6) {
+						handler.addObj(new Crate (i*32, j*32, ID.Crate_ammoPlus, ss_powerups));
+					}
+					//handler.addObj(new Crate (i*32, j*32, ID.Crate, ss_powerups, powerup));
+					//alternate between each powerup upon color detection
+					if (powerup == 6) {
+						powerup = 1;
+					}
+					else {
+						powerup++;
+					}
 				}
 				if (red == 237 && green ==28 && blue==36) {
 					handler.addObj(new Block(i*32, j*32, ID.Block, ss));
@@ -482,6 +525,5 @@ public class Game extends Canvas implements Runnable {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-	}
-	
+	}	
 }
