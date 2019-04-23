@@ -6,7 +6,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import java.util.Random;
 
 import javax.swing.JFrame;
 
@@ -78,7 +77,7 @@ public class Game extends Canvas implements Runnable {
 		start();
 		
 		handler = new Handler();
-		camera = new Camera(0, 0);
+		camera = new Camera(0, 0, level);
 		//remove second this if needed
 		this.addKeyListener(new KeyInput(handler, this));
 		
@@ -298,6 +297,7 @@ public class Game extends Canvas implements Runnable {
 		}
 		
 		handler.render(g);
+		
 		
 		g2d.translate(camera.getX(), camera.getY());
 		
