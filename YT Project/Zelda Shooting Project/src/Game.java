@@ -126,17 +126,11 @@ public class Game extends Canvas implements Runnable {
 			
 		}
 		else if (level == 6){
-			switchLevel(6);
 			levelCounter = 6;
+			hp=100;
+			switchLevel(6);
 		}
-	}
-	
-	/*
-	public static void main (String args[]) {
-		new Game();
-	}
-	*/
-	
+	}	
 	
 	//MAIN TICK() METHOD
 	//CONTROL GIVEN TO HANDLER.TICK() HERE WHICH CONTROLS EVERYTHING NOW.
@@ -193,12 +187,14 @@ public class Game extends Canvas implements Runnable {
 			}
 		}
 		
+		/*
 		//multiplayer level
 		if (levelCounter ==6) {
 			//Game.LEVEL++;
 			switchLevel(6);
 			hp = 100;
 		}
+		*/
 		
 		
 	}
@@ -373,6 +369,7 @@ public class Game extends Canvas implements Runnable {
 		//clears the current level before loading the next level
 		handler.clearLevel();
 		
+		//random motion
 		if (level == 2) {
 			loadLevel(level2);
 		}

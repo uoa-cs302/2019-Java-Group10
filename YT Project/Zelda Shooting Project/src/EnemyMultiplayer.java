@@ -15,7 +15,7 @@ public class EnemyMultiplayer extends GameObject{
 	Animations anim;
 	
 	int choose = 0;
-	int hp = 100;   //health
+	int hp = 1000;   //health
 	
 	public EnemyMultiplayer(int x, int y, ID id, Handler handler, SpriteSheet ss) {
 		super(x, y, id, ss);
@@ -34,7 +34,7 @@ public class EnemyMultiplayer extends GameObject{
 		collision();
 		
 		if (handler.isUpM()) {
-			velY = -5;
+			velY = -8;
 		}
 		//improving lag
 		else if (!handler.isDownM()) {
@@ -42,21 +42,21 @@ public class EnemyMultiplayer extends GameObject{
 		}
 		
 		if (handler.isDownM()) {
-			velY = 5;
+			velY = 8;
 		}
 		else if (!handler.isUpM()) {
 			velY = 0;
 		}
 		
 		if (handler.isRightM()) {
-			velX = 5;
+			velX = 8;
 		}
 		else if (!handler.isLeftM()) {
 			velX = 0;
 		}
 		
 		if (handler.isLeftM()) {
-			velX = -5;
+			velX = -8;
 		}
 		else if (!handler.isRightM()) {
 			velX = 0;
