@@ -18,6 +18,7 @@ public class Camera {
 		x = x + (obj.getX() - x - 1024/2) * 0.05f;
 		y = y + (obj.getY() - y - 768/2) * 0.05f;
 		
+		//activate camera for every level except level 6 - multiplayer
 		if(level!=6) {
 			if(x <= 0 ) x=0;
 			//if(x >= 1024+32 ) x=1024+30;
@@ -27,6 +28,7 @@ public class Camera {
 			if(y >= 230) y=230;	
 		}
 		else {
+			//multiplayer level
 			x = 0 ;
 			y = 0 ;
 		}

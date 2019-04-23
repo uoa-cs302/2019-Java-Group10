@@ -160,6 +160,11 @@ public class Zelda extends GameObject{
 			if(temp.getId() == ID.Crate_fruits) {
 				//intersects is an inbuilt function
 				if(getBounds().intersects(temp.getBounds())) {
+					//if the last level is completed, exit the game and return to the home screen for now
+					if (game.levelCounter == 5) {
+						game.frame.dispose();
+						Home.main(null);
+					}
 					game.levelCounter++;
 					game.levelSwitch = true;
 					handler.removeObj(temp);

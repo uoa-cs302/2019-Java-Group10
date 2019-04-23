@@ -31,12 +31,12 @@ public class Game extends Canvas implements Runnable {
 	
 	private BufferedImage grass = null, dirt = null;
 	public BufferedImage level1 = null, level2 = null, levelBoss = null, 
-			levelMultiplayer = null, levelHunter = null, pause = null, esc = null,
-			up = null, down = null, right = null, left = null, mouse = null, mute = null;
+			levelMultiplayer = null, levelHunter = null, pause = null, esc = null, mute = null,
+			up = null, right = null, left = null, down = null, mouse = null;
 	private BufferedImage spriteSheet = null;
 	
 	//declared here becoz we'll be drawing this out in a later video
-	public int ammo =100; //100 bullets
+	public int ammo = 100; //100 bullets
 	//100 health
 	public int hp = 100;
 	long start, timingValue;
@@ -127,6 +127,7 @@ public class Game extends Canvas implements Runnable {
 		else if (level == 6){
 			levelCounter = 6;
 			hp=100;
+			ammo = 500;
 			switchLevel(6);
 		}
 	}	
@@ -307,28 +308,73 @@ public class Game extends Canvas implements Runnable {
 		//health for the game - UI
 		//health box
 		g.setColor(Color.GRAY);
-		g.fillRect(5, 5, 200, 32);
-	
-		//health with colour coordination for specific boundaries
-		if(hp < 50 && hp > 35) {
-			g.setColor(Color.YELLOW);
-		}
-		else if (hp < 35) {
-			g.setColor(Color.RED);
+		if (levelCounter == 6) {
+			//draw health box background for player 1 and player 2
+			g.fillRect(805, 695, 200, 32);
+			g.fillRect(5, 695, 200, 32);
+			
+			
+			//player 2 health
+			if ((EnemyMultiplayer.hp)/10 < 50 && (EnemyMultiplayer.hp)/10 > 35) {
+				g.setColor(Color.YELLOW);
+			}
+			else if ((EnemyMultiplayer.hp)/10 < 35) {
+				g.setColor(Color.RED);
+			}
+			else {
+				g.setColor(Color.GREEN);
+			}
+			g.fillRect(5, 695, (EnemyMultiplayer.hp/5), 32);
+			//outline for the health bar
+			g.setColor(Color.BLACK);
+			g.drawRect(5, 695, 200, 32);
+			
+			
+			
+			//player 1 health
+			if(hp < 50 && hp > 35) {
+				g.setColor(Color.YELLOW);
+			}
+			else if (hp < 35) {
+				g.setColor(Color.RED);
+			}
+			else {
+				g.setColor(Color.GREEN);
+			}
+			g.fillRect(805, 695, hp*2, 32);
+			//outline for the health bar
+			g.setColor(Color.BLACK);
+			g.drawRect(805, 695, 200, 32);
+			
+			
+			//health text for both player 1 and player 2
+			g.setColor(new Color(211,211,211));
+			g.setFont(GameFont.getFont("/teen_bold.ttf", 12));
+			g.drawString("Player 1 Health", 805, 690);
+			g.drawString("Player 2 Health", 5, 690);
 		}
 		else {
-			g.setColor(Color.GREEN);
-		}
-		g.fillRect(5, 5, hp*2, 32);
-		//outline for the health bar
-		g.setColor(Color.BLACK);
-		g.drawRect(5, 5, 200, 32);
-		
-		//Health string
-		g.setColor(new Color(211,211,211));
-		g.setFont(GameFont.getFont("/teen_bold.ttf", 15));
-		g.drawString("Health", 5, 50);
-		
+			g.fillRect(5, 5, 200, 32);
+			//health with colour coordination for specific boundaries
+			if(hp < 50 && hp > 35) {
+				g.setColor(Color.YELLOW);
+			}
+			else if (hp < 35) {
+				g.setColor(Color.RED);
+			}
+			else {
+				g.setColor(Color.GREEN);
+			}
+			g.fillRect(5, 5, hp*2, 32);
+			//outline for the health bar
+			g.setColor(Color.BLACK);
+			g.drawRect(5, 5, 200, 32);
+			
+			//Health string
+			g.setColor(new Color(211,211,211));
+			g.setFont(GameFont.getFont("/teen_bold.ttf", 15));
+			g.drawString("Health", 5, 50);
+		}		
 		
 		//ammo - UI - bottom left corner
 //		g.setColor(new Color(211,211,211));
@@ -471,7 +517,7 @@ public class Game extends Canvas implements Runnable {
 				
 				//pink
 				if(red ==255 && green ==174 && blue ==201) {
-					handler.addObj(new EnemyMultiplayer (i*32, j*32, ID.EnemyMultiplayer, handler, ss));
+					handler.addObj(new EnemyMultiplayer (i*32, j*32, ID.EnemyMultiplayer, handler, this, ss));
 				}
 				
 				if(red ==255 && green ==242 && blue ==0) {

@@ -1,3 +1,5 @@
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -9,19 +11,28 @@ public class EnemyMultiplayer extends GameObject{
 	//ONE ENEMY KEEPS LEAVING FROM THE BOTTOM LEFT OFF MAP. Only one, the rest are working fine.
 		
 	Random r = new Random();
+	public Game game;
 	private Handler handler;
 	
 	private BufferedImage[] enemy_image = new BufferedImage[2];
+	public BufferedImage wInput = null, aInput = null, sInput = null, dInput = null;
 	Animations anim;
 	
 	int choose = 0;
-	int hp = 1000;   //health
+	public static int hp = 1000;   //health
 	
-	public EnemyMultiplayer(int x, int y, ID id, Handler handler, SpriteSheet ss) {
+	public EnemyMultiplayer(int x, int y, ID id, Handler handler, Game game, SpriteSheet ss) {
 		super(x, y, id, ss);
 		this.handler = handler;
+		this.game = game;
 		enemy_image[0] = ss.grabImage(5, 3, 32, 32);
 		enemy_image[1] = ss.grabImage(6, 3, 32, 32);
+		
+		BufferedImageLoader loader = new BufferedImageLoader();
+		wInput = loader.loadImage("/w.png");
+		aInput = loader.loadImage("/a.png");
+		sInput = loader.loadImage("/s.png");
+		dInput = loader.loadImage("/d.png");
 		
 		anim = new Animations(3, enemy_image);
 	}
@@ -169,6 +180,27 @@ public class EnemyMultiplayer extends GameObject{
 
 	@Override
 	public void render(Graphics g) {
+		g.setColor(new Color(211,211,211));
+		g.setFont(new Font("Arial", Font.TRUETYPE_FONT, 17));
+		
+		//draw player 2 controls
+		g.drawImage(wInput, 100, 500, 100, 100, null);
+		g.drawImage(sInput, 100, 540, 100, 100, null);
+		g.drawImage(dInput, 140, 540, 100, 100, null);
+		g.drawImage(aInput, 60, 540, 100, 100, null);
+		g.drawString("Player 2", 115, 640);
+		
+		//draw player 1 controls
+		g.drawImage(game.up, 720, 500, 100, 100, null);
+		g.drawImage(game.down, 720, 540, 100, 100, null);
+		g.drawImage(game.right, 760, 540, 100, 100, null);
+		g.drawImage(game.left, 680, 540, 100, 100, null);
+		g.drawImage(game.mouse, 840, 525, 100, 100, null);
+		g.drawString("Player 1", 790, 640);
+		
+		
+		
+		//draw p2 animations
 		anim.drawAnimation(g, x, y, 0);
 	}
 
