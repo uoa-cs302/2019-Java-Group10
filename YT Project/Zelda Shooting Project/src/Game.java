@@ -6,6 +6,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 
@@ -28,6 +33,8 @@ public class Game extends Canvas implements Runnable {
 	//int iDirt = 0, jDirt = 0;
 	boolean dirtTile = true;
 	public boolean levelSwitch= false;
+	
+	String file = "highscoreStorage.txt";
 	
 	private BufferedImage grass = null, dirt = null;
 	public BufferedImage level1 = null, level2 = null, levelBoss = null, 
@@ -206,7 +213,7 @@ public class Game extends Canvas implements Runnable {
 		}
 		
 		//total score when game is not finished
-		System.out.println(highscore);
+		//System.out.println(highscore);
 		finalScore = highscore - (int) (finish+timingValue);
 		
 		/*
@@ -592,6 +599,59 @@ public class Game extends Canvas implements Runnable {
 		this.isRunning = isRunning;
 	}
 
+	public void highscorePrint() {
+		int hs=0;
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(file));
+			String line = reader.readLine();
+			//System.out.println(line);
+			while (line != null)                 // read the score file line by line
+			{
+				try {
+					int score = Integer.parseInt(line.trim());   // parse each line as an int
+					//System.out.println(score);
+					if (score > hs)                       // and keep track of the largest
+					{ 
+						hs = score; 
+					}
+				} catch (NumberFormatException e1) {
+					// ignore invalid scores
+					//System.err.println("ignoring invalid score: " + line);
+				}
+				line = reader.readLine();
+			}
+			reader.close();
+
+		} catch (IOException ex) {
+			System.err.println("ERROR reading scores from file");
+		}
+		
+		 // display the high score
+	    if (finalScore > hs)
+	    {    
+	        System.out.println("You now have the new high score " + finalScore +
+	        		"! The previous high score was " + hs);
+	    } else if (finalScore == hs) {
+	        System.out.println("You tied the high score!");
+	    } else {
+	        System.out.println("The all time high score was " + hs);
+	    }
+	    
+	    //System.out.println(finalScore);
+	    
+	 // append the last score to the end of the file
+	    try {
+	        BufferedWriter output = new BufferedWriter(new FileWriter(file, true));
+	        output.newLine();
+	        output.append("" + finalScore);
+	        output.close();
+
+	    } catch (IOException ex1) {
+	        System.out.printf("ERROR writing score to file: %s\n", ex1);
+	    }
+	}
+
+	
 	//was private before
 	public void start() {
 		isRunning = true;

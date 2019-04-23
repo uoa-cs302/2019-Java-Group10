@@ -35,8 +35,10 @@ public class KeyInput extends KeyAdapter {
 		if (key == KeyEvent.VK_ESCAPE) {
 			counter++;
 			if(counter==2) {
+				game.highscorePrint();
 				game.frame.dispose();
 				Home.main(null);
+				game.stop();
 				//game.Window.dispose();
 			}
 		}
