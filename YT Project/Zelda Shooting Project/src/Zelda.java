@@ -157,6 +157,16 @@ public class Zelda extends GameObject{
 				}
 			}
 			
+			if(temp.getId() == ID.Crate_fruits) {
+				//intersects is an inbuilt function
+				if(getBounds().intersects(temp.getBounds())) {
+					game.levelCounter++;
+					game.levelSwitch = true;
+					handler.removeObj(temp);
+				}
+			}
+		
+			
 			//collision with spider enemy
 			if(temp.getId() == ID.EnemySpider) {
 				if(getBounds().intersects(temp.getBounds())) {

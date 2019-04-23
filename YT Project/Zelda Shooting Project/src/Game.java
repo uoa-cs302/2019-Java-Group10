@@ -1,6 +1,7 @@
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
@@ -25,11 +26,9 @@ public class Game extends Canvas implements Runnable {
 	public SpriteSheet ss, ss_zelda, ss_spider, ss_powerups;
 	private Home home;
 	
-	Random rand = new Random();
-	
 	//int iDirt = 0, jDirt = 0;
 	boolean dirtTile = true;
-	public int powerup = 1;
+	public boolean levelSwitch= false;
 	
 	private BufferedImage grass = null, dirt = null;
 	public BufferedImage level1 = null, level2 = null, levelBoss = null, 
@@ -46,7 +45,7 @@ public class Game extends Canvas implements Runnable {
 	//long totalTime = 0;
 	
 	//should start from 1. Kept at 5 to skip levels for now.
-	int levelCounter=1;
+	int levelCounter;
 	int difficulty=1;
 	
 	//NOTE- Should clear all objects once game ends. Allows for a fresh start on a new game.
@@ -122,12 +121,13 @@ public class Game extends Canvas implements Runnable {
 		this.addMouseListener(new MouseInput(handler, camera, this, ss));
 		
 		if(level == 1) {
+			levelCounter=1;
 			loadLevel(level1);
-			levelCounter++;
+			
 		}
 		else if (level == 6){
-			levelCounter = 6;
 			switchLevel(6);
+			levelCounter = 6;
 		}
 	}
 	
@@ -151,38 +151,50 @@ public class Game extends Canvas implements Runnable {
 		
 		handler.tick();
 		
-		//change level is health = 0;
-		if (hp <= 0 && levelCounter ==2) {
-			//Game.LEVEL++;
-			switchLevel(2);
-			hp = 100;
-			levelCounter++;
-		}
-		
-		if (hp <= 0 && levelCounter ==3) {
-			//Game.LEVEL++;
-			switchLevel(3);
-			hp = 100;
-			levelCounter++;
-		}
-		
-		//boss Level
-		if (hp <= 0 && levelCounter ==4) {
-			//Game.LEVEL++;
-			switchLevel(4);
-			hp = 100;
-			levelCounter++;
-		}
-		
-		//hunter level
-		if (hp <= 0 && levelCounter ==5) {
-			//Game.LEVEL++;
-			switchLevel(5);
-			hp = 100;
+
+		if(levelSwitch ==true) {
+
+			//change level is health = 0;
+			if (levelCounter ==2) {
+				//Game.LEVEL++;
+				switchLevel(2);
+				hp = 100;
+				levelSwitch =false;
+				//levelCounter++;
+				
+			}
+
+
+			else if (levelCounter ==3) {
+				//Game.LEVEL++;
+				switchLevel(3);
+				hp = 100;
+				levelSwitch =false;
+				//levelCounter++;
+				
+			}
+
+			//boss Level
+			else if (levelCounter ==4) {
+				//Game.LEVEL++;
+				switchLevel(4);
+				hp = 100;
+				levelSwitch =false;
+				//levelCounter++;
+				
+			}
+
+			//hunter level
+			else if (levelCounter ==5) {
+				//Game.LEVEL++;
+				switchLevel(5);
+				hp = 100;
+				levelSwitch =false;
+			}
 		}
 		
 		//multiplayer level
-		if (hp <= 0 && levelCounter ==6) {
+		if (levelCounter ==6) {
 			//Game.LEVEL++;
 			switchLevel(6);
 			hp = 100;
@@ -213,10 +225,11 @@ public class Game extends Canvas implements Runnable {
 		for (int i = 0; i < 30*72; i += 32) {
 			for (int j = 0; j < 30*72; j +=32) {
 					g.drawImage(grass, i, j, null);
-					//g.drawImage(ss.grabImage(2, 1, 32, 32), i, j, null);
 			}
-		}	
-
+		}
+		g.drawImage(dirt, 50, 50, null);
+		g.drawImage(dirt, 100, 100, null);
+		g.drawImage(dirt, 150, 150, null);
 
 //		if (dirtTileOnce) {
 //			for (int i = 0; i < 20; i++) {
@@ -224,20 +237,20 @@ public class Game extends Canvas implements Runnable {
 //			}
 //			dirtTileOnce = false;
 //		}
-
 //		if (dirtTile) {
 //			g.drawImage(dirt, iDirt, jDirt, null);
 //		}
 		
 		
 		//TUTORIAL (game instructions)
-		if (levelCounter == 2) {
+		if (levelCounter == 1) {
 			//grey colour used for font input
 			g.setColor(new Color(211,211,211));
 			g.setFont(GameFont.getFont("/teen_bold.ttf", 20));
 			//storyline
 			g.drawString("Game Storyline:", 50, 730);
-			g.setFont(GameFont.getFont("/teen.ttf", 15));
+			//g.setFont(GameFont.getFont("/teen.ttf", 15));
+			g.setFont(new Font("Arial", Font.TRUETYPE_FONT, 17));
 			g.drawString("... your best friend, Link, has been injured and "
 					+ "needs special fruits to survive", 50, 760);
 			g.drawString("After discovering these fruits can only be " + 
@@ -251,13 +264,14 @@ public class Game extends Canvas implements Runnable {
 			//Controls
 			g.setFont(GameFont.getFont("/teen_bold.ttf", 20));
 			g.drawString("Controls", 50, 540);
-			g.setFont(GameFont.getFont("/teen.ttf", 15));
+			//g.setFont(GameFont.getFont("/teen.ttf", 15));
+			g.setFont(new Font("Arial", Font.TRUETYPE_FONT, 17));
 			g.drawImage(pause, 50, 530, 100, 100, null);
-			g.drawString("Pause", 120, 580);
+			g.drawString("   - Pause", 120, 585);
 			g.drawImage(esc, 50, 580, 100, 100, null);
-			g.drawString("Home", 120, 630);
+			g.drawString("x2  - Home", 105, 635);
 			g.drawImage(mute, 32, 630, 100, 100, null);
-			g.drawString("Mute", 120, 680);
+			g.drawString("   - Mute", 120, 685);
 			g.drawImage(up, 300, 530, 100, 100, null);
 			g.drawImage(down, 300, 570, 100, 100, null);
 			g.drawImage(right, 340, 570, 100, 100, null);
@@ -266,10 +280,13 @@ public class Game extends Canvas implements Runnable {
 			g.drawImage(mouse, 500, 555, 100, 100, null);
 			g.drawString("Shoot", 525, 665);
 			
+			
+			 /*
 			//Powerups and Powerdowns
 			g.setFont(GameFont.getFont("/teen_bold.ttf", 20));
 			g.drawString("Powerups/ Powerdowns", 50, 440);
-			g.setFont(GameFont.getFont("/teen.ttf", 15));
+			//g.setFont(GameFont.getFont("/teen.ttf", 15));
+			g.setFont(new Font("Arial", Font.TRUETYPE_FONT, 17));
 			g.drawImage(ss_powerups.grabBigImage(1, 1, 60, 60), 70, 440, null);
 			g.drawString("Extra Life", 70, 500);
 			g.drawImage(ss_powerups.grabBigImage(2, 1, 60, 60), 180, 440, null);
@@ -280,6 +297,7 @@ public class Game extends Canvas implements Runnable {
 			g.drawString("Speed decreaser", 420, 500);
 			g.drawImage(ss_powerups.grabBigImage(1, 3, 60, 60), 570, 440, null);
 			g.drawString("Ammo", 570, 500);
+			*/
 		}
 		
 		handler.render(g);
@@ -375,7 +393,7 @@ public class Game extends Canvas implements Runnable {
 			loadLevel(levelHunter);
 		}
 
-		//Hunter Level
+		//multiplayer Level
 		if (level == 6) {
 			loadLevel(levelMultiplayer);
 		}
@@ -401,36 +419,38 @@ public class Game extends Canvas implements Runnable {
 				//Rn, just working off guess limits.
 				
 				
-				if(red == 153 && green ==217 && blue ==234) {
-					if (powerup == 1) {
-						handler.addObj(new Crate (i*32, j*32, ID.Crate_healthPlus, ss_powerups));
-					}
-					else if (powerup == 2) {
-						handler.addObj(new Crate (i*32, j*32, ID.Crate_healthMinus, ss_powerups));
-					}
-					else if (powerup == 3) {
-						handler.addObj(new Crate (i*32, j*32, ID.Crate_speedPlus, ss_powerups));
-					}
-					else if (powerup == 4) {
-						handler.addObj(new Crate (i*32, j*32, ID.Crate_speedMinus, ss_powerups));
-					}
-					else if (powerup == 5 || powerup == 6) {
-						handler.addObj(new Crate (i*32, j*32, ID.Crate_ammoPlus, ss_powerups));
-					}
-					//handler.addObj(new Crate (i*32, j*32, ID.Crate, ss_powerups, powerup));
-					//alternate between each powerup upon color detection
-					if (powerup == 6) {
-						powerup = 1;
-					}
-					else {
-						powerup++;
-					}
+				//select powerups, powerdowns and special fruit on color detection
+				//maroon colour
+				if(red == 136 && green == 0 && blue == 21) {
+					handler.addObj(new Crate (i*32, j*32, ID.Crate_ammoPlus, ss_powerups, levelCounter));
+				}
+				//gold - light orange
+				if(red == 255 && green == 201 && blue == 14) {
+					handler.addObj(new Crate (i*32, j*32, ID.Crate_healthMinus, ss_powerups, levelCounter));
+				}
+				//light purple
+				if(red == 200 && green == 191 && blue == 231) {
+					handler.addObj(new Crate (i*32, j*32, ID.Crate_healthPlus, ss_powerups, levelCounter));
+				}
+				//light blue
+				if(red == 153 && green == 217 && blue == 234) {
+					handler.addObj(new Crate (i*32, j*32, ID.Crate_speedPlus, ss_powerups, levelCounter));
+				}
+				//medium blue
+				if(red == 0 && green == 162 && blue == 232) {
+					handler.addObj(new Crate (i*32, j*32, ID.Crate_speedMinus, ss_powerups, levelCounter));
+				}
+				//special fruit - brown
+				if(red == 185 && green == 122 && blue == 87) {
+					handler.addObj(new Crate (i*32, j*32, ID.Crate_fruits, ss, levelCounter));
 				}
 				
+				
+				
 				//need to fix to remove overlap
-				if (red == 127 && green ==127 && blue==127) {
-					handler.addObj(new DirtTile (i*32, j*32, ID.DirtTile, ss));
-				}
+//				if (red == 127 && green ==127 && blue==127) {
+//					handler.addObj(new DirtTile (i*32, j*32, ID.DirtTile, ss));
+//				}
 				
 				if (red == 237 && green ==28 && blue==36) {
 					handler.addObj(new Block(i*32, j*32, ID.Block, ss));
@@ -443,7 +463,6 @@ public class Game extends Canvas implements Runnable {
 					handler.addObj(new Enemy (i*32, j*32, ID.Enemy, handler, ss));
 				}
 				
-				
 				if(red ==163 && green ==73 && blue ==164) {
 					handler.addObj(new EnemySpider (i*32, j*32, ID.EnemySpider, handler, ss_spider));
 				}
@@ -452,6 +471,7 @@ public class Game extends Canvas implements Runnable {
 					handler.addObj(new EnemyBoss (i*32, j*32, ID.EnemyBoss, handler, ss, this));
 				}
 				
+				//pink
 				if(red ==255 && green ==174 && blue ==201) {
 					handler.addObj(new EnemyMultiplayer (i*32, j*32, ID.EnemyMultiplayer, handler, ss));
 				}

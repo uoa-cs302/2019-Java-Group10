@@ -9,6 +9,7 @@ public enum ID {
 	Crate_speedPlus(), //powerup
 	Crate_speedMinus(), //powerdown
 	Crate_ammoPlus(), //powerup
+	Crate_fruits(),
 	Arrow(), //bullet
 	Enemy(),  //random motion. Lizard?
 	EnemySpider(), //spider enemy. Left to right motion

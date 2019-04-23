@@ -6,7 +6,7 @@ public class Crate extends GameObject {
 	
 	private BufferedImage crate_image;
 
-	public Crate(int x, int y, ID id, SpriteSheet ss) {
+	public Crate(int x, int y, ID id, SpriteSheet ss, int level) {
 		super(x, y, id, ss);
 		//based on the ID of powerup/powerdown set, grab the according image from the sprite sheet to render
 		if (id == ID.Crate_healthPlus) {
@@ -23,6 +23,25 @@ public class Crate extends GameObject {
 		}
 		else if (id == ID.Crate_ammoPlus) {
 			crate_image = ss.grabBigImage(1, 3, 60, 60);
+		}
+		
+		if (id == ID.Crate_fruits) {
+			if (level == 1) {
+				crate_image = ss.grabImage(4, 4, 32, 32);	
+			}
+			//need to modify
+			if (level == 2){
+				crate_image = ss.grabImage(4, 4, 32, 32);
+			}
+			else if (level == 3){
+				crate_image = ss.grabImage(4, 4, 32, 32);
+			}
+			else if (level == 4){
+				crate_image = ss.grabImage(4, 4, 32, 32);
+			}
+			else if (level == 5){
+				crate_image = ss.grabImage(4, 4, 32, 32);
+			}
 		}
 	}
 
