@@ -19,7 +19,7 @@ public class EnemyMultiplayer extends GameObject{
 	Animations anim;
 	
 	int choose = 0;
-	public static int hp = 1000;   //health
+	//public int hp = game.multiplayerHp;   //health
 	
 	public EnemyMultiplayer(int x, int y, ID id, Handler handler, Game game, SpriteSheet ss) {
 		super(x, y, id, ss);
@@ -105,7 +105,7 @@ public class EnemyMultiplayer extends GameObject{
 		
 		anim.runAnimation();
 		
-		if(hp <= 0) {
+		if(game.multiplayerHp <= 0) {
 			handler.removeObj(this);
 		}
 	}
@@ -126,7 +126,7 @@ public class EnemyMultiplayer extends GameObject{
 			if(temp.getId() == ID.Arrow) {
 				if(getBounds().intersects(temp.getBounds())) {
 					//if health=100, then it takes 2 shots for enemy to die
-					hp = hp-50;
+					game.multiplayerHp = game.multiplayerHp-50;
 					handler.removeObj(temp);
 				}
 				

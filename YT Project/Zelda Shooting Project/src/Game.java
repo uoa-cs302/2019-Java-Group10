@@ -39,6 +39,7 @@ public class Game extends Canvas implements Runnable {
 	public int ammo = 100; //100 bullets
 	//100 health
 	public int hp = 100;
+	public int multiplayerHp = 1000;
 	long start, timingValue;
 	long finish = 0;
 	//long totalTime = 0;
@@ -315,16 +316,16 @@ public class Game extends Canvas implements Runnable {
 			
 			
 			//player 2 health
-			if ((EnemyMultiplayer.hp)/10 < 50 && (EnemyMultiplayer.hp)/10 > 35) {
+			if ((multiplayerHp)/10 < 50 && (multiplayerHp)/10 > 35) {
 				g.setColor(Color.YELLOW);
 			}
-			else if ((EnemyMultiplayer.hp)/10 < 35) {
+			else if ((multiplayerHp)/10 <= 35) {
 				g.setColor(Color.RED);
 			}
 			else {
 				g.setColor(Color.GREEN);
 			}
-			g.fillRect(5, 695, (EnemyMultiplayer.hp/5), 32);
+			g.fillRect(5, 695, (multiplayerHp/5), 32);
 			//outline for the health bar
 			g.setColor(Color.BLACK);
 			g.drawRect(5, 695, 200, 32);
@@ -335,7 +336,7 @@ public class Game extends Canvas implements Runnable {
 			if(hp < 50 && hp > 35) {
 				g.setColor(Color.YELLOW);
 			}
-			else if (hp < 35) {
+			else if (hp <= 35) {
 				g.setColor(Color.RED);
 			}
 			else {
@@ -350,8 +351,8 @@ public class Game extends Canvas implements Runnable {
 			//health text for both player 1 and player 2
 			g.setColor(new Color(211,211,211));
 			g.setFont(GameFont.getFont("/teen_bold.ttf", 12));
-			g.drawString("Player 1 Health", 805, 690);
-			g.drawString("Player 2 Health", 5, 690);
+			g.drawString("Player 1 Health", 805, 695);
+			g.drawString("Player 2 Health", 5, 695);
 		}
 		else {
 			g.fillRect(5, 5, 200, 32);
@@ -359,7 +360,7 @@ public class Game extends Canvas implements Runnable {
 			if(hp < 50 && hp > 35) {
 				g.setColor(Color.YELLOW);
 			}
-			else if (hp < 35) {
+			else if (hp <= 35) {
 				g.setColor(Color.RED);
 			}
 			else {
