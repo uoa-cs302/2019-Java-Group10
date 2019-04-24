@@ -147,8 +147,7 @@ public class Game extends Canvas implements Runnable {
 		if(level == 1) {
 			levelCounter=1;
 			loadLevel(level1);
-			System.out.println(highscore);
-			new EndGame(this);
+			//new EndGame(this);
 			
 		}
 		else if (level == 6){
@@ -481,12 +480,17 @@ public class Game extends Canvas implements Runnable {
 		}
 		
 		if(countdownFlag) {
-//			g.drawString("Time:  " + (countdownTimer/60) + " minutes " + 
-//					(countdownTimer%60) + " seconds", 400, 50);
-			g.drawString((countdownTimer/60) + ":" + (countdownTimer%60), 475, 40);
+			if(countdownTimer%60 < 10) {
+				g.drawString("Time:  " + (countdownTimer/60) + " minutes " + 
+						"0" + (countdownTimer%60) + " seconds", 400, 50);
+			}
+			else {
+				g.drawString("Time:  " + (countdownTimer/60) + " minutes " + 
+						(countdownTimer%60) + " seconds", 400, 50);
+			}
 		}
 		else {
-//			g.drawString("Time: 5 minutes finished", 400, 50);
+			g.drawString("Time: 5 minutes finished", 400, 50);
 		}
 		
 		
@@ -506,7 +510,7 @@ public class Game extends Canvas implements Runnable {
 		}
 		
 		if (level == 3) {
-			//loading level 2 here. Change to Level 3 when its set up.
+			//boss level
 			loadLevel(levelBoss);
 		}
 		
