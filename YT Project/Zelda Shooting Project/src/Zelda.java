@@ -12,7 +12,7 @@ public class Zelda extends GameObject{
 
 	Animations animFront, animBack, animRight, animLeft;
 
-	int speedPositive = 3, speedNegative = -3;
+	int speedPositive = 4, speedNegative = -4;
 
 	private BufferedImage[] zelda_Leftimage = new BufferedImage[3];
 	private BufferedImage[] zelda_Rightimage = new BufferedImage[3];

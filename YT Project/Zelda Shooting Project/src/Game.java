@@ -37,7 +37,7 @@ public class Game extends Canvas implements Runnable {
 	
 	String file = "highscoreStorage.txt";
 	
-	private BufferedImage grass = null, dirt = null;
+	public BufferedImage grass = null, dirt = null;
 	public BufferedImage level1 = null, level2 = null, levelBoss = null, 
 			levelSpinOff = null,
 			levelMultiplayer = null, levelHunter = null, pause = null, esc = null, mute = null,
@@ -148,6 +148,7 @@ public class Game extends Canvas implements Runnable {
 			levelCounter=1;
 			loadLevel(level1);
 			System.out.println(highscore);
+			new EndGame(this);
 			
 		}
 		else if (level == 6){
@@ -480,11 +481,12 @@ public class Game extends Canvas implements Runnable {
 		}
 		
 		if(countdownFlag) {
-			g.drawString("Time:  " + (countdownTimer/60) + " minutes " + 
-					(countdownTimer%60) + " seconds", 400, 50);
+//			g.drawString("Time:  " + (countdownTimer/60) + " minutes " + 
+//					(countdownTimer%60) + " seconds", 400, 50);
+			g.drawString((countdownTimer/60) + ":" + (countdownTimer%60), 475, 40);
 		}
 		else {
-			g.drawString("Time: 5 minutes finished", 400, 50);
+//			g.drawString("Time: 5 minutes finished", 400, 50);
 		}
 		
 		
