@@ -133,7 +133,7 @@ public class Home extends Canvas {
 		homeFrame.add(h);
 		
 		//start background music
-		new Sound("/forest.wav", true);
+		//new Sound("/forest.wav", true);
 	}
 
 	public void paint (Graphics g) {

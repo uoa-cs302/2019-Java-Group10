@@ -33,6 +33,7 @@ public class Game extends Canvas implements Runnable {
 	//int iDirt = 0, jDirt = 0;
 	boolean dirtTile = true;
 	public boolean levelSwitch= false;
+	boolean countdownFlag = true;
 	
 	String file = "highscoreStorage.txt";
 	
@@ -471,7 +472,21 @@ public class Game extends Canvas implements Runnable {
 		g.setColor(new Color(211,211,211));
 		
 		//game time
-		g.drawString("Time: " + (finish+timingValue) + "sec", 450, 50);
+		int timeForScore = (int) (finish + timingValue);
+		int countdownTimer = 300 - timeForScore;
+		
+		if (countdownTimer == 0) {
+			countdownFlag = false;
+		}
+		
+		if(countdownFlag) {
+			g.drawString("Time:  " + (countdownTimer/60) + " minutes " + 
+					(countdownTimer%60) + " seconds", 400, 50);
+		}
+		else {
+			g.drawString("Time: 5 minutes finished", 400, 50);
+		}
+		
 		
 		
 		g.dispose();

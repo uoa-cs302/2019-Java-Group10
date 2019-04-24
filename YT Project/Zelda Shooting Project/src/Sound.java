@@ -17,7 +17,9 @@ public class Sound {
 	        clip.open(inputStream);
 	        //loop music only if music is true
 	        if (backgroundMusic == true) {
-	        	clip.loop(clip.LOOP_CONTINUOUSLY);
+	        	//clip.loop(clip.LOOP_CONTINUOUSLY);
+	        	//changed to Static call
+	        	clip.loop(Clip.LOOP_CONTINUOUSLY);
 	        }
 	        else {
 	        	clip.start();
