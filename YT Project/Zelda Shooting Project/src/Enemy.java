@@ -12,8 +12,12 @@ public class Enemy extends GameObject{
 	private Handler handler;
 	private Game game;
 	
-	private BufferedImage[] enemy_image = new BufferedImage[2];
-	Animations anim;
+	private BufferedImage[] enemy_imageFront = new BufferedImage[3];
+	private BufferedImage[] enemy_imageRight = new BufferedImage[3];
+	private BufferedImage[] enemy_imageLeft = new BufferedImage[3];
+	private BufferedImage[] enemy_imageBack = new BufferedImage[3];
+	
+	Animations animFront, animRight, animLeft, animBack, anim;
 	
 	int choose = 0;
 	int hp = 100;   //health
@@ -22,10 +26,19 @@ public class Enemy extends GameObject{
 		super(x, y, id, ss);
 		this.handler = handler;
 		this.game = game;
-		enemy_image[0] = ss.grabImage(5, 3, 32, 32);
-		enemy_image[1] = ss.grabImage(6, 3, 32, 32);
 		
-		anim = new Animations(3, enemy_image);
+		//load each angle of the enemy animal into its corresponding angle array
+		for (int i = 0; i < 3; i ++) {
+			enemy_imageFront[i] = ss.grabMediumImage(i+1, 1, 50, 50);
+			enemy_imageLeft[i] = ss.grabMediumImage(i+1, 2, 50, 50);
+			enemy_imageRight[i] = ss.grabMediumImage(i+1, 3, 50, 50);
+			enemy_imageBack[i] = ss.grabMediumImage(i+1, 4, 50, 50);
+		}
+		
+		animFront = new Animations(3, enemy_imageFront);
+		animRight = new Animations(3, enemy_imageRight);
+		animLeft = new Animations(3, enemy_imageLeft);
+		animBack = new Animations(3, enemy_imageBack);
 	}
 
 	@Override
@@ -52,7 +65,22 @@ public class Enemy extends GameObject{
 				else if(choose == 0) {
 					//velocity range of -3 to 3
 					velX = (r.nextInt(6) + -3);
+					
+					if (velX < 0) {
+						animLeft.runAnimation();
+					}
+					else {
+						animRight.runAnimation();
+					}
+					
 					velY = (r.nextInt(6) + -3);
+				
+					if (velY < 0) {
+						animBack.runAnimation();
+					}
+					else {
+						animFront.runAnimation();
+					}
 				}
 			}
 			
@@ -66,8 +94,6 @@ public class Enemy extends GameObject{
 			}
 		}
 		
-		anim.runAnimation();
-		
 		if(hp <= 0) {
 			handler.removeObj(this);
 			game.highscore = game.highscore + 10;
@@ -76,7 +102,26 @@ public class Enemy extends GameObject{
 
 	@Override
 	public void render(Graphics g) {
-		anim.drawAnimation(g, x, y, 0);
+		if (velX == 0 && velY == 0) {
+			g.drawImage(enemy_imageFront[0], x, y, null);
+		}
+		//else draw the animation of the direction the character is moving in
+		else if (velX > 0) {
+			animRight.drawAnimation(g, x, y, 0);
+		}
+		else if (velX < 0) {
+			animLeft.drawAnimation(g, x, y, 0);
+		}
+		else if (velY > 0) {
+			animFront.drawAnimation(g, x, y, 0);
+		}
+		else if (velY < 0) {
+			animBack.drawAnimation(g, x, y, 0);
+		}
+		//in the case no if condition is met, draw front animation
+		else {
+			animFront.drawAnimation(g, x, y, 0);
+		}
 	}
 
 	

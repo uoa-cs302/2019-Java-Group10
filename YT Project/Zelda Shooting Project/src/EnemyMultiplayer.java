@@ -9,14 +9,20 @@ public class EnemyMultiplayer extends GameObject{
 
 	
 	//ONE ENEMY KEEPS LEAVING FROM THE BOTTOM LEFT OFF MAP. Only one, the rest are working fine.
+	//Enemy also goes under the tutorial controls....
 		
 	Random r = new Random();
 	public Game game;
 	private Handler handler;
 	
-	private BufferedImage[] enemy_image = new BufferedImage[2];
+	private BufferedImage[] multiplayer_imageFront = new BufferedImage[2];
+	private BufferedImage[] multiplayer_imageRight = new BufferedImage[2];
+	private BufferedImage[] multiplayer_imageLeft = new BufferedImage[2];
+	private BufferedImage[] multiplayer_imageBack = new BufferedImage[2];
+
 	public BufferedImage wInput = null, aInput = null, sInput = null, dInput = null;
-	Animations anim;
+	
+	Animations animFront, animRight, animLeft, animBack;
 	
 	int choose = 0;
 	//public int hp = game.multiplayerHp;   //health
@@ -25,16 +31,24 @@ public class EnemyMultiplayer extends GameObject{
 		super(x, y, id, ss);
 		this.handler = handler;
 		this.game = game;
-		enemy_image[0] = ss.grabImage(5, 3, 32, 32);
-		enemy_image[1] = ss.grabImage(6, 3, 32, 32);
+		
+		for (int i = 0; i < 2; i ++) {
+			multiplayer_imageFront[i] = ss.grabMediumImage(i+1, 1, 50, 50);
+			multiplayer_imageRight[i] = ss.grabMediumImage(i+1, 2, 50, 50);
+			multiplayer_imageBack[i] = ss.grabMediumImage(i+3, 1, 50, 50);
+			multiplayer_imageLeft[i] = ss.grabMediumImage(i+3, 2, 50, 50);
+		}
+		
+		animFront = new Animations(2, multiplayer_imageFront);
+		animRight = new Animations(2, multiplayer_imageRight);
+		animLeft = new Animations(2, multiplayer_imageLeft);
+		animBack = new Animations(2, multiplayer_imageBack);
 		
 		BufferedImageLoader loader = new BufferedImageLoader();
 		wInput = loader.loadImage("/w.png");
 		aInput = loader.loadImage("/a.png");
 		sInput = loader.loadImage("/s.png");
 		dInput = loader.loadImage("/d.png");
-		
-		anim = new Animations(3, enemy_image);
 	}
 
 	@Override
@@ -46,6 +60,7 @@ public class EnemyMultiplayer extends GameObject{
 		
 		if (handler.isUpM()) {
 			velY = -8;
+			animBack.runAnimation();
 		}
 		//improving lag
 		else if (!handler.isDownM()) {
@@ -54,6 +69,7 @@ public class EnemyMultiplayer extends GameObject{
 		
 		if (handler.isDownM()) {
 			velY = 8;
+			animFront.runAnimation();
 		}
 		else if (!handler.isUpM()) {
 			velY = 0;
@@ -61,6 +77,7 @@ public class EnemyMultiplayer extends GameObject{
 		
 		if (handler.isRightM()) {
 			velX = 8;
+			animRight.runAnimation();
 		}
 		else if (!handler.isLeftM()) {
 			velX = 0;
@@ -68,6 +85,7 @@ public class EnemyMultiplayer extends GameObject{
 		
 		if (handler.isLeftM()) {
 			velX = -8;
+			animLeft.runAnimation();
 		}
 		else if (!handler.isRightM()) {
 			velX = 0;
@@ -102,8 +120,6 @@ public class EnemyMultiplayer extends GameObject{
 			
 			
 		//}
-		
-		anim.runAnimation();
 		
 		if(game.multiplayerHp <= 0) {
 			handler.removeObj(this);
@@ -198,10 +214,27 @@ public class EnemyMultiplayer extends GameObject{
 		g.drawImage(game.mouse, 840, 525, 100, 100, null);
 		g.drawString("Player 1", 790, 640);
 		
-		
-		
 		//draw p2 animations
-		anim.drawAnimation(g, x, y, 0);
+		if (velX == 0 && velY == 0) {
+			g.drawImage(multiplayer_imageFront[0], x, y, null);
+		}
+		//else draw the animation of the direction the character is moving in
+		else if (velX > 0) {
+			animRight.drawAnimation(g, x, y, 0);
+		}
+		else if (velX < 0) {
+			animLeft.drawAnimation(g, x, y, 0);
+		}
+		else if (velY > 0) {
+			animFront.drawAnimation(g, x, y, 0);
+		}
+		else if (velY < 0) {
+			animBack.drawAnimation(g, x, y, 0);
+		}
+		//in the case no if condition is met, draw front animation
+		else {
+			animFront.drawAnimation(g, x, y, 0);
+		}
 	}
 
 	

@@ -27,7 +27,7 @@ public class Game extends Canvas implements Runnable {
 	private Handler handler;
 	private Thread thread;
 	private Camera camera;
-	public SpriteSheet ss, ss_zelda, ss_spider, ss_powerups;
+	public SpriteSheet ss, ss_zelda, ss_spider, ss_powerups, ss_multiplayer, ss_enemyBoss, ss_bear, ss_hunter;
 	private Home home;
 	
 	//int iDirt = 0, jDirt = 0;
@@ -115,6 +115,18 @@ public class Game extends Canvas implements Runnable {
 		
 		spriteSheet = loader.loadImage("/ss_powerups.png");
 		ss_powerups = new SpriteSheet(spriteSheet);
+		
+		spriteSheet = loader.loadImage("/ss_multiplayer.png");
+		ss_multiplayer = new SpriteSheet(spriteSheet);
+		
+		spriteSheet = loader.loadImage("/ss_enemyBoss.png");
+		ss_enemyBoss = new SpriteSheet(spriteSheet);
+		
+		spriteSheet = loader.loadImage("/ss_enemyBear.png");
+		ss_bear = new SpriteSheet(spriteSheet);
+		
+		spriteSheet = loader.loadImage("/ss_hunter.png");
+		ss_hunter = new SpriteSheet(spriteSheet);
 		
 		//controls images
 		pause = loader.loadImage("/pause.png");
@@ -244,14 +256,26 @@ public class Game extends Canvas implements Runnable {
 		///// DRAW ITEMS HERE
 			
 		//everything between g2d is getting translated
-		g2d.translate(-camera.getX(), -camera.getY());		
+		g2d.translate(-camera.getX(), -camera.getY());	
 		
-		//draws the floor image as the background
-		for (int i = 0; i < 30*72; i += 32) {
-			for (int j = 0; j < 30*72; j +=32) {
-					g.drawImage(grass, i, j, null);
+		//change background image to dirt tiles for level 1 and level 4
+		if (levelCounter == 1 || levelCounter == 4) {
+			for (int i = 0; i < 30*72; i += 32) {
+				for (int j = 0; j < 30*72; j +=32) {
+						g.drawImage(dirt, i, j, null);
+				}
 			}
 		}
+		//for all other levels, have background as grass
+		else {
+			for (int i = 0; i < 30*72; i += 32) {
+				for (int j = 0; j < 30*72; j +=32) {
+						g.drawImage(grass, i, j, null);
+				}
+			}
+		}
+		//draws the floor image as the background
+		
 		
 //		g.drawImage(dirt, 50, 50, null);
 //		g.drawImage(dirt, 100, 100, null);
@@ -518,8 +542,6 @@ public class Game extends Canvas implements Runnable {
 					handler.addObj(new Crate (i*32, j*32, ID.Crate_fruits, ss, levelCounter));
 				}
 				
-				
-				
 				//need to fix to remove overlap
 //				if (red == 127 && green ==127 && blue==127) {
 //					handler.addObj(new DirtTile (i*32, j*32, ID.DirtTile, ss));
@@ -533,7 +555,7 @@ public class Game extends Canvas implements Runnable {
 					handler.addObj(new Zelda(i*32, j*32, ID.Player, handler, this, ss_zelda));
 				}
 				if(red ==34 && green == 177 && blue ==76) {
-					handler.addObj(new Enemy (i*32, j*32, ID.Enemy, handler, ss, this));
+					handler.addObj(new Enemy (i*32, j*32, ID.Enemy, handler, ss_bear, this));
 				}
 				
 				if(red ==163 && green ==73 && blue ==164) {
@@ -541,22 +563,19 @@ public class Game extends Canvas implements Runnable {
 				}
 				
 				if(red ==255 && green ==127 && blue ==39) {
-					handler.addObj(new EnemyBoss (i*32, j*32, ID.EnemyBoss, handler, ss, this));
+					handler.addObj(new EnemyBoss (i*32, j*32, ID.EnemyBoss, handler, ss_enemyBoss, this));
 				}
 				
 				//pink
 				if(red ==255 && green ==174 && blue ==201) {
-					handler.addObj(new EnemyMultiplayer (i*32, j*32, ID.EnemyMultiplayer, handler, this, ss));
+					handler.addObj(new EnemyMultiplayer (i*32, j*32, ID.EnemyMultiplayer, handler, this, ss_hunter));
 				}
 				
 				if(red ==255 && green ==242 && blue ==0) {
-					handler.addObj(new EnemyHunter (i*32, j*32, ID.EnemyHunter, handler, ss, this));
-				}
-				
-				
+					handler.addObj(new EnemyHunter (i*32, j*32, ID.EnemyHunter, handler, ss_hunter, this));
+				}				
 			}
 		}
-		
 	}
 	
 	public void run() {

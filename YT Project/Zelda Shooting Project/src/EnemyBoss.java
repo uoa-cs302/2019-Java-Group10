@@ -11,9 +11,12 @@ public class EnemyBoss extends GameObject{
 	Random r = new Random();
 	private Handler handler;
 	
-	private BufferedImage[] enemy_image = new BufferedImage[2];
+	private BufferedImage[] enemy_imageFront = new BufferedImage[3];
+	private BufferedImage[] enemy_imageRight = new BufferedImage[3];
+	private BufferedImage[] enemy_imageLeft = new BufferedImage[3];
+	private BufferedImage[] enemy_imageBack = new BufferedImage[3];
 	private Game game;
-	Animations anim;
+	Animations animFront, animRight, animLeft, animBack, anim;
 	
 	int zelda_x, zelda_y;
 	int choose = 0;
@@ -24,12 +27,21 @@ public class EnemyBoss extends GameObject{
 		super(x, y, id, ss);
 		this.handler = handler;
 		this.game = game;
-		enemy_image[0] = ss.grabImage(5, 3, 32, 32);
-		enemy_image[1] = ss.grabImage(6, 3, 32, 32);
+		
+		//load each angle of the enemy animal into its corresponding angle array
+		for (int i = 0; i < 3; i ++) {
+			enemy_imageFront[i] = ss.grabMediumImage(i+1, 1, 50, 50);
+			enemy_imageLeft[i] = ss.grabMediumImage(i+1, 2, 50, 50);
+			enemy_imageRight[i] = ss.grabMediumImage(i+1, 3, 50, 50);
+			enemy_imageBack[i] = ss.grabMediumImage(i+1, 4, 50, 50);
+		}
 		
 		hp = (game.difficulty * 100) +50;
 		
-		anim = new Animations(3, enemy_image);
+		animFront = new Animations(3, enemy_imageFront);
+		animRight = new Animations(3, enemy_imageRight);
+		animLeft = new Animations(3, enemy_imageLeft);
+		animBack = new Animations(3, enemy_imageBack);
 	}
 
 	@Override
@@ -62,11 +74,24 @@ public class EnemyBoss extends GameObject{
 						speed = game.difficulty +1;
 						
 						velX=  (int) (speed*Math.cos(direction));
+						if (velX < 0) {
+							animLeft.runAnimation();
+						}
+						else {
+							animRight.runAnimation();
+						}
 						velY= (int) (speed*Math.sin(direction));
+						if (velY < 0) {
+							animBack.runAnimation();
+						}
+						else {
+							animFront.runAnimation();
+						}
 					}
 					else {
 						velX= 0;
 						velY= 0;
+						animFront.runAnimation();
 					}
 				}
 			}
@@ -85,8 +110,6 @@ public class EnemyBoss extends GameObject{
 			}
 		}
 		
-		anim.runAnimation();
-		
 		if(hp <= 0) {
 			handler.removeObj(this);
 			game.highscore = game.highscore + 20;
@@ -95,7 +118,26 @@ public class EnemyBoss extends GameObject{
 
 	@Override
 	public void render(Graphics g) {
-		anim.drawAnimation(g, x, y, 0);
+		if (velX == 0 && velY == 0) {
+			g.drawImage(enemy_imageFront[0], x, y, null);
+		}
+		//else draw the animation of the direction the character is moving in
+		else if (velX > 0) {
+			animRight.drawAnimation(g, x, y, 0);
+		}
+		else if (velX < 0) {
+			animLeft.drawAnimation(g, x, y, 0);
+		}
+		else if (velY > 0) {
+			animFront.drawAnimation(g, x, y, 0);
+		}
+		else if (velY < 0) {
+			animBack.drawAnimation(g, x, y, 0);
+		}
+		//in the case no if condition is met, draw front animation
+		else {
+			animFront.drawAnimation(g, x, y, 0);
+		}
 	}
 
 	
