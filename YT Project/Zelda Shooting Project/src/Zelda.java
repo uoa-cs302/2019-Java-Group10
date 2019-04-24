@@ -192,6 +192,7 @@ public class Zelda extends GameObject{
 			if(temp.getId() == ID.EnemySpider) {
 				if(getBounds().intersects(temp.getBounds())) {
 					game.hp--;
+					new Sound("/pew.wav", false);
 				}
 			}
 

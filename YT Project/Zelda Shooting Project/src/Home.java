@@ -131,11 +131,12 @@ public class Home extends Canvas {
 		homeFrame.setLocationRelativeTo(null);
 		homeFrame.setVisible(true);
 		homeFrame.add(h);
+		
+		//start background music
+		new Sound("/forest.wav", true);
 	}
 
-	public void paint (Graphics g) {   
-
-
+	public void paint (Graphics g) {
 		//draw the relevant images to the screen
 		g.drawImage(backgroundZelda, 0, 0, 1024, 768, null);
 		//g.drawImage(startGame, 750, 250, 250, 250, null);
@@ -159,8 +160,7 @@ public class Home extends Canvas {
 		g.drawString("Copyright - An original game by GameWarriors", 640, 710);
 		g.drawString("Background credits: GameWarriors", 30, 710);	
 
-
-
+		
 		//display correct image for certain difficulty level setting
 		if (difficultyLevel == 1) {
 			g.drawImage(diff1[1], 800, 300, 125, 125, null);	
@@ -198,6 +198,6 @@ public class Home extends Canvas {
 		g.setFont(GameFont.getFont("/teen.ttf", 15));
 		g.drawString("Copyright - An original game by GameWarriors", 640, 710);
 		g.drawString("Background credits: GameWarriors", 30, 710);	
-		*/	
+		*/
 	}
 }
