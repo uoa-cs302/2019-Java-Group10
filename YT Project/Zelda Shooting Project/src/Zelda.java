@@ -2,6 +2,8 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import javax.swing.JOptionPane;
+
 //wizard
 public class Zelda extends GameObject{
 
@@ -163,6 +165,18 @@ public class Zelda extends GameObject{
 					//if the last level is completed, exit the game and return to the home screen for now
 					if (game.levelCounter == 5) {
 						//game.highscore = game.highscore + 1000;
+						//game.frame.dispose();
+						//Home.main(null);
+								
+						//source-code: https://stackoverflow.com/questions/17979438/how-to-perform-action-on-ok-of-joptionpane-showmessagedialog
+//						int input = JOptionPane.showOptionDialog(null, "Congratulation! You collected all the special fruits in time to save Link. You win!", "Game Over", 
+//								JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+//
+						JOptionPane.showMessageDialog(null, "Congratulation! You collected all the special fruits in time to save Link. You win!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+//						if(input == JOptionPane.OK_OPTION){
+//							game.frame.dispose();
+//							Home.main(null);
+//						}
 						game.frame.dispose();
 						Home.main(null);
 						game.stop();

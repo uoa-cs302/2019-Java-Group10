@@ -31,16 +31,16 @@ public class Crate extends GameObject {
 			}
 			//need to modify
 			if (level == 2){
-				crate_image = ss.grabImage(4, 4, 32, 32);
+				crate_image = ss.grabImage(4, 5, 32, 32);
 			}
 			else if (level == 3){
-				crate_image = ss.grabImage(4, 4, 32, 32);
+				crate_image = ss.grabImage(5, 5, 32, 32);
 			}
 			else if (level == 4){
-				crate_image = ss.grabImage(4, 4, 32, 32);
+				crate_image = ss.grabImage(6, 5, 32, 32);
 			}
 			else if (level == 5){
-				crate_image = ss.grabImage(4, 4, 32, 32);
+				crate_image = ss.grabImage(3, 5, 32, 32);
 			}
 		}
 	}

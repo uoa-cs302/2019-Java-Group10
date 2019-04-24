@@ -348,6 +348,21 @@ public class Game extends Canvas implements Runnable {
 			g.drawImage(ss_powerups.grabBigImage(1, 3, 60, 60), 570, 440, null);
 			g.drawString("Ammo", 570, 500);
 			
+			
+			//special fruits
+			g.setFont(GameFont.getFont("/teen_bold.ttf", 20));
+			g.drawString("Special Fruits", 50, 330);
+			g.setFont(new Font("Arial", Font.TRUETYPE_FONT, 17));
+			g.drawImage(ss.grabImage(4, 4, 32, 32), 80, 340, null);
+			g.drawString("Level 1", 70, 400);
+			g.drawImage(ss.grabImage(4, 5, 32, 32), 190, 340, null);
+			g.drawString("Level 2", 180, 400);
+			g.drawImage(ss.grabImage(5, 5, 32, 32), 300, 340, null);
+			g.drawString("Level 3", 290, 400);
+			g.drawImage(ss.grabImage(6, 5, 32, 32), 410, 340, null);
+			g.drawString("Level 4", 400, 400);
+			g.drawImage(ss.grabImage(3, 5, 32, 32), 520, 340, null);
+			g.drawString("Level 5", 510, 400);			
 		}
 		
 		handler.render(g);
