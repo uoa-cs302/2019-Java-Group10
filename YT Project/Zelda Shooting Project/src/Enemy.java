@@ -47,7 +47,7 @@ public class Enemy extends GameObject{
 		y = y+velY;
 		
 		//basically makes choose variable a random number between 0 and 9.
-		choose = r.nextInt(10);
+		choose = r.nextInt(30);
 		
 		for(int i = 0; i < handler.obj.size(); i++) {
 			GameObject temp = handler.obj.get(i);
@@ -63,8 +63,8 @@ public class Enemy extends GameObject{
 				}
 				//not colliding
 				else if(choose == 0) {
-					//velocity range of -3 to 3
-					velX = (r.nextInt(6) + -3);
+					//velocity range of -2 to 2
+					velX = (r.nextInt(4) + -2);
 					
 					if (velX < 0) {
 						animLeft.runAnimation();
@@ -73,7 +73,7 @@ public class Enemy extends GameObject{
 						animRight.runAnimation();
 					}
 					
-					velY = (r.nextInt(6) + -3);
+					velY = (r.nextInt(4) + -2);
 				
 					if (velY < 0) {
 						animBack.runAnimation();

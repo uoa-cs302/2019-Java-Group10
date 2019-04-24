@@ -59,7 +59,7 @@ public class EnemyMultiplayer extends GameObject{
 		collision();
 		
 		if (handler.isUpM()) {
-			velY = -8;
+			velY = -5;
 			animBack.runAnimation();
 		}
 		//improving lag
@@ -68,7 +68,7 @@ public class EnemyMultiplayer extends GameObject{
 		}
 		
 		if (handler.isDownM()) {
-			velY = 8;
+			velY = 5;
 			animFront.runAnimation();
 		}
 		else if (!handler.isUpM()) {
@@ -76,7 +76,7 @@ public class EnemyMultiplayer extends GameObject{
 		}
 		
 		if (handler.isRightM()) {
-			velX = 8;
+			velX = 5;
 			animRight.runAnimation();
 		}
 		else if (!handler.isLeftM()) {
@@ -84,7 +84,7 @@ public class EnemyMultiplayer extends GameObject{
 		}
 		
 		if (handler.isLeftM()) {
-			velX = -8;
+			velX = -5;
 			animLeft.runAnimation();
 		}
 		else if (!handler.isRightM()) {

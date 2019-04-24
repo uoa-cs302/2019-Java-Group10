@@ -71,7 +71,7 @@ public class EnemyHunter extends GameObject{
 						deltaX = zelda_x - x;
 						deltaY = zelda_y - y;
 						direction = Math.atan2(deltaY,deltaX);
-						speed = game.difficulty + 2;
+						speed = game.difficulty +1;
 						
 						velX=  (int) (speed*Math.cos(direction));
 						if (velX < 0) {

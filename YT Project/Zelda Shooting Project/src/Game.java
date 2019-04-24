@@ -153,7 +153,7 @@ public class Game extends Canvas implements Runnable {
 		else if (level == 6){
 			levelCounter = 6;
 			hp=100;
-			ammo = 500;
+			ammo = 400;
 			switchLevel(6);
 		}
 	}	
