@@ -4,6 +4,7 @@ import javax.sound.sampled.Clip;
 
 public class Sound {
 	
+	//THIS CLASS DOESN'T WORK ON DEVS COMPUTER FOR SOME REASON...
 	public Sound(String file, boolean music) {
 		playSound(file, music);
 	}
