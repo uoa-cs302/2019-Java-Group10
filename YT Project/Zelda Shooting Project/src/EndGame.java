@@ -4,6 +4,8 @@ import java.awt.Rectangle;
 
 import javax.swing.JFrame;
 
+//NEED TO ASK DEV ABOUT THREADS FOR THIS CLASS!!!!
+
 public class EndGame extends Canvas{
 
 	private Game game;

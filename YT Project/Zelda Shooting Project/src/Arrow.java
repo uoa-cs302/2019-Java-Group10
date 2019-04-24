@@ -36,13 +36,15 @@ public class Arrow extends GameObject{
 
 	@Override
 	public void render(Graphics g) {
-		g.setColor(Color.green);
-		g.fillOval(x, y, 8, 8);
+		g.setColor(Color.BLACK);
+		//g.fillRect(x, y, 4, 15);
+		//g.drawLine(x, y, 8, 8);
+		g.fillOval(x, y, 10, 10);
 	}
 
 	@Override
 	public Rectangle getBounds() {
-		return new Rectangle(x, y, 8, 8);
+		return new Rectangle(x, y, 10, 10);
 	}
 
 }
