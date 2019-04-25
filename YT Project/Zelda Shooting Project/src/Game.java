@@ -54,6 +54,7 @@ public class Game extends Canvas implements Runnable {
 	public int multiplayerHp = 1000;
 	long start, timingValue;
 	long finish = 0;
+	boolean alive =true;
 	//long totalTime = 0;
 	
 	//should start from 1. Kept at 5 to skip levels for now.
@@ -172,8 +173,12 @@ public class Game extends Canvas implements Runnable {
 		
 		handler.tick();
 		
-		if(levelCounter != 6 && hp <= 0) {
+		if(alive && levelCounter != 6 && hp <= 0) {
+			this.frame.dispose();
+			alive = false;
 			new EndGame(this, 2);
+			this.stop();
+			//may need game.stop() here if it doesnt work through endgame
 		}
 		
 

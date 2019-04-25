@@ -11,6 +11,7 @@ public class EndGame extends Canvas{
 	private Game game;
 	private int value;
 	private JFrame frame;
+	private Home home;
 
 	public EndGame(Game game, int value) {
 		this.game = game;
@@ -31,13 +32,24 @@ public class EndGame extends Canvas{
 			}
 		}
 		
+		//mouse input OK needs call to Home screen and Endgame.frame.dispose
+		//END thread for game class here! Important!
+		
+		
 		if(value ==1) {
+			
+			
 			//when u collect last fruit
 			//put Game OVER and Link saved and stuff here
 			//finalScore as well here
+			
 		}
 		else if (value ==2 ) {
-			g.drawString("Zelda died.Shame", 300, 300);	
+			g.drawString("Zelda died.Shame", 300, 300);
+			Home.main(null);
+			game.stop();
+			
+			//game.stop();
 			//this is when u die
 			//put GAME OVER and Unfortunately u couldnt save link ...
 			//your score was finalScore
