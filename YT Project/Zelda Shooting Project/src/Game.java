@@ -13,6 +13,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 //MAIN CLASS BASICALLY. EVRYTHING GETS PUT THROUGH HERE.
 //ALL CLASSES INITIALISED HERE
@@ -229,16 +230,21 @@ public class Game extends Canvas implements Runnable {
 		//System.out.println(highscore);
 		finalScore = highscore - (int) (finish+timingValue);
 		
-		/*
-		//multiplayer level
-		if (levelCounter ==6) {
-			//Game.LEVEL++;
-			switchLevel(6);
-			hp = 100;
-		}
-		*/
-		
-		
+		//display which player wins in multiplayer
+		if (levelCounter == 6) {
+			if (hp == -5) {
+				JOptionPane.showMessageDialog(null, "Player 2 Wins!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+				this.frame.dispose();
+				Home.main(null);
+				this.stop();
+			}
+			else if (multiplayerHp == -5){
+				JOptionPane.showMessageDialog(null, "Player 1 Wins!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+				this.frame.dispose();
+				Home.main(null);
+				this.stop();
+			}
+		}		
 	}
 	
 	//updates couple 1000times/ sec
