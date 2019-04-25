@@ -35,7 +35,7 @@ public class KeyInput extends KeyAdapter {
 		if (key == KeyEvent.VK_ESCAPE) {
 			counter++;
 			if(counter==2) {
-				game.highscorePrint();
+				//game.highscorePrint();
 				game.frame.dispose();
 				Home.main(null);
 				game.stop();
@@ -45,6 +45,7 @@ public class KeyInput extends KeyAdapter {
 		
 		if (key == KeyEvent.VK_PAGE_DOWN) {
 			game.switchLevel(5);
+			//add in condition to make ammo and health same as after spin-off level
 		}
 		
 		//loops through all objects

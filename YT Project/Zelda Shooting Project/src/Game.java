@@ -11,6 +11,8 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -55,6 +57,11 @@ public class Game extends Canvas implements Runnable {
 	long start, timingValue;
 	long finish = 0;
 	boolean alive =true;
+	
+	private ArrayList<Integer> topScores = new ArrayList<Integer>();
+	//might not need these
+	int scoreOne=0, scoreTwo=0, scoreThree=0;
+	int scoreFour, scoreFive, scoreSix, scoreSeven, scoreEight, scoreNine, scoreTen;
 	//long totalTime = 0;
 	
 	//should start from 1. Kept at 5 to skip levels for now.
@@ -70,6 +77,9 @@ public class Game extends Canvas implements Runnable {
 		//make new JFrame window with the following input parameters
 		int w=1024;
 		int h=768;
+		
+		
+		
 		
 		//new Window(1024, 768, "Zelda Reborn", this);
 		//replaced as below
@@ -87,8 +97,21 @@ public class Game extends Canvas implements Runnable {
 		frame.setVisible(true);
 		//
 		
+		/*
+		if (level ==7) {
+			topHighscores();
+			new EndGame(this, 4);
+			this.frame.dispose();
+			//this.stop();
+
+		}
+		*/
+		
+		
 		
 		start();
+		
+		
 		
 		handler = new Handler();
 		camera = new Camera(0, 0, level);
@@ -159,6 +182,23 @@ public class Game extends Canvas implements Runnable {
 			ammo = 400;
 			switchLevel(6);
 		}
+		
+		if (level ==7) {
+			topHighscores();
+			new EndGame(this, 4);
+			this.frame.dispose();
+			this.stop();
+
+		}
+		
+		//for displaying highscore
+		/*
+		else if (level ==7) {
+			topHighscores();
+			this.frame.dispose();
+			new EndGame(this, 4);
+			this.stop();
+		}  */
 	}	
 	
 	//MAIN TICK() METHOD
@@ -174,8 +214,8 @@ public class Game extends Canvas implements Runnable {
 		
 		handler.tick();
 		
-		System.out.println(finalScore);
-		System.out.println(levelCounter);
+		//System.out.println(finalScore);
+		//System.out.println(levelCounter);
 		
 		
 		//only perform function is zelda is still alive
@@ -682,6 +722,7 @@ public class Game extends Canvas implements Runnable {
 		this.isRunning = isRunning;
 	}
 
+	//use this to print at end of game.
 	public void highscorePrint() {
 		int hs=0;
 		try {
@@ -732,6 +773,48 @@ public class Game extends Canvas implements Runnable {
 	    } catch (IOException ex1) {
 	        System.out.printf("ERROR writing score to file: %s\n", ex1);
 	    }
+	}
+
+	public void topHighscores() {
+		int hs=0;
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(file));
+			String line = reader.readLine();
+			//System.out.println(line);
+			while (line != null)                 // read the score file line by line
+			{
+				try {
+					int score = Integer.parseInt(line.trim());   // parse each line as an int
+					//System.out.println(score);
+					topScores.add(score);
+				} catch (NumberFormatException e1) {
+					// ignore invalid scores
+					//System.err.println("ignoring invalid score: " + line);
+				}
+				line = reader.readLine();
+			}
+			reader.close();
+
+		} catch (IOException ex) {
+			System.err.println("ERROR reading scores from file");
+		}
+		
+		Collections.sort(topScores);
+		Collections.reverse(topScores);
+		
+		scoreOne = topScores.get(0).intValue();
+		scoreTwo = topScores.get(1).intValue();
+		scoreThree = topScores.get(2).intValue();
+		/* add in later according to above
+		scoreFour = list[3];
+		scoreFive = list[4];
+		scoreSix = list[5];
+		scoreSeven = list[6];
+		scoreEight = list[7];
+		scoreNine = list[8];
+		scoreTen = list[9];
+		*/
+		
 	}
 
 	

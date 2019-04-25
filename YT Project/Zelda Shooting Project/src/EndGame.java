@@ -53,7 +53,7 @@ public class EndGame extends Canvas{
 				double x = e.getX();
 				double y = e.getY();
 
-				if (value == 1 || value == 2) {
+				if (value == 1 || value == 2 || value ==4) {
 					if ((x > rectHome.getX()) && (x < rectHome.getX() + 128) && (y > rectHome.getY()) && (y < rectHome.getY() + 44)) {
 						EndGame.frame.dispose();
 						Home.main(null);
@@ -149,8 +149,18 @@ public class EndGame extends Canvas{
 			g.setFont(GameFont.getFont("/Stars.ttf", 80));
 			g.drawString("HIGHSCORES", 250, 200);
 			
+			g.setFont(GameFont.getFont("/teen_bold.ttf", 20));
+			g.drawString("" + game.scoreOne, 250, 220);
+			g.drawString("" + game.scoreTwo, 250, 240);
+			g.drawString("" + game.scoreThree, 250, 260);
+			
+			
+			g.drawImage(homeButton, 375, 450, 250, 250, null);
 		}
 
+		
+		
+		//do we even need this?
 		value = 99; //default to not enter loop		
 	}
 }
