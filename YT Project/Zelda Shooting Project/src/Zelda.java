@@ -12,7 +12,8 @@ public class Zelda extends GameObject{
 
 	Animations animFront, animBack, animRight, animLeft;
 
-	int speedPositive = 3, speedNegative = -3;
+	//change back to 3, -3
+	int speedPositive = 5, speedNegative = -5;
 
 	private BufferedImage[] zelda_Leftimage = new BufferedImage[3];
 	private BufferedImage[] zelda_Rightimage = new BufferedImage[3];
@@ -148,28 +149,38 @@ public class Zelda extends GameObject{
 				if(getBounds().intersects(temp.getBounds())) {
 					//if the last level is completed, exit the game and return to the home screen for now
 					if (game.levelCounter == 5) {
-						//game.highscore = game.highscore + 1000;
-						//game.frame.dispose();
-						//Home.main(null);
-								
-						//source-code: https://stackoverflow.com/questions/17979438/how-to-perform-action-on-ok-of-joptionpane-showmessagedialog
-//						int input = JOptionPane.showOptionDialog(null, "Congratulation! You collected all the special fruits in time to save Link. You win!", "Game Over", 
-//								JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
-//
-						
-						//Do we not need a condition on Ok click and why? 
-						JOptionPane.showMessageDialog(null, "Congratulation! You collected all the special fruits in time to save Link. You win!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
-//						if(input == JOptionPane.OK_OPTION){
-//							game.frame.dispose();
-//							Home.main(null);
-//						}
 						game.frame.dispose();
-						Home.main(null);
+						new EndGame(game, 1);
 						game.stop();
+						
+//						//source-code: https://stackoverflow.com/questions/17979438/how-to-perform-action-on-ok-of-joptionpane-showmessagedialog
+////						int input = JOptionPane.showOptionDialog(null, "Congratulation! You collected all the special fruits in time to save Link. You win!", "Game Over", 
+////								JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+//						//Do we not need a condition on Ok click and why? 
+//						JOptionPane.showMessageDialog(null, "Congratulation! You collected all the special fruits in time to save Link. You win!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+////						if(input == JOptionPane.OK_OPTION){
+////							game.frame.dispose();
+////							Home.main(null);
+////						}
+//						game.frame.dispose();
+//						Home.main(null);
+//						game.stop();
 					}
-					game.levelCounter++;
-					game.levelSwitch = true;
-					handler.removeObj(temp);
+					else if (game.levelCounter == 3){
+						new EndGame(game, 3);
+						game.stop();
+						handler.removeObj(temp);
+					}
+					else if (game.levelCounter == 4) {
+						game.levelSwitch = true;
+						game.levelCounter++;
+						handler.removeObj(temp);
+					}
+					else {
+						game.levelCounter++;
+						game.levelSwitch = true;
+						handler.removeObj(temp);
+					}
 				}
 			}
 		

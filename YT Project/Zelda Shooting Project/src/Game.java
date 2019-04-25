@@ -38,7 +38,7 @@ public class Game extends Canvas implements Runnable {
 	
 	String file = "highscoreStorage.txt";
 	
-	public BufferedImage grass = null, dirt = null;
+	public BufferedImage grass = null, dirt = null, background = null;
 	public BufferedImage level1 = null, level2 = null, levelBoss = null, 
 			levelSpinOff = null,
 			levelMultiplayer = null, levelHunter = null, pause = null, esc = null, mute = null,
@@ -105,6 +105,7 @@ public class Game extends Canvas implements Runnable {
 		levelSpinOff = loader.loadImage("/zelda_level_spinoff.png");
 		levelMultiplayer = loader.loadImage("/zelda_level_multiplayer.png");
 		levelHunter = loader.loadImage("/zelda_level_hunter.png");
+		background = loader.loadImage("/backgroundForest.jpg");
 		
 		spriteSheet = loader.loadImage("/sprite_sheet.png");
 		ss = new SpriteSheet(spriteSheet);
@@ -173,13 +174,20 @@ public class Game extends Canvas implements Runnable {
 		
 		handler.tick();
 		
-//		if(alive && levelCounter != 6 && hp <= 0) {
-//			this.frame.dispose();
-//			alive = false;
-//			new EndGame(this, 2);
-//			this.stop();
-//		}
+		System.out.println(finalScore);
+		System.out.println(levelCounter);
 		
+		
+		//only perform function is zelda is still alive
+		if (alive) {
+			//why do we have the level not = 6 here? should it not just be hp = 0?
+			if (levelCounter != 6 && hp <= 0) {
+				this.frame.dispose();
+				alive = false;
+				new EndGame(this, 2);
+				this.stop();
+			}
+		}
 
 		if(levelSwitch ==true) {
 
@@ -269,13 +277,15 @@ public class Game extends Canvas implements Runnable {
 		Graphics2D g2d = (Graphics2D) g;
 		
 
-		//may remove later
-		if(alive && levelCounter != 6 && hp <= 0) {
-			this.frame.dispose();
-			alive = false;
-			new EndGame(this, 2);
-			this.stop();
-		}
+//		//may remove later
+//		if(alive && levelCounter != 6 && hp <= 0) {
+//			this.frame.dispose();
+//			alive = false;
+//			new EndGame(this, 2);
+//			this.stop();
+//		}
+		
+		
 		/////
 		
 		
@@ -284,6 +294,7 @@ public class Game extends Canvas implements Runnable {
 		//everything between g2d is getting translated
 		g2d.translate(-camera.getX(), -camera.getY());	
 		
+		//draws the floor image as the background
 		//change background image to dirt tiles for level 1 and level 4
 		if (levelCounter == 1 || levelCounter == 4) {
 			for (int i = 0; i < 30*72; i += 32) {
@@ -300,23 +311,6 @@ public class Game extends Canvas implements Runnable {
 				}
 			}
 		}
-		//draws the floor image as the background
-		
-		
-//		g.drawImage(dirt, 50, 50, null);
-//		g.drawImage(dirt, 100, 100, null);
-//		g.drawImage(dirt, 150, 150, null);
-
-//		if (dirtTileOnce) {
-//			for (int i = 0; i < 20; i++) {
-//				g.drawImage(dirt, rand.nextInt(1024), rand.nextInt(768), null);
-//			}
-//			dirtTileOnce = false;
-//		}
-//		if (dirtTile) {
-//			g.drawImage(dirt, iDirt, jDirt, null);
-//		}
-		
 		
 		//TUTORIAL (game instructions)
 		if (levelCounter == 1) {
@@ -404,9 +398,8 @@ public class Game extends Canvas implements Runnable {
 		g.setColor(Color.GRAY);
 		if (levelCounter == 6) {
 			//draw health box background for player 1 and player 2
-			//CHANGE y to 695
-			g.fillRect(805, 495, 200, 32);
-			g.fillRect(5, 495, 200, 32);
+			g.fillRect(805, 695, 200, 32);
+			g.fillRect(5, 695, 200, 32);
 			
 			
 			//player 2 health
@@ -419,10 +412,10 @@ public class Game extends Canvas implements Runnable {
 			else {
 				g.setColor(Color.GREEN);
 			}
-			g.fillRect(5, 495, (multiplayerHp/5), 32);
+			g.fillRect(5, 695, (multiplayerHp/5), 32);
 			//outline for the health bar
 			g.setColor(Color.BLACK);
-			g.drawRect(5, 495, 200, 32);
+			g.drawRect(5, 695, 200, 32);
 			
 			
 			
@@ -436,17 +429,17 @@ public class Game extends Canvas implements Runnable {
 			else {
 				g.setColor(Color.GREEN);
 			}
-			g.fillRect(805, 495, hp*2, 32);
+			g.fillRect(805, 695, hp*2, 32);
 			//outline for the health bar
 			g.setColor(Color.BLACK);
-			g.drawRect(805, 495, 200, 32);
+			g.drawRect(805, 695, 200, 32);
 			
 			
 			//health text for both player 1 and player 2
 			g.setColor(new Color(211,211,211));
 			g.setFont(GameFont.getFont("/teen_bold.ttf", 12));
-			g.drawString("Player 1 Health", 805, 495);
-			g.drawString("Player 2 Health", 5, 495);
+			g.drawString("Player 1 Health", 805, 695);
+			g.drawString("Player 2 Health", 5, 695);
 		}
 		else {
 			g.fillRect(5, 5, 200, 32);
@@ -509,22 +502,26 @@ public class Game extends Canvas implements Runnable {
 		if(countdownFlag) {
 			if(countdownTimer%60 < 10) {
 				g.drawString((countdownTimer/60) + ":" + 
-						"0" + (countdownTimer%60), 400, 50);
+						"0" + (countdownTimer%60), 475, 35);
 			}
 			else {
 				g.drawString((countdownTimer/60) + ":" + 
-						(countdownTimer%60), 400, 50);
+						(countdownTimer%60), 475, 35);
 			}
 		}
 		else {
-			g.drawString("0:00", 400, 50);
+			g.drawString("0:00", 475, 35);
 		}
 		
 		if (levelCounter != 6) {
-			g.drawString(finalScore + "", 500, 50);
+			g.drawString(finalScore + "", 850, 35);
 		}
 		
-		
+		g.setFont(GameFont.getFont("/teen_bold.ttf", 15));
+		g.drawString("Time", 485, 50);
+		if (levelCounter != 6) {
+			g.drawString("Score", 850, 50);
+		}
 		
 		g.dispose();
 		bs.show();

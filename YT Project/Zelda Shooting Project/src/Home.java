@@ -98,9 +98,10 @@ public class Home extends Canvas {
 				}
 				//highscore button input
 				else if ((x > rectHighscore.getX()) && (x < rectHighscore.getX() + 220) && (y > rectHighscore.getY()) && (y < rectHighscore.getY() + 55)) {
-					System.out.println("highscore");
-					//99 is just a default value to compare against
-					//new Game(h, 99);
+					System.out.println("Highscores");
+					//homeFrame.dispose();
+					//what game input do i pass in here???
+					//new EndGame(new Game(h,1), 4);
 				}
 				//end button input
 				else if ((x > rectEnd.getX()) && (x < rectEnd.getX() + 152) && (y > rectEnd.getY()) && (y < rectEnd.getY() + 55)) {
