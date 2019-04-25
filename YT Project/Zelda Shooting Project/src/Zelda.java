@@ -12,7 +12,7 @@ public class Zelda extends GameObject{
 
 	Animations animFront, animBack, animRight, animLeft;
 
-	int speedPositive = 4, speedNegative = -4;
+	int speedPositive = 3, speedNegative = -3;
 
 	private BufferedImage[] zelda_Leftimage = new BufferedImage[3];
 	private BufferedImage[] zelda_Rightimage = new BufferedImage[3];
@@ -138,7 +138,7 @@ public class Zelda extends GameObject{
 			if(temp.getId() == ID.Crate_ammoPlus) {
 				//intersects is an inbuilt function
 				if(getBounds().intersects(temp.getBounds())) {
-					game.ammo = game.ammo + 10;
+					game.ammo = game.ammo + 25;
 					handler.removeObj(temp);
 				}
 			}
@@ -212,7 +212,7 @@ public class Zelda extends GameObject{
 			if(temp.getId() == ID.ArrowHunter) {
 				if(getBounds().intersects(temp.getBounds())) {
 					handler.removeObj(temp);
-					game.hp = game.hp - 5;
+					game.hp = game.hp - 2;
 				}
 			}
 		}

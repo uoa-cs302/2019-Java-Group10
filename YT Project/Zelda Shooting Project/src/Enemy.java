@@ -96,7 +96,7 @@ public class Enemy extends GameObject{
 		
 		if(hp <= 0) {
 			handler.removeObj(this);
-			game.highscore = game.highscore + 10;
+			game.highscore = game.highscore + 100;
 		}
 	}
 

@@ -46,7 +46,7 @@ public class Game extends Canvas implements Runnable {
 	private BufferedImage spriteSheet = null;
 	
 	//declared here becoz we'll be drawing this out in a later video
-	public int ammo = 100; //100 bullets
+	public int ammo = 300; //300 bullets
 	//100 health
 	public int hp = 100;
 	public int highscore =0;
@@ -148,7 +148,7 @@ public class Game extends Canvas implements Runnable {
 		if(level == 1) {
 			levelCounter=1;
 			loadLevel(level1);
-			new EndGame(this);
+			//new EndGame(this);
 			
 		}
 		else if (level == 6){
@@ -172,6 +172,10 @@ public class Game extends Canvas implements Runnable {
 		
 		handler.tick();
 		
+		if(levelCounter != 6 && hp <= 0) {
+			new EndGame(this, 2);
+		}
+		
 
 		if(levelSwitch ==true) {
 
@@ -179,7 +183,7 @@ public class Game extends Canvas implements Runnable {
 			if (levelCounter ==2) {
 				//Game.LEVEL++;
 				switchLevel(2);
-				hp = 100;
+				//hp = 100;
 				levelSwitch =false;
 				//levelCounter++;
 				//System.out.println(highscore);
@@ -190,7 +194,8 @@ public class Game extends Canvas implements Runnable {
 			else if (levelCounter ==3) {
 				//Game.LEVEL++;
 				switchLevel(3);
-				hp = 100;
+				//highscore=highscore+500;
+				//hp = 100;
 				levelSwitch =false;
 				//levelCounter++;
 				//System.out.println(highscore);
@@ -211,8 +216,8 @@ public class Game extends Canvas implements Runnable {
 				//Game.LEVEL++;
 				switchLevel(5);
 				//extra 1000 points given for making it to the last level
-				highscore=highscore+1000;
-				hp = 100;
+				//highscore=highscore+1000;
+				//hp = 100;
 				levelSwitch =false;
 				//System.out.println(highscore);
 			}
@@ -232,13 +237,13 @@ public class Game extends Canvas implements Runnable {
 		
 		//display which player wins in multiplayer
 		if (levelCounter == 6) {
-			if (hp == -5) {
+			if (hp <= 0) {
 				JOptionPane.showMessageDialog(null, "Player 2 Wins!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
 				this.frame.dispose();
 				Home.main(null);
 				this.stop();
 			}
-			else if (multiplayerHp == -5){
+			else if (multiplayerHp <= 0){
 				JOptionPane.showMessageDialog(null, "Player 1 Wins!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
 				this.frame.dispose();
 				Home.main(null);
@@ -385,8 +390,9 @@ public class Game extends Canvas implements Runnable {
 		g.setColor(Color.GRAY);
 		if (levelCounter == 6) {
 			//draw health box background for player 1 and player 2
-			g.fillRect(805, 695, 200, 32);
-			g.fillRect(5, 695, 200, 32);
+			//CHANGE y to 695
+			g.fillRect(805, 495, 200, 32);
+			g.fillRect(5, 495, 200, 32);
 			
 			
 			//player 2 health
@@ -399,10 +405,10 @@ public class Game extends Canvas implements Runnable {
 			else {
 				g.setColor(Color.GREEN);
 			}
-			g.fillRect(5, 695, (multiplayerHp/5), 32);
+			g.fillRect(5, 495, (multiplayerHp/5), 32);
 			//outline for the health bar
 			g.setColor(Color.BLACK);
-			g.drawRect(5, 695, 200, 32);
+			g.drawRect(5, 495, 200, 32);
 			
 			
 			
@@ -416,17 +422,17 @@ public class Game extends Canvas implements Runnable {
 			else {
 				g.setColor(Color.GREEN);
 			}
-			g.fillRect(805, 695, hp*2, 32);
+			g.fillRect(805, 495, hp*2, 32);
 			//outline for the health bar
 			g.setColor(Color.BLACK);
-			g.drawRect(805, 695, 200, 32);
+			g.drawRect(805, 495, 200, 32);
 			
 			
 			//health text for both player 1 and player 2
 			g.setColor(new Color(211,211,211));
 			g.setFont(GameFont.getFont("/teen_bold.ttf", 12));
-			g.drawString("Player 1 Health", 805, 695);
-			g.drawString("Player 2 Health", 5, 695);
+			g.drawString("Player 1 Health", 805, 495);
+			g.drawString("Player 2 Health", 5, 495);
 		}
 		else {
 			g.fillRect(5, 5, 200, 32);
@@ -485,18 +491,23 @@ public class Game extends Canvas implements Runnable {
 			countdownFlag = false;
 		}
 		
+		
 		if(countdownFlag) {
 			if(countdownTimer%60 < 10) {
-				g.drawString("Time:  " + (countdownTimer/60) + " minutes " + 
-						"0" + (countdownTimer%60) + " seconds", 400, 50);
+				g.drawString((countdownTimer/60) + ":" + 
+						"0" + (countdownTimer%60), 400, 50);
 			}
 			else {
-				g.drawString("Time:  " + (countdownTimer/60) + " minutes " + 
-						(countdownTimer%60) + " seconds", 400, 50);
+				g.drawString((countdownTimer/60) + ":" + 
+						(countdownTimer%60), 400, 50);
 			}
 		}
 		else {
-			g.drawString("Time: 5 minutes finished", 400, 50);
+			g.drawString("0:00", 400, 50);
+		}
+		
+		if (levelCounter != 6) {
+			g.drawString(finalScore + "", 500, 50);
 		}
 		
 		

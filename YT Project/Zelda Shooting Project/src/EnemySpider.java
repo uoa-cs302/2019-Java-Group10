@@ -92,7 +92,7 @@ public class EnemySpider extends GameObject{
 		
 		if(hp <= 0) {
 			handler.removeObj(this);
-			game.highscore = game.highscore + 5;
+			game.highscore = game.highscore + 20;
 		}
 	}
 
