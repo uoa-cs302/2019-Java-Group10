@@ -26,6 +26,7 @@ public class EndGame extends Canvas{
 	}
 	
 	public void paint(Graphics g) {
+		//System.out.println("Recurring?");
 		for (int i = 0; i < 30*72; i += 32) {
 			for (int j = 0; j < 30*72; j +=32) {
 					g.drawImage(game.grass, i, j, null);
@@ -45,9 +46,12 @@ public class EndGame extends Canvas{
 			
 		}
 		else if (value ==2 ) {
+			//System.out.println("OK");
 			g.drawString("Zelda died.Shame", 300, 300);
 			Home.main(null);
-			game.stop();
+			//System.out.println("After Home()");
+			
+			value =99; //default to not enter loop
 			
 			//game.stop();
 			//this is when u die

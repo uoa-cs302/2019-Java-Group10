@@ -173,13 +173,12 @@ public class Game extends Canvas implements Runnable {
 		
 		handler.tick();
 		
-		if(alive && levelCounter != 6 && hp <= 0) {
-			this.frame.dispose();
-			alive = false;
-			new EndGame(this, 2);
-			this.stop();
-			//may need game.stop() here if it doesnt work through endgame
-		}
+//		if(alive && levelCounter != 6 && hp <= 0) {
+//			this.frame.dispose();
+//			alive = false;
+//			new EndGame(this, 2);
+//			this.stop();
+//		}
 		
 
 		if(levelSwitch ==true) {
@@ -268,6 +267,16 @@ public class Game extends Canvas implements Runnable {
 		
 		Graphics g = bs.getDrawGraphics();
 		Graphics2D g2d = (Graphics2D) g;
+		
+
+		//may remove later
+		if(alive && levelCounter != 6 && hp <= 0) {
+			this.frame.dispose();
+			alive = false;
+			new EndGame(this, 2);
+			this.stop();
+		}
+		/////
 		
 		
 		///// DRAW ITEMS HERE
