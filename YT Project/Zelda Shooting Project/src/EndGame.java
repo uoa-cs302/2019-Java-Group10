@@ -14,7 +14,7 @@ public class EndGame extends Canvas{
 	public EndGame(Game game) {
 		this.game = game;
 		frame = new JFrame("Zelda Reborn");
-		frame.setSize(600, 400);
+		frame.setSize(1024, 768);
 		frame.setResizable(false);
 		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
@@ -28,7 +28,6 @@ public class EndGame extends Canvas{
 					g.drawImage(game.grass, i, j, null);
 			}
 		}
-		g.drawString("DOES THIS WORK???", 300, 300);
-		
+		g.drawString("DOES THIS WORK???", 300, 300);		
 	}
 }

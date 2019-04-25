@@ -148,7 +148,7 @@ public class Game extends Canvas implements Runnable {
 		if(level == 1) {
 			levelCounter=1;
 			loadLevel(level1);
-			//new EndGame(this);
+			new EndGame(this);
 			
 		}
 		else if (level == 6){
