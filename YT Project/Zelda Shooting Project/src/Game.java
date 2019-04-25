@@ -183,10 +183,12 @@ public class Game extends Canvas implements Runnable {
 			switchLevel(6);
 		}
 		
+		//remember to add highscore to txt file when game ends. Not here
 		if (level ==7) {
 			topHighscores();
-			new EndGame(this, 4);
 			this.frame.dispose();
+			new EndGame(this, 4);
+			//this.frame.dispose();
 			this.stop();
 
 		}
