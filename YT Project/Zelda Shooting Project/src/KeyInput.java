@@ -22,14 +22,17 @@ public class KeyInput extends KeyAdapter {
 				
 		//game paused (toggle on paused variable)
 		if (key == KeyEvent.VK_P) {
+			game.pauseGame = !game.pauseGame;
+			/*
 			if (paused == false) {
-				game.stop();
+				//game.stop();
 				paused = true;
+				
 			}
 			else {
-				game.start();
+				//game.start();
 				paused = false;
-			}
+			}*/
 		}
 		
 		if (key == KeyEvent.VK_ESCAPE) {

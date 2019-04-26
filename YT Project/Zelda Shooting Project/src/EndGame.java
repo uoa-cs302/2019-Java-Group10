@@ -25,6 +25,8 @@ public class EndGame extends Canvas{
 		this.game = game;
 		this.value = value;
 
+		
+		
 		//create a new JFrame with set parameters
 		frame = new JFrame("Zelda Reborn");
 		frame.setSize(1024, 768);
@@ -44,6 +46,9 @@ public class EndGame extends Canvas{
 		rectYes.setBounds(378, 553, 80, 47);
 		rectNo = new Rectangle();
 		rectNo.setBounds(549, 553, 72, 47);
+		
+		////
+		
 
 		//detect mouse input to button
 		//source-code: https://www.youtube.com/watch?v=CajXXmhIndI
@@ -66,7 +71,8 @@ public class EndGame extends Canvas{
 						game.levelCounter = 4;
 						game.levelSwitch = true;
 						EndGame.frame.dispose();
-						game.start();
+						game.pauseGame =false;
+						//game.start();
 					}
 					//no button
 					else if ((x > rectNo.getX()) && (x < rectNo.getX() + 72) && (y > rectNo.getY()) && (y < rectNo.getY() + 47)) {
@@ -74,7 +80,8 @@ public class EndGame extends Canvas{
 						game.levelCounter = 5;
 						game.levelSwitch = true;
 						EndGame.frame.dispose();
-						game.start();
+						game.pauseGame = false;
+						//game.start();
 					}
 				}
 				//System.out.println(x + " , " + y);

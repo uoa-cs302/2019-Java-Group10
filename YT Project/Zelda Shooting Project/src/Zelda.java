@@ -13,7 +13,7 @@ public class Zelda extends GameObject{
 	Animations animFront, animBack, animRight, animLeft;
 
 	//change back to 3, -3
-	int speedPositive = 5, speedNegative = -5;
+	int speedPositive = 3, speedNegative = -3;
 
 	private BufferedImage[] zelda_Leftimage = new BufferedImage[3];
 	private BufferedImage[] zelda_Rightimage = new BufferedImage[3];
@@ -167,8 +167,10 @@ public class Zelda extends GameObject{
 //						game.stop();
 					}
 					else if (game.levelCounter == 3){
+						System.out.println("Spin off frame shown");
+						game.pauseGame= true;
 						new EndGame(game, 3);
-						game.stop();
+						//game.stop();
 						handler.removeObj(temp);
 					}
 					else if (game.levelCounter == 4) {
@@ -189,7 +191,7 @@ public class Zelda extends GameObject{
 			if(temp.getId() == ID.EnemySpider) {
 				if(getBounds().intersects(temp.getBounds())) {
 					game.hp--;
-				//	new Sound("/pew.wav", false);
+					//new Sound("/pew.wav", false);
 				}
 			}
 

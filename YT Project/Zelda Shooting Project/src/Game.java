@@ -37,6 +37,7 @@ public class Game extends Canvas implements Runnable {
 	boolean dirtTile = true;
 	public boolean levelSwitch= false;
 	boolean countdownFlag = true;
+	boolean pauseGame=false;
 	
 	String file = "highscoreStorage.txt";
 	
@@ -179,7 +180,7 @@ public class Game extends Canvas implements Runnable {
 		else if (level == 6){
 			levelCounter = 6;
 			hp=100;
-			ammo = 400;
+			ammo = 200;
 			switchLevel(6);
 		}
 		
@@ -206,104 +207,107 @@ public class Game extends Canvas implements Runnable {
 	//MAIN TICK() METHOD
 	//CONTROL GIVEN TO HANDLER.TICK() HERE WHICH CONTROLS EVERYTHING NOW.
 	//updates everything 60times/ sec
-	public void tick() {		
-		//finding the player object to pass parameters to our camera
-		for (int i = 0; i < handler.obj.size(); i++) {
-			if (handler.obj.get(i).getId() == ID.Player) {
-				camera.tick(handler.obj.get(i));
-			}
-		}
-		
-		handler.tick();
-		
-		//System.out.println(finalScore);
-		//System.out.println(levelCounter);
-		
-		
-		//only perform function is zelda is still alive
-		if (alive) {
-			//why do we have the level not = 6 here? should it not just be hp = 0?
-			if (levelCounter != 6 && hp <= 0) {
-				this.frame.dispose();
-				alive = false;
-				new EndGame(this, 2);
-				this.stop();
-			}
-		}
-
-		if(levelSwitch ==true) {
-
-			//change level is health = 0;
-			if (levelCounter ==2) {
-				//Game.LEVEL++;
-				switchLevel(2);
-				//hp = 100;
-				levelSwitch =false;
-				//levelCounter++;
-				//System.out.println(highscore);
-				
+	public void tick() {
+		//only run if game is not paused
+		if(!pauseGame) {
+			//finding the player object to pass parameters to our camera
+			for (int i = 0; i < handler.obj.size(); i++) {
+				if (handler.obj.get(i).getId() == ID.Player) {
+					camera.tick(handler.obj.get(i));
+				}
 			}
 
+			handler.tick();
 
-			else if (levelCounter ==3) {
-				//Game.LEVEL++;
-				switchLevel(3);
-				//highscore=highscore+500;
-				//hp = 100;
-				levelSwitch =false;
-				//levelCounter++;
-				//System.out.println(highscore);
+			//System.out.println(finalScore);
+			//System.out.println(levelCounter);
+
+
+			//only perform function is zelda is still alive
+			if (alive) {
+				//!=6 since level 6 is multiplayer
+				if (levelCounter != 6 && hp <= 0) {
+					this.frame.dispose();
+					alive = false;
+					new EndGame(this, 2);
+					this.stop();
+				}
 			}
 
-			//boss Level
-			else if (levelCounter ==4) {
-				//Game.LEVEL++;
-				switchLevel(4);
-				hp = 100;
-				levelSwitch =false;
-				//levelCounter++;
-				//System.out.println(highscore);
-			}
+			if(levelSwitch ==true) {
 
-			//hunter level
-			else if (levelCounter ==5) {
-				//Game.LEVEL++;
-				switchLevel(5);
-				//extra 1000 points given for making it to the last level
-				//highscore=highscore+1000;
-				//hp = 100;
-				levelSwitch =false;
-				//System.out.println(highscore);
-			}
-			
-			/* Not working. Remove later.
+				//change level is health = 0;
+				if (levelCounter ==2) {
+					//Game.LEVEL++;
+					switchLevel(2);
+					//hp = 100;
+					levelSwitch =false;
+					//levelCounter++;
+					//System.out.println(highscore);
+
+				}
+
+
+				else if (levelCounter ==3) {
+					//Game.LEVEL++;
+					switchLevel(3);
+					//highscore=highscore+500;
+					//hp = 100;
+					levelSwitch =false;
+					//levelCounter++;
+					//System.out.println(highscore);
+				}
+
+				//boss Level
+				else if (levelCounter ==4) {
+					//Game.LEVEL++;
+					switchLevel(4);
+					hp = 100;
+					levelSwitch =false;
+					//levelCounter++;
+					//System.out.println(highscore);
+				}
+
+				//hunter level
+				else if (levelCounter ==5) {
+					//Game.LEVEL++;
+					switchLevel(5);
+					//extra 1000 points given for making it to the last level
+					//highscore=highscore+1000;
+					//hp = 100;
+					levelSwitch =false;
+					//System.out.println(highscore);
+				}
+
+				/* Not working. Remove later.
 			//game over condition after final level
 			else if (levelCounter ==10) {
 				//total score = animals killed score - time taken + game finish bonus
 				finalScore = highscore - (int) (finish+timingValue) + 1000;
 				System.out.println("Score =" + finalScore);
 			}*/
+			}
+
+			//total score when game is not finished
+			//System.out.println(highscore);
+			finalScore = highscore - (int) (finish+timingValue);
+
+			//display which player wins in multiplayer
+			if (levelCounter == 6) {
+				if (hp <= 0) {
+					JOptionPane.showMessageDialog(null, "Player 2 Wins!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+					this.frame.dispose();
+					Home.main(null);
+					this.stop();
+				}
+				else if (multiplayerHp <= 0){
+					JOptionPane.showMessageDialog(null, "Player 1 Wins!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+					this.frame.dispose();
+					Home.main(null);
+					this.stop();
+				}
+			}	
 		}
-		
-		//total score when game is not finished
-		//System.out.println(highscore);
-		finalScore = highscore - (int) (finish+timingValue);
-		
-		//display which player wins in multiplayer
-		if (levelCounter == 6) {
-			if (hp <= 0) {
-				JOptionPane.showMessageDialog(null, "Player 2 Wins!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
-				this.frame.dispose();
-				Home.main(null);
-				this.stop();
-			}
-			else if (multiplayerHp <= 0){
-				JOptionPane.showMessageDialog(null, "Player 1 Wins!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
-				this.frame.dispose();
-				Home.main(null);
-				this.stop();
-			}
-		}		
 	}
 	
 	//updates couple 1000times/ sec
@@ -316,20 +320,7 @@ public class Game extends Canvas implements Runnable {
 		}
 		
 		Graphics g = bs.getDrawGraphics();
-		Graphics2D g2d = (Graphics2D) g;
-		
-
-//		//may remove later
-//		if(alive && levelCounter != 6 && hp <= 0) {
-//			this.frame.dispose();
-//			alive = false;
-//			new EndGame(this, 2);
-//			this.stop();
-//		}
-		
-		
-		/////
-		
+		Graphics2D g2d = (Graphics2D) g;		
 		
 		///// DRAW ITEMS HERE
 			
@@ -346,7 +337,7 @@ public class Game extends Canvas implements Runnable {
 			}
 		}
 		//for all other levels, have background as grass
-		else {
+		else if (levelCounter == 2 || levelCounter == 3 ||levelCounter ==5 || levelCounter ==6){
 			for (int i = 0; i < 30*72; i += 32) {
 				for (int j = 0; j < 30*72; j +=32) {
 						g.drawImage(grass, i, j, null);
@@ -362,7 +353,7 @@ public class Game extends Canvas implements Runnable {
 			//storyline
 			g.drawString("Game Storyline:", 50, 730);
 			//g.setFont(GameFont.getFont("/teen.ttf", 15));
-			g.setFont(new Font("Arial", Font.TRUETYPE_FONT, 17));
+			g.setFont(new Font("Arial", Font.TRUETYPE_FONT, 16));
 			g.drawString("... your best friend, Link, has been injured and "
 					+ "needs special fruits to survive", 50, 760);
 			g.drawString("After discovering these fruits can only be " + 
@@ -427,6 +418,7 @@ public class Game extends Canvas implements Runnable {
 			g.drawString("Level 5", 510, 400);			
 		}
 		
+		//all game objects being rendered here
 		handler.render(g);
 		
 		
@@ -438,6 +430,8 @@ public class Game extends Canvas implements Runnable {
 		//health for the game - UI
 		//health box
 		g.setColor(Color.GRAY);
+		
+		//multiplayer
 		if (levelCounter == 6) {
 			//draw health box background for player 1 and player 2
 			g.fillRect(805, 695, 200, 32);
@@ -483,7 +477,7 @@ public class Game extends Canvas implements Runnable {
 			g.drawString("Player 1 Health", 805, 695);
 			g.drawString("Player 2 Health", 5, 695);
 		}
-		else {
+		else if(levelCounter >= 1 && levelCounter <= 5 ){
 			g.fillRect(5, 5, 200, 32);
 			//health with colour coordination for specific boundaries
 			if(hp < 50 && hp > 35) {
@@ -556,13 +550,13 @@ public class Game extends Canvas implements Runnable {
 		}
 		
 		if (levelCounter != 6) {
-			g.drawString(finalScore + "", 850, 35);
+			g.drawString(finalScore + "", 825, 35);
 		}
 		
 		g.setFont(GameFont.getFont("/teen_bold.ttf", 15));
 		g.drawString("Time", 485, 50);
 		if (levelCounter != 6) {
-			g.drawString("Score", 850, 50);
+			g.drawString("Score", 825, 50);
 		}
 		
 		g.dispose();
