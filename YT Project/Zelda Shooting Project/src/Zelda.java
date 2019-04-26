@@ -149,6 +149,7 @@ public class Zelda extends GameObject{
 				if(getBounds().intersects(temp.getBounds())) {
 					//if the last level is completed, exit the game and return to the home screen for now
 					if (game.levelCounter == 5) {
+						game.highscorePrint();
 						game.frame.dispose();
 						new EndGame(game, 1);
 						game.stop();

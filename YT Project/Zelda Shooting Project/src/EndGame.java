@@ -157,9 +157,13 @@ public class EndGame extends Canvas{
 			g.drawString("HIGHSCORES", 250, 200);
 			
 			g.setFont(GameFont.getFont("/teen_bold.ttf", 20));
-			g.drawString("" + game.scoreOne, 250, 220);
-			g.drawString("" + game.scoreTwo, 250, 240);
-			g.drawString("" + game.scoreThree, 250, 260);
+			g.drawString("1. " + game.scoreOne, 250, 250);
+			g.drawString("2. " + game.scoreTwo, 250, 280);
+			g.drawString("3. " + game.scoreThree, 250, 310);
+			g.drawString("4. " + game.scoreFour, 250, 340);
+			g.drawString("5. " + game.scoreFive, 250, 370);
+			
+			
 			
 			
 			g.drawImage(homeButton, 375, 450, 250, 250, null);

@@ -62,7 +62,8 @@ public class Game extends Canvas implements Runnable {
 	private ArrayList<Integer> topScores = new ArrayList<Integer>();
 	//might not need these
 	int scoreOne=0, scoreTwo=0, scoreThree=0;
-	int scoreFour, scoreFive, scoreSix, scoreSeven, scoreEight, scoreNine, scoreTen;
+	int scoreFour, scoreFive, scoreSix;
+	//scoreSeven, scoreEight, scoreNine, scoreTen;
 	//long totalTime = 0;
 	
 	//should start from 1. Kept at 5 to skip levels for now.
@@ -227,6 +228,7 @@ public class Game extends Canvas implements Runnable {
 			if (alive) {
 				//!=6 since level 6 is multiplayer
 				if (levelCounter != 6 && hp <= 0) {
+					highscorePrint();
 					this.frame.dispose();
 					alive = false;
 					new EndGame(this, 2);
@@ -746,7 +748,7 @@ public class Game extends Canvas implements Runnable {
 			System.err.println("ERROR reading scores from file");
 		}
 		
-		 // display the high score
+		 /*// display the high score
 	    if (finalScore > hs)
 	    {    
 	        System.out.println("You now have the new high score " + finalScore +
@@ -755,7 +757,7 @@ public class Game extends Canvas implements Runnable {
 	        System.out.println("You tied the high score!");
 	    } else {
 	        System.out.println("The all time high score was " + hs);
-	    }
+	    } */
 	    
 	    //System.out.println(finalScore);
 	    
@@ -798,9 +800,14 @@ public class Game extends Canvas implements Runnable {
 		Collections.sort(topScores);
 		Collections.reverse(topScores);
 		
+		System.out.println(topScores);
+		
 		scoreOne = topScores.get(0).intValue();
 		scoreTwo = topScores.get(1).intValue();
 		scoreThree = topScores.get(2).intValue();
+		scoreFour = topScores.get(3).intValue();
+		scoreFive = topScores.get(4).intValue();
+		//scoreSix = topScores.get(5).intValue();
 		/* add in later according to above
 		scoreFour = list[3];
 		scoreFive = list[4];
